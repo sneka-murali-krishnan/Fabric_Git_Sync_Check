@@ -1,0 +1,41 @@
+table DimProduct
+	lineageTag: 99bb95ec-66a1-4239-a3fa-8e60f4ce9320
+	sourceLineageTag: [gold].[DimProduct]
+
+	column ProductID
+		dataType: int64
+		lineageTag: fcdfd232-0944-4162-9213-ce7bcb9aaa76
+		summarizeBy: count
+		sourceColumn: ProductID
+
+	column ProductName
+		dataType: string
+		lineageTag: 2e2e4399-f9bd-4e25-bffe-3a9eb03d83fa
+		summarizeBy: none
+		sourceColumn: ProductName
+
+	column CategoryName
+		dataType: string
+		lineageTag: fe642a8f-a570-4fac-a4a4-ad3d6b3325c1
+		summarizeBy: none
+		sourceColumn: CategoryName
+
+	column SupplierName
+		dataType: string
+		lineageTag: c793055f-6675-4d16-adc0-11df1688492e
+		summarizeBy: none
+		sourceColumn: SupplierName
+
+	column UnitPrice
+		dataType: decimal
+		lineageTag: 2af06b75-236a-4f35-acbb-8e7a83792d04
+		summarizeBy: sum
+		sourceColumn: UnitPrice
+
+	partition DimProduct = entity
+		mode: directLake
+		source
+			entityName: DimProduct
+			schemaName: gold
+			expressionSource: DL_Warehouse
+

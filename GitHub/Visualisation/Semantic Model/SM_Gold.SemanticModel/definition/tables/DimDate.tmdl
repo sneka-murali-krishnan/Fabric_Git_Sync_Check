@@ -1,0 +1,47 @@
+table DimDate
+	lineageTag: 6cbb80a9-8904-4324-9223-8b819197bab2
+	sourceLineageTag: [gold].[DimDate]
+
+	column DateKey
+		dataType: int64
+		lineageTag: e51ae764-7031-46e5-a0c7-df08cd2cf29c
+		summarizeBy: count
+		sourceColumn: DateKey
+
+	column FullDate
+		dataType: dateTime
+		lineageTag: 630dcc4e-15ee-4180-87b7-f6cf4f1ad419
+		summarizeBy: none
+		sourceColumn: FullDate
+
+	column Year
+		dataType: int64
+		lineageTag: cfe381ad-da33-40a7-b6ba-2211fabb6e11
+		summarizeBy: sum
+		sourceColumn: Year
+
+	column Month
+		dataType: int64
+		lineageTag: 44f5f176-a65d-48d8-86c5-850fda1931e0
+		summarizeBy: sum
+		sourceColumn: Month
+
+	column MonthName
+		dataType: string
+		lineageTag: 0053d7cb-c133-4a01-b7fb-3eb7d5815f58
+		summarizeBy: none
+		sourceColumn: MonthName
+
+	column Quarter
+		dataType: int64
+		lineageTag: 0ab07081-6f3c-4342-ad96-63efa88fa90d
+		summarizeBy: sum
+		sourceColumn: Quarter
+
+	partition DimDate = entity
+		mode: directLake
+		source
+			entityName: DimDate
+			schemaName: gold
+			expressionSource: DL_Warehouse
+

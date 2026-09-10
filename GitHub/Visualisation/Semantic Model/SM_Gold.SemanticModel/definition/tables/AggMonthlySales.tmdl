@@ -1,0 +1,29 @@
+table AggMonthlySales
+	lineageTag: 2d28acaa-f5fe-4e96-8021-05a17a96de64
+	sourceLineageTag: [gold].[AggMonthlySales]
+
+	column RegionName
+		dataType: string
+		lineageTag: 1ff6eab5-3110-4b96-8b04-75d4299388c2
+		summarizeBy: none
+		sourceColumn: RegionName
+
+	column SalesMonth
+		dataType: dateTime
+		lineageTag: 2d5bd98c-9d79-4bba-b61d-70be59fe03e6
+		summarizeBy: none
+		sourceColumn: SalesMonth
+
+	column MonthlySales
+		dataType: decimal
+		lineageTag: 489df47b-5d87-4643-8cac-40f47d84eb09
+		summarizeBy: sum
+		sourceColumn: MonthlySales
+
+	partition AggMonthlySales = entity
+		mode: directLake
+		source
+			entityName: AggMonthlySales
+			schemaName: gold
+			expressionSource: DL_Warehouse
+

@@ -1,0 +1,41 @@
+table DimCustomer
+	lineageTag: d0893fd8-7040-446f-8abd-c8c942654db9
+	sourceLineageTag: [gold].[DimCustomer]
+
+	column CustomerID
+		dataType: int64
+		lineageTag: e6fb3568-acf8-46d8-b130-08d97759794f
+		summarizeBy: count
+		sourceColumn: CustomerID
+
+	column CustomerName
+		dataType: string
+		lineageTag: fa481f2c-7662-41c7-a066-07a8463363c3
+		summarizeBy: none
+		sourceColumn: CustomerName
+
+	column Email
+		dataType: string
+		lineageTag: 09b6753b-4919-4a0f-a39a-1a93b7477b7e
+		summarizeBy: none
+		sourceColumn: Email
+
+	column CountryName
+		dataType: string
+		lineageTag: 66531e47-7630-4057-bf86-ff7ecd76f2fd
+		summarizeBy: none
+		sourceColumn: CountryName
+
+	column SignupDate
+		dataType: dateTime
+		lineageTag: a9383884-0e35-4451-abc0-ff533a1ff942
+		summarizeBy: none
+		sourceColumn: SignupDate
+
+	partition DimCustomer = entity
+		mode: directLake
+		source
+			entityName: DimCustomer
+			schemaName: gold
+			expressionSource: DL_Warehouse
+

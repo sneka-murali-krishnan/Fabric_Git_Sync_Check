@@ -1,0 +1,41 @@
+table DimEmployee
+	lineageTag: 449999b6-86a9-452c-b895-687678d5f391
+	sourceLineageTag: [gold].[DimEmployee]
+
+	column EmployeeID
+		dataType: int64
+		lineageTag: b390d668-8096-4140-8b96-a5b5416054dd
+		summarizeBy: count
+		sourceColumn: EmployeeID
+
+	column EmployeeName
+		dataType: string
+		lineageTag: c3268c98-3ef5-4254-8ca9-ef80eda8c3ba
+		summarizeBy: none
+		sourceColumn: EmployeeName
+
+	column Role
+		dataType: string
+		lineageTag: 6e8d5477-baac-4e9e-81d9-f7e1aa9f0abf
+		summarizeBy: none
+		sourceColumn: Role
+
+	column StoreID
+		dataType: int64
+		lineageTag: 02897be4-0d76-43ab-86d0-005a5e2dad2b
+		summarizeBy: count
+		sourceColumn: StoreID
+
+	column HireDate
+		dataType: dateTime
+		lineageTag: 1e48d196-2b65-46fe-8e3d-73fea5e928b7
+		summarizeBy: none
+		sourceColumn: HireDate
+
+	partition DimEmployee = entity
+		mode: directLake
+		source
+			entityName: DimEmployee
+			schemaName: gold
+			expressionSource: DL_Warehouse
+

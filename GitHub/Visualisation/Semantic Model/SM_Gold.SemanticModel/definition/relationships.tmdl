@@ -1,0 +1,36 @@
+relationship Relationship
+	fromColumn: FactSales.DateKey
+	toColumn: DimDate.DateKey
+
+relationship 'Relationship 1'
+	fromColumn: FactSales.CustomerID
+	toColumn: DimCustomer.CustomerID
+
+relationship 'Relationship 2'
+	fromColumn: FactSales.ProductID
+	toColumn: DimProduct.ProductID
+
+relationship 'Relationship 3'
+	fromColumn: FactSales.StoreID
+	toColumn: DimStore.StoreID
+
+relationship 'Relationship 4'
+	fromColumn: FactSales.EmployeeID
+	toColumn: DimEmployee.EmployeeID
+
+relationship 'Relationship 5'
+	fromColumn: FactPayments.DateKey
+	toColumn: DimDate.DateKey
+
+relationship 'Relationship 6'
+	fromColumn: FactReturns.DateKey
+	toColumn: DimDate.DateKey
+
+relationship 'Relationship 7'
+	fromColumn: FactInventory.DateKey
+	toColumn: DimDate.DateKey
+
+relationship 'Relationship 8'
+	fromColumn: FactInventory.ProductID
+	toColumn: DimProduct.ProductID
+

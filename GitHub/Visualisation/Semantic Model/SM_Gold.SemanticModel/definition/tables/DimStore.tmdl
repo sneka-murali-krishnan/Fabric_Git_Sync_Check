@@ -1,0 +1,41 @@
+table DimStore
+	lineageTag: 232fab09-e048-41ae-b5fe-00513a065b2b
+	sourceLineageTag: [gold].[DimStore]
+
+	column StoreID
+		dataType: int64
+		lineageTag: 35c4bd3c-ca5b-4c51-953a-e9e15771e132
+		summarizeBy: count
+		sourceColumn: StoreID
+
+	column StoreName
+		dataType: string
+		lineageTag: 4660c247-b3b6-4b03-b586-eb049c3194cd
+		summarizeBy: none
+		sourceColumn: StoreName
+
+	column RegionName
+		dataType: string
+		lineageTag: 2e0a4e38-151d-4278-a7ea-93f5543fab0f
+		summarizeBy: none
+		sourceColumn: RegionName
+
+	column CountryName
+		dataType: string
+		lineageTag: 9fd23cd1-b3f2-4583-aa50-e723ed96c1b6
+		summarizeBy: none
+		sourceColumn: CountryName
+
+	column OpenDate
+		dataType: dateTime
+		lineageTag: 19f400a6-6ee3-4771-bc21-b8ec441a4f2e
+		summarizeBy: none
+		sourceColumn: OpenDate
+
+	partition DimStore = entity
+		mode: directLake
+		source
+			entityName: DimStore
+			schemaName: gold
+			expressionSource: DL_Warehouse
+

@@ -1,0 +1,1 @@
+CREATE   PROCEDURE gold.sp_BuildAggMonthlySales AS BEGIN TRUNCATE TABLE gold.AggMonthlySales; INSERT INTO gold.AggMonthlySales (RegionName, SalesMonth, MonthlySales) SELECT RegionName, SalesMonth, MonthlySales FROM dbo.vw_MonthlySalesByRegion; END;

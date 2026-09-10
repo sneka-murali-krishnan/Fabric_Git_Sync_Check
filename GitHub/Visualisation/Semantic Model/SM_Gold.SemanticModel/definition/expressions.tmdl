@@ -1,0 +1,7 @@
+expression DL_Warehouse =
+		let
+			Source = AzureStorage.DataLake("https://onelake.dfs.fabric.microsoft.com/74da0728-60bf-45a7-8063-e47582cdb26e/6bf890af-634d-42a1-a950-d9afb233e273")
+		in
+			Source
+	lineageTag: c671a39a-2ccc-4736-a48e-becd159f17c9
+

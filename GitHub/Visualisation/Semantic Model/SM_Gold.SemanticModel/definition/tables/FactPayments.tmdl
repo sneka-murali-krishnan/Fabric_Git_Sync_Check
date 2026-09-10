@@ -1,0 +1,41 @@
+table FactPayments
+	lineageTag: 7736c5a5-a07a-442b-aa7c-ceb3fbeba429
+	sourceLineageTag: [gold].[FactPayments]
+
+	column PaymentID
+		dataType: int64
+		lineageTag: 811ba87b-320f-4974-ad6e-2f2915419c2b
+		summarizeBy: count
+		sourceColumn: PaymentID
+
+	column OrderID
+		dataType: int64
+		lineageTag: 2bb7beca-cea5-460d-9fab-edd7df5cbd71
+		summarizeBy: count
+		sourceColumn: OrderID
+
+	column DateKey
+		dataType: int64
+		lineageTag: 81714eca-a288-48d1-bca6-e03f51d57bc6
+		summarizeBy: count
+		sourceColumn: DateKey
+
+	column PaymentMethodID
+		dataType: int64
+		lineageTag: ecb558ce-664d-4e36-b7a0-bd250e8aea88
+		summarizeBy: count
+		sourceColumn: PaymentMethodID
+
+	column Amount
+		dataType: decimal
+		lineageTag: 04d07d30-f4ee-486f-b36f-04d296893f9c
+		summarizeBy: sum
+		sourceColumn: Amount
+
+	partition FactPayments = entity
+		mode: directLake
+		source
+			entityName: FactPayments
+			schemaName: gold
+			expressionSource: DL_Warehouse
+

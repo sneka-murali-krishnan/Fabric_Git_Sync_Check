@@ -1,0 +1,71 @@
+table FactSales
+	lineageTag: 5a6efb23-85d1-413f-bb9d-ad337bd7cc93
+	sourceLineageTag: [gold].[FactSales]
+
+	column OrderDetailID
+		dataType: int64
+		lineageTag: baf65353-d097-4282-a513-df8e0aaab46c
+		summarizeBy: count
+		sourceColumn: OrderDetailID
+
+	column OrderID
+		dataType: int64
+		lineageTag: fd5e3d7e-4fd2-4e11-b953-eb241313a507
+		summarizeBy: count
+		sourceColumn: OrderID
+
+	column DateKey
+		dataType: int64
+		lineageTag: 860c28fb-9ca2-4c38-879c-b77be1f4b47f
+		summarizeBy: count
+		sourceColumn: DateKey
+
+	column CustomerID
+		dataType: int64
+		lineageTag: b0392c2a-1f7d-454b-88f2-7f995b7091b0
+		summarizeBy: count
+		sourceColumn: CustomerID
+
+	column ProductID
+		dataType: int64
+		lineageTag: 195736cf-26fd-482c-bd09-351a2152c018
+		summarizeBy: count
+		sourceColumn: ProductID
+
+	column StoreID
+		dataType: int64
+		lineageTag: 4849f24c-403b-4012-99f3-2fdb207b3717
+		summarizeBy: count
+		sourceColumn: StoreID
+
+	column EmployeeID
+		dataType: int64
+		lineageTag: 7e26751e-71df-46e2-b92c-368c1a78f03c
+		summarizeBy: count
+		sourceColumn: EmployeeID
+
+	column Quantity
+		dataType: int64
+		lineageTag: 678aa6de-acca-47c4-af7e-0b499e499edf
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+	column UnitPrice
+		dataType: decimal
+		lineageTag: 6ecaa425-0591-4d4b-83e7-f6d250587a50
+		summarizeBy: sum
+		sourceColumn: UnitPrice
+
+	column LineTotal
+		dataType: decimal
+		lineageTag: 5d55ffef-b549-40f5-b601-7367233b6cb2
+		summarizeBy: sum
+		sourceColumn: LineTotal
+
+	partition FactSales = entity
+		mode: directLake
+		source
+			entityName: FactSales
+			schemaName: gold
+			expressionSource: DL_Warehouse
+

@@ -1,0 +1,41 @@
+table FactReturns
+	lineageTag: 9ade365a-5d68-4275-86b8-7c2bbfb4e4e4
+	sourceLineageTag: [gold].[FactReturns]
+
+	column ReturnID
+		dataType: int64
+		lineageTag: 8bce829f-a12a-4040-8713-390bac98a65c
+		summarizeBy: count
+		sourceColumn: ReturnID
+
+	column OrderDetailID
+		dataType: int64
+		lineageTag: 3d5f72e0-a592-4ace-90ef-def2c46b777b
+		summarizeBy: count
+		sourceColumn: OrderDetailID
+
+	column DateKey
+		dataType: int64
+		lineageTag: 2dd65250-a568-4b5c-a169-bafdbeb69c87
+		summarizeBy: count
+		sourceColumn: DateKey
+
+	column Reason
+		dataType: string
+		lineageTag: 31124825-4618-4034-ba81-290a019e1402
+		summarizeBy: none
+		sourceColumn: Reason
+
+	column RefundAmount
+		dataType: decimal
+		lineageTag: e4bb8b95-a5e7-4209-8d40-bcc1528ba4aa
+		summarizeBy: sum
+		sourceColumn: RefundAmount
+
+	partition FactReturns = entity
+		mode: directLake
+		source
+			entityName: FactReturns
+			schemaName: gold
+			expressionSource: DL_Warehouse
+

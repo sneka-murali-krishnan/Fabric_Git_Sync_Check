@@ -1,0 +1,169 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "Lookup",
+        "typeProperties": {
+          "source": {
+            "type": "FabricSqlDatabaseSource",
+            "sqlReaderQuery": "SELECT TABLE_SCHEMA, TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE = 'BASE TABLE' AND TABLE_SCHEMA IN ('dbo', 'gold');",
+            "partitionOption": "None",
+            "queryTimeout": "00:10:00",
+            "datasetSettings": {
+              "type": "FabricSqlDatabaseTable",
+              "schema": [],
+              "connectionSettings": {
+                "name": "SQL_DB_Trial",
+                "properties": {
+                  "type": "FabricSqlDatabase",
+                  "typeProperties": {
+                    "artifactId": "620bd2ba-410d-4b20-9fe9-87e0dc4be346",
+                    "workspaceId": "74da0728-60bf-45a7-8063-e47582cdb26e"
+                  },
+                  "externalReferences": {
+                    "connection": "697dd88e-2e58-4c6c-96c7-04477939e364"
+                  }
+                }
+              }
+            }
+          },
+          "datasetSettings": {
+            "type": "FabricSqlDatabaseTable",
+            "schema": [],
+            "connectionSettings": {
+              "name": "SQL_DB_Trial",
+              "properties": {
+                "type": "FabricSqlDatabase",
+                "typeProperties": {
+                  "artifactId": "dc4be346-87e0-9fe9-4b20-410d620bd2ba",
+                  "workspaceId": "00000000-0000-0000-0000-000000000000"
+                },
+                "externalReferences": {
+                  "connection": "697dd88e-2e58-4c6c-96c7-04477939e364"
+                },
+                "annotations": []
+              }
+            },
+            "annotations": []
+          },
+          "firstRowOnly": false
+        },
+        "policy": {
+          "timeout": "0.01:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Lookup_All_Tables",
+        "dependsOn": []
+      },
+      {
+        "type": "ForEach",
+        "typeProperties": {
+          "isSequential": false,
+          "batchCount": 5,
+          "items": {
+            "value": "@activity('Lookup_All_Tables').output.value",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "type": "Copy",
+              "typeProperties": {
+                "source": {
+                  "type": "FabricSqlDatabaseSource",
+                  "sqlReaderQuery": {
+                    "value": "@concat('SELECT * FROM [', item().TABLE_SCHEMA, '].[', item().TABLE_NAME, '];')",
+                    "type": "Expression"
+                  },
+                  "partitionOption": "None",
+                  "queryTimeout": "00:30:00",
+                  "datasetSettings": {
+                    "type": "FabricSqlDatabaseTable",
+                    "schema": [],
+                    "connectionSettings": {
+                      "name": "SQL_DB_Trial",
+                      "properties": {
+                        "type": "FabricSqlDatabase",
+                        "typeProperties": {
+                          "artifactId": "dc4be346-87e0-9fe9-4b20-410d620bd2ba",
+                          "workspaceId": "00000000-0000-0000-0000-000000000000"
+                        },
+                        "externalReferences": {
+                          "connection": "697dd88e-2e58-4c6c-96c7-04477939e364"
+                        },
+                        "annotations": []
+                      }
+                    },
+                    "annotations": []
+                  }
+                },
+                "sink": {
+                  "type": "DataWarehouseSink",
+                  "tableOption": "autoCreate",
+                  "allowCopyCommand": true,
+                  "copyCommandSettings": {},
+                  "datasetSettings": {
+                    "type": "DataWarehouseTable",
+                    "typeProperties": {
+                      "schema": {
+                        "value": "@item().TABLE_SCHEMA",
+                        "type": "Expression"
+                      },
+                      "table": {
+                        "value": "@item().TABLE_NAME",
+                        "type": "Expression"
+                      }
+                    },
+                    "schema": [],
+                    "linkedService": {
+                      "name": "WH_Gold",
+                      "properties": {
+                        "type": "DataWarehouse",
+                        "typeProperties": {
+                          "artifactId": "b233e273-d9af-a950-42a1-634d6bf890af",
+                          "endpoint": "4zfhklsvnxoejdtng7bpzr3jjm-fad5u5f7mctuladd4r2yftnsny.datawarehouse.fabric.microsoft.com",
+                          "workspaceId": "00000000-0000-0000-0000-000000000000"
+                        },
+                        "annotations": []
+                      }
+                    },
+                    "annotations": []
+                  }
+                },
+                "translator": {
+                  "type": "TabularTranslator",
+                  "typeConversion": true,
+                  "typeConversionSettings": {
+                    "allowDataTruncation": true,
+                    "treatBooleanAsNumber": false
+                  }
+                },
+                "enableStaging": true
+              },
+              "policy": {
+                "timeout": "0.02:00:00",
+                "retry": 1,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Copy_Table_Data",
+              "dependsOn": []
+            }
+          ]
+        },
+        "name": "ForEach_Table",
+        "dependsOn": [
+          {
+            "activity": "Lookup_All_Tables",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

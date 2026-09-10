@@ -1,0 +1,89 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.12.0/schema.json",
+  "name": "2370d88664909a2c7810",
+  "position": {
+    "x": 0,
+    "y": 585.16304910452391,
+    "z": 1,
+    "height": 493.99634217881913,
+    "width": 489.75603022878636,
+    "tabOrder": 1
+  },
+  "visual": {
+    "visualType": "cardVisual",
+    "query": {
+      "queryState": {
+        "Data": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "AggMonthlySales"
+                        }
+                      },
+                      "Property": "MonthlySales"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(AggMonthlySales.MonthlySales)",
+              "nativeQueryRef": "Sum of MonthlySales"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Aggregation": {
+                "Expression": {
+                  "Column": {
+                    "Expression": {
+                      "SourceRef": {
+                        "Entity": "AggMonthlySales"
+                      }
+                    },
+                    "Property": "MonthlySales"
+                  }
+                },
+                "Function": 0
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "0bfd80e45cb90dd8dc7d",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "AggMonthlySales"
+                  }
+                },
+                "Property": "MonthlySales"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced"
+      }
+    ]
+  }
+}

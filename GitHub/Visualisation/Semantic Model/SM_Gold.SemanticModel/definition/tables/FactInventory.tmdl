@@ -1,0 +1,41 @@
+table FactInventory
+	lineageTag: 7a3af340-29c7-4635-a1a9-a36c73f89196
+	sourceLineageTag: [gold].[FactInventory]
+
+	column InventoryID
+		dataType: int64
+		lineageTag: a0ec1511-07a3-455b-a0fe-abd41c6a1422
+		summarizeBy: count
+		sourceColumn: InventoryID
+
+	column ProductID
+		dataType: int64
+		lineageTag: 357e764e-5b4e-4899-99f6-06775aab7262
+		summarizeBy: count
+		sourceColumn: ProductID
+
+	column WarehouseID
+		dataType: int64
+		lineageTag: dfec7549-f38a-41c9-8e64-f5bfb1c27cfe
+		summarizeBy: count
+		sourceColumn: WarehouseID
+
+	column QuantityOnHand
+		dataType: int64
+		lineageTag: 58270763-8d0d-4dda-a8a4-a5933bdaec66
+		summarizeBy: sum
+		sourceColumn: QuantityOnHand
+
+	column DateKey
+		dataType: int64
+		lineageTag: b00cc53e-c22a-4e51-adae-69e68e2360fa
+		summarizeBy: count
+		sourceColumn: DateKey
+
+	partition FactInventory = entity
+		mode: directLake
+		source
+			entityName: FactInventory
+			schemaName: gold
+			expressionSource: DL_Warehouse
+
