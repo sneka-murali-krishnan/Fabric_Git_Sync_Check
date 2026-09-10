@@ -1,1 +1,0 @@
-CREATE   PROCEDURE gold.sp_BuildDimCustomer AS BEGIN TRUNCATE TABLE gold.DimCustomer; INSERT INTO gold.DimCustomer (CustomerID, CustomerName, Email, CountryName, SignupDate) SELECT c.CustomerID, c.CustomerName, c.Email, co.CountryName, c.SignupDate FROM dbo.Customers c JOIN dbo.Countries co ON co.CountryID = c.CountryID; END;

@@ -1,1 +1,0 @@
-CREATE   PROCEDURE gold.sp_BuildGoldLayer_Master AS BEGIN EXEC gold.sp_BuildDimDate; EXEC gold.sp_BuildDimCustomer; EXEC gold.sp_BuildDimProduct; EXEC gold.sp_BuildDimStore; EXEC gold.sp_BuildDimEmployee; EXEC gold.sp_BuildFactSales; EXEC gold.sp_BuildFactPayments; EXEC gold.sp_BuildFactReturns; EXEC gold.sp_BuildFactInventory; EXEC gold.sp_BuildAggMonthlySales; END;
