@@ -1,0 +1,57 @@
+table DimBroker
+	lineageTag: 613457dc-0f8f-40e9-9912-06b38cd042bf
+
+	column BrokerKey
+		dataType: int64
+		lineageTag: 78d0c37e-bdc4-4887-974e-e85b191270ed
+		sourceColumn: BrokerKey
+
+	column BrokerId
+		dataType: string
+		lineageTag: c1403e74-8313-492d-9969-143583ce81e8
+		sourceColumn: BrokerId
+
+	column Code
+		dataType: string
+		lineageTag: c7f83206-b10d-4f57-9662-e9771c0d049a
+		sourceColumn: Code
+
+	column Name
+		dataType: string
+		lineageTag: f6089135-0222-4157-b0ef-49913095d8d6
+		sourceColumn: Name
+
+	column DTCCode
+		dataType: string
+		lineageTag: 9e008bff-d1cb-4fcf-9b02-5b2e8b99414d
+		sourceColumn: DTCCode
+
+	column CreatedBy
+		dataType: string
+		lineageTag: f2002207-3c81-48e7-8bf3-db825a100e25
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: 1024d7b8-ba2a-4ec6-ae39-1dee33ccc841
+		sourceColumn: CreatedDate
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: 5d9a73f2-4c14-44ce-bd9b-dd2db7fc6517
+		sourceColumn: UpdatedBy
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: 55668bab-92a6-4e98-9975-1caea0ed2381
+		sourceColumn: UpdatedDate
+
+	partition DimBroker-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimBroker"]}[Data]
+				in
+				    Nav
+

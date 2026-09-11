@@ -1,0 +1,52 @@
+table DimThresholdPeriod
+	lineageTag: 8e71c57b-5549-40c3-9381-56508549d4d4
+
+	column MVPeriod
+		dataType: int64
+		lineageTag: 9fa0e37b-d6c7-4ff9-aa47-b15c85cf83b4
+		sourceColumn: MVPeriod
+
+	column BenchmarkCode
+		dataType: string
+		lineageTag: 96818a59-ecfd-4a83-832d-7314f406f3eb
+		sourceColumn: BenchmarkCode
+
+	column PortfolioCode
+		dataType: string
+		lineageTag: eb28b733-ae3c-4557-9b7a-dceb4692ab8c
+		sourceColumn: PortfolioCode
+
+	column MVDuration
+		dataType: int64
+		lineageTag: 83993b03-5eb5-4132-965f-03c689bba304
+		sourceColumn: MVDuration
+
+	column MVStartDate
+		dataType: dateTime
+		lineageTag: 2f2adc23-0afb-400a-a4ae-5f9956dfedbe
+		sourceColumn: MVStartDate
+
+	column MVEndDate
+		dataType: dateTime
+		lineageTag: f6a1abee-5d7f-4f73-9b42-f21534165c08
+		sourceColumn: MVEndDate
+
+	column BMPercentageChange
+		dataType: double
+		lineageTag: 13e16ede-6d5b-446e-9738-0f503d00e865
+		sourceColumn: BMPercentageChange
+
+	column PFPercentageChange
+		dataType: double
+		lineageTag: b603eace-12ec-4b51-a897-7d5b6b3e40f9
+		sourceColumn: PFPercentageChange
+
+	partition DimThresholdPeriod-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="dbo",Item="DimThresholdPeriod"]}[Data]
+				in
+				    Nav
+

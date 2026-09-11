@@ -1,0 +1,423 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "Lookup",
+        "typeProperties": {
+          "source": {
+            "type": "DataWarehouseSource",
+            "sqlReaderStoredProcedureName": "Log.SP_ETLBatchHeader",
+            "storedProcedureParameters": {
+              "BatchId": {
+                "type": "Int32",
+                "value": null
+              },
+              "EndTime": {
+                "type": "DateTime",
+                "value": null
+              },
+              "ErrorMessage": {
+                "type": "String",
+                "value": null
+              },
+              "PipelineName": {
+                "type": "String",
+                "value": {
+                  "value": "@pipeline().PipelineName",
+                  "type": "Expression"
+                }
+              },
+              "PipelineRunId": {
+                "type": "String",
+                "value": {
+                  "value": "@pipeline().RunId",
+                  "type": "Expression"
+                }
+              },
+              "StartTime": {
+                "type": "DateTime",
+                "value": {
+                  "value": "@utcNow()",
+                  "type": "Expression"
+                }
+              },
+              "Status": {
+                "type": "String",
+                "value": {
+                  "value": "@concat(pipeline().PipelineName,' - Process has been Started')",
+                  "type": "Expression"
+                }
+              }
+            },
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00"
+          },
+          "datasetSettings": {
+            "type": "DataWarehouseTable",
+            "schema": [],
+            "linkedService": {
+              "name": "WH_MetaData",
+              "properties": {
+                "type": "DataWarehouse",
+                "typeProperties": {
+                  "artifactId": "bfce2aba-4923-90da-4a1e-2c020d4b573a",
+                  "endpoint": "2ybikadzh7yenkzxsnkoh7ua74-6cma2dxeutwe7e52vtwd4d7iaq.datawarehouse.fabric.microsoft.com",
+                  "workspaceId": "00000000-0000-0000-0000-000000000000"
+                },
+                "annotations": []
+              }
+            },
+            "annotations": []
+          },
+          "firstRowOnly": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Insert Log Header",
+        "dependsOn": []
+      },
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "Batch_Id",
+          "value": {
+            "value": "@int(activity('Insert Log Header').output.value[0].BatchId)",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Get Batch ID",
+        "dependsOn": [
+          {
+            "activity": "Insert Log Header",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SqlServerStoredProcedure",
+        "typeProperties": {
+          "storedProcedureName": "Log.SP_ETLBatchHeader",
+          "storedProcedureParameters": {
+            "BatchId": {
+              "value": {
+                "value": "@variables('Batch_Id')",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "EndTime": {
+              "value": {
+                "value": "@utcNow()",
+                "type": "Expression"
+              },
+              "type": "DateTime"
+            },
+            "ErrorMessage": {
+              "value": "No Error",
+              "type": "String"
+            },
+            "PipelineName": {
+              "value": {
+                "value": "@pipeline().PipelineName",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "PipelineRunId": {
+              "value": {
+                "value": "@pipeline().RunId",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "StartTime": {
+              "value": null,
+              "type": "DateTime"
+            },
+            "Status": {
+              "value": {
+                "value": "Success",
+                "type": "Expression"
+              },
+              "type": "String"
+            }
+          }
+        },
+        "linkedService": {
+          "name": "WH_MetaData",
+          "properties": {
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "artifactId": "bfce2aba-4923-90da-4a1e-2c020d4b573a",
+              "endpoint": "2ybikadzh7yenkzxsnkoh7ua74-6cma2dxeutwe7e52vtwd4d7iaq.datawarehouse.fabric.microsoft.com",
+              "workspaceId": "00000000-0000-0000-0000-000000000000"
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Success Pipeline Log",
+        "dependsOn": [
+          {
+            "activity": "Bronze To Silver NB",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "SqlServerStoredProcedure",
+        "typeProperties": {
+          "storedProcedureName": "Log.SP_ETLBatchHeader",
+          "storedProcedureParameters": {
+            "BatchId": {
+              "value": {
+                "value": "@variables('Batch_Id')",
+                "type": "Expression"
+              },
+              "type": "Int32"
+            },
+            "EndTime": {
+              "value": {
+                "value": "@utcNow()",
+                "type": "Expression"
+              },
+              "type": "DateTime"
+            },
+            "ErrorMessage": {
+              "value": "Inner Activity Failure",
+              "type": "String"
+            },
+            "PipelineName": {
+              "value": {
+                "value": "@pipeline().PipelineName",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "PipelineRunId": {
+              "value": {
+                "value": "@pipeline().RunId",
+                "type": "Expression"
+              },
+              "type": "String"
+            },
+            "StartTime": {
+              "value": null,
+              "type": "DateTime"
+            },
+            "Status": {
+              "value": {
+                "value": "Failure",
+                "type": "Expression"
+              },
+              "type": "String"
+            }
+          }
+        },
+        "linkedService": {
+          "name": "WH_MetaData",
+          "properties": {
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "artifactId": "bfce2aba-4923-90da-4a1e-2c020d4b573a",
+              "endpoint": "2ybikadzh7yenkzxsnkoh7ua74-6cma2dxeutwe7e52vtwd4d7iaq.datawarehouse.fabric.microsoft.com",
+              "workspaceId": "00000000-0000-0000-0000-000000000000"
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Failure Pipeline Log",
+        "dependsOn": [
+          {
+            "activity": "Bronze To Silver NB",
+            "dependencyConditions": [
+              "Failed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ExecutePipeline",
+        "typeProperties": {
+          "pipeline": {
+            "referenceName": "7ee12284-171f-bfaa-4c6b-d80796658418",
+            "type": "PipelineReference"
+          },
+          "parameters": {
+            "DBsource": {
+              "value": "@pipeline().parameters.DBsource",
+              "type": "Expression"
+            },
+            "Batch_Id": {
+              "value": "@variables('Batch_Id')",
+              "type": "Expression"
+            },
+            "SchemaName": {
+              "value": "@pipeline().parameters.SchemaName",
+              "type": "Expression"
+            }
+          },
+          "waitOnCompletion": true
+        },
+        "policy": {
+          "secureInput": false
+        },
+        "name": "Sub Pipeline Invoke",
+        "dependsOn": [
+          {
+            "activity": "Get Batch ID",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "94f13705-3d99-9c1a-44c8-5ca74c4c9459",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "ETLBatchId": {
+              "value": {
+                "value": "@variables('Batch_Id')",
+                "type": "Expression"
+              },
+              "type": "int"
+            },
+            "DBSource": {
+              "value": {
+                "value": "@pipeline().parameters.DBsource",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "SchemaName": {
+              "value": {
+                "value": "@pipeline().parameters.SchemaName",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Bronze To Silver NB",
+        "dependsOn": [
+          {
+            "activity": "Sub Pipeline Invoke",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "4c4c9459-5ca7-44c8-9c1a-3d9994f13705",
+          "workspaceId": "0e0d98f0-a4e4-4fec-93ba-acec3e0fe804",
+          "parameters": {
+            "ETLBatchId": {
+              "value": {
+                "value": "@variables('Batch_Id')",
+                "type": "Expression"
+              },
+              "type": "int"
+            },
+            "DBSource": {
+              "value": {
+                "value": "@pipeline().parameters.DBsource",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "SchemaName": {
+              "value": {
+                "value": "@pipeline().parameters.SchemaName",
+                "type": "Expression"
+              },
+              "type": "string"
+            },
+            "FilterValue": {
+              "value": "1",
+              "type": "string"
+            },
+            "FilterField": {
+              "value": "IsReportingTable",
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Mail Alert Invoke",
+        "state": "Inactive",
+        "onInactiveMarkAs": "Succeeded",
+        "dependsOn": []
+      }
+    ],
+    "parameters": {
+      "DBsource": {
+        "type": "string",
+        "defaultValue": "Incremental Reporting Tables - Data Load"
+      },
+      "SchemaName": {
+        "type": "string",
+        "defaultValue": "FininWork"
+      }
+    },
+    "variables": {
+      "Batch_Id": {
+        "type": "Integer"
+      },
+      "Activity_Start_Time": {
+        "type": "String"
+      },
+      "Activity_End_Time": {
+        "type": "String"
+      },
+      "TableCate": {
+        "type": "Integer"
+      }
+    },
+    "concurrency": 2
+  }
+}

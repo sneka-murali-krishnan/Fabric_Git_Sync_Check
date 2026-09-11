@@ -1,0 +1,47 @@
+table DimSecurityIdentifier
+	lineageTag: 9be115dd-a1fc-40d0-ac45-4225a5a85fe0
+
+	column SecurityKey
+		dataType: int64
+		lineageTag: 78169117-b6bf-43b3-8e85-00bb913ff02d
+		sourceColumn: SecurityKey
+
+	column IdentifierType
+		dataType: string
+		lineageTag: 6c241709-634c-4c08-887f-235e5df85e16
+		sourceColumn: IdentifierType
+
+	column Identifier
+		dataType: string
+		lineageTag: ab01ba4e-3c71-4167-ab71-e7122fc8e589
+		sourceColumn: Identifier
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 0595f076-2f3c-4b28-b4da-cb6f57e38190
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: b5eeeac4-e62f-4e88-a867-86b7ae3fee22
+		sourceColumn: CreatedDate
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: 1e1a4a87-4cad-41c8-afc6-106b09451c33
+		sourceColumn: UpdatedBy
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: 4c5518ed-3ce9-4350-a0e2-d831ab280884
+		sourceColumn: UpdatedDate
+
+	partition DimSecurityIdentifier-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimSecurityIdentifier"]}[Data]
+				in
+				    Nav
+

@@ -1,0 +1,72 @@
+table DimClient
+	lineageTag: 4b9f55f6-27e5-402a-954a-9ab174f7a401
+
+	column ClientKey
+		dataType: int64
+		lineageTag: e0f4c4a6-e022-4139-8ed8-a8953d77af9a
+		sourceColumn: ClientKey
+
+	column ClientId
+		dataType: string
+		lineageTag: 757d25dc-3f05-4299-b515-8030514407b3
+		sourceColumn: ClientId
+
+	column Code
+		dataType: string
+		lineageTag: 6088f460-a379-49db-a701-c4ccee891651
+		sourceColumn: Code
+
+	column Name
+		dataType: string
+		lineageTag: ef96f8fb-94aa-424f-bc05-c8a88feae830
+		sourceColumn: Name
+
+	column ShortName
+		dataType: string
+		lineageTag: 247b2c97-c1a0-4a20-a4be-97d35ee80bc6
+		sourceColumn: ShortName
+
+	column LongName
+		dataType: string
+		lineageTag: 64900cef-3db8-4235-992e-a3ad17a43168
+		sourceColumn: LongName
+
+	column CreatedBy
+		dataType: string
+		lineageTag: c3f3b911-f49a-4bae-86a9-68a16ecb5146
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: 937b9fec-fbb9-4349-9d65-369ae4280805
+		sourceColumn: CreatedDate
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: 6ffe4b08-af18-4b5d-9800-8356667b3162
+		sourceColumn: UpdatedBy
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: 55e98a7e-b0cb-4b98-b183-32b6895b0320
+		sourceColumn: UpdatedDate
+
+	column ExternalSystemKey
+		dataType: int64
+		lineageTag: bef86543-4b64-4499-81fd-f5d17fb5c23d
+		sourceColumn: ExternalSystemKey
+
+	column ExternalSystemClient
+		dataType: int64
+		lineageTag: 91ba2d68-1362-4209-90bf-b2d0433335cb
+		sourceColumn: ExternalSystemClient
+
+	partition DimClient-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimClient"]}[Data]
+				in
+				    Nav
+

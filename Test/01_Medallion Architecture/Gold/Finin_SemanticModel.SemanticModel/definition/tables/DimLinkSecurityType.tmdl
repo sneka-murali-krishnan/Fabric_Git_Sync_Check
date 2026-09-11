@@ -1,0 +1,67 @@
+table DimLinkSecurityType
+	lineageTag: 963fb275-5b39-4ecb-8d16-38cddff27efd
+
+	column LinkSecurityTypeKey
+		dataType: int64
+		lineageTag: 9399da20-2e93-4065-9dee-ea0d92bdb669
+		sourceColumn: LinkSecurityTypeKey
+
+	column SecurityTypeCode
+		dataType: string
+		lineageTag: 6aa9dfcf-4e42-4071-a01c-121366b671ac
+		sourceColumn: SecurityTypeCode
+
+	column CustomerSecurityTypeCode
+		dataType: string
+		lineageTag: 683c4590-3a2c-47c9-bf72-5ea021023d20
+		sourceColumn: CustomerSecurityTypeCode
+
+	column SecurityTypeName
+		dataType: string
+		lineageTag: 5f9222ed-7b8d-4ed8-b313-a753f2a1c9d0
+		sourceColumn: SecurityTypeName
+
+	column CustomerSecurityTypeName
+		dataType: string
+		lineageTag: b5db5827-cf81-400e-8ec8-d54dc53fda41
+		sourceColumn: CustomerSecurityTypeName
+
+	column SecurityTypeKey
+		dataType: int64
+		lineageTag: aa71e837-ba79-4fa0-8c7c-005c7f46f6f9
+		sourceColumn: SecurityTypeKey
+
+	column CustomerSecurityTypeKey
+		dataType: int64
+		lineageTag: 1c0c6cf0-9450-4feb-878e-15083fe1a71c
+		sourceColumn: CustomerSecurityTypeKey
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 82984b11-44b8-4a11-8014-e0fe5761ecfd
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: 76d651d1-4769-4bed-9be7-98d0b2e82301
+		sourceColumn: CreatedDate
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: 1f4751fb-b779-4d64-8cc0-af23982fb0d1
+		sourceColumn: UpdatedBy
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: 126a9f90-3aec-4a4c-b4f6-c3b6bed248e9
+		sourceColumn: UpdatedDate
+
+	partition DimLinkSecurityType-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimLinkSecurityType"]}[Data]
+				in
+				    Nav
+

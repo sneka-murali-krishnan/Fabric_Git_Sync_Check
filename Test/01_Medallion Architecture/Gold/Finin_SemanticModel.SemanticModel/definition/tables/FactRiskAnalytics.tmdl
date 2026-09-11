@@ -1,0 +1,167 @@
+table FactRiskAnalytics
+	lineageTag: 39e9abfa-f517-49dd-a978-a381b94eda14
+
+	column AnalyticsKey
+		dataType: int64
+		lineageTag: 67d7db7d-020f-4313-a8aa-83a5163640c8
+		sourceColumn: AnalyticsKey
+
+	column SecurityKey
+		dataType: int64
+		lineageTag: 54bd3fc9-8d6d-4831-8ba4-6108206c1e17
+		sourceColumn: SecurityKey
+
+	column LinkAssetClassKey
+		dataType: int64
+		lineageTag: e134c850-855b-4886-bd31-e34c9325afdf
+		sourceColumn: LinkAssetClassKey
+
+	column LinkSecurityTypeKey
+		dataType: int64
+		lineageTag: 38a6cbca-8b06-4a13-ab57-ce25f93b3d6f
+		sourceColumn: LinkSecurityTypeKey
+
+	column CurrencyKey
+		dataType: int64
+		lineageTag: 8fdddfc0-d1dd-4836-baf5-9309b7e73c19
+		sourceColumn: CurrencyKey
+
+	column CountryKey
+		dataType: int64
+		lineageTag: ddc45dc9-42b5-4850-94d3-934bef222895
+		sourceColumn: CountryKey
+
+	column SourceSystemKey
+		dataType: int64
+		lineageTag: fa234e1b-289c-4e77-a61b-674395197e0b
+		sourceColumn: SourceSystemKey
+
+	column DateKey
+		dataType: int64
+		lineageTag: 6ab5fda6-bd97-4d32-97ef-96dc0b71a74d
+		sourceColumn: DateKey
+
+	column EffectiveDt
+		dataType: dateTime
+		lineageTag: 9487f919-2640-43f3-ba6f-ee57d999317b
+		sourceColumn: EffectiveDt
+
+	column EquityVolatility
+		dataType: decimal
+		lineageTag: 382970a2-ca53-4463-a838-6453f1559920
+		sourceColumn: EquityVolatility
+
+	column PERatio
+		dataType: decimal
+		lineageTag: f1f4a71c-cd44-42bf-8a2a-20d3dc39ee46
+		sourceColumn: PERatio
+
+	column KeyRateDur6M
+		dataType: decimal
+		lineageTag: 33cf9a2c-d27a-44e9-bf6d-45f88f4e259c
+		sourceColumn: KeyRateDur6M
+
+	column KeyRateDur1Yr
+		dataType: decimal
+		lineageTag: dda0beb4-4922-4b82-9dbf-9506f1998172
+		sourceColumn: KeyRateDur1Yr
+
+	column KeyRateDur2y
+		dataType: decimal
+		lineageTag: 3e04aa25-7bf9-443c-a3bd-8513e16b233f
+		sourceColumn: KeyRateDur2y
+
+	column KeyRateDur3y
+		dataType: decimal
+		lineageTag: de9ca30e-5934-49ef-a537-1bb783bc9e76
+		sourceColumn: KeyRateDur3y
+
+	column KeyRateDur5y
+		dataType: decimal
+		lineageTag: 10b5efa3-5e5f-4245-9a87-9426339bdcea
+		sourceColumn: KeyRateDur5y
+
+	column KeyRateDur7y
+		dataType: decimal
+		lineageTag: 66aec279-8e63-4d05-803b-b84fa22a39df
+		sourceColumn: KeyRateDur7y
+
+	column KeyRateDur10y
+		dataType: decimal
+		lineageTag: 9615e7d0-8926-4ae5-9749-3dff65ef01ed
+		sourceColumn: KeyRateDur10y
+
+	column Factor
+		dataType: decimal
+		lineageTag: 0f6c910a-c23e-4d64-b8ac-8bac5d4258c6
+		sourceColumn: Factor
+
+	column WAC
+		dataType: decimal
+		lineageTag: 4e612113-afc8-42af-a28e-73c3b71c2a69
+		sourceColumn: WAC
+
+	column WAM
+		dataType: decimal
+		lineageTag: 83f59d38-cf7e-4a67-842d-ea0a457a60f2
+		sourceColumn: WAM
+
+	column ModifiedDur
+		dataType: decimal
+		lineageTag: 3bde420a-45ca-41a7-a641-84d71e7424d1
+		sourceColumn: ModifiedDur
+
+	column SpreadDur
+		dataType: decimal
+		lineageTag: 3544e9fb-de43-4220-a7aa-2f3020776d35
+		sourceColumn: SpreadDur
+
+	column OAS
+		dataType: decimal
+		lineageTag: 40291a58-791c-4c34-a3b7-bf3ac75d0a2d
+		sourceColumn: OAS
+
+	column Convexity
+		dataType: decimal
+		lineageTag: 3f633311-e73d-4861-80c6-89d34be192b7
+		sourceColumn: Convexity
+
+	column AdjustedDur
+		dataType: decimal
+		lineageTag: 582ce5ea-b9a7-4bff-a8af-7eb0029bca3b
+		sourceColumn: AdjustedDur
+
+	column YTM
+		dataType: decimal
+		lineageTag: d007cb0e-9d7b-4c95-86a8-cc92961b9195
+		sourceColumn: YTM
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 97ce8f1a-23d5-4ad2-adca-8b29598942ee
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: 64bd4663-000c-41f3-b8a1-2b0091acb9e7
+		sourceColumn: CreatedDate
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: 92823df9-3ac4-45d7-9376-72b798eeed79
+		sourceColumn: UpdatedBy
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: 1eddaf19-82c0-487d-a17c-1e1b8c32ba36
+		sourceColumn: UpdatedDate
+
+	partition FactRiskAnalytics-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="FactRiskAnalytics"]}[Data]
+				in
+				    Nav
+

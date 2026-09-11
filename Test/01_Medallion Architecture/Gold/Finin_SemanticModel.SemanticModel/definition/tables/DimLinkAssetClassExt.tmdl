@@ -1,0 +1,17 @@
+table DimLinkAssetClassExt
+	lineageTag: 92bc6978-4771-45fb-b520-c701837f6d34
+
+	column LinkAssetClassKey
+		dataType: int64
+		lineageTag: 901ea5a9-8f21-4192-aa4b-f4018e8a398b
+		sourceColumn: LinkAssetClassKey
+
+	partition DimLinkAssetClassExt-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimLinkAssetClassExt"]}[Data]
+				in
+				    Nav
+

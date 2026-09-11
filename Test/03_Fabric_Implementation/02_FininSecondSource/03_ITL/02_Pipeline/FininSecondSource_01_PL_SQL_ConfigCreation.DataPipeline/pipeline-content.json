@@ -1,0 +1,416 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "SqlServerSource",
+            "sqlReaderQuery": "SELECT * FROM INFORMATION_SCHEMA.COLUMNS ",
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00",
+            "datasetSettings": {
+              "type": "AzureSqlTable",
+              "typeProperties": {
+                "database": "fabricaccelerator"
+              },
+              "schema": [],
+              "externalReferences": {
+                "connection": "d796e273-a4ec-4654-9450-15e022830810"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "DataWarehouseSink",
+            "tableOption": "autoCreate",
+            "allowCopyCommand": true,
+            "writeBehavior": "Insert",
+            "datasetSettings": {
+              "type": "DataWarehouseTable",
+              "typeProperties": {
+                "schema": {
+                  "value": "@variables('ConfigSchemaName')",
+                  "type": "Expression"
+                },
+                "table": "SourceInformationSchema"
+              },
+              "schema": [],
+              "linkedService": {
+                "name": "WH_MetaData",
+                "properties": {
+                  "type": "DataWarehouse",
+                  "typeProperties": {
+                    "artifactId": "bfce2aba-4923-90da-4a1e-2c020d4b573a",
+                    "endpoint": "2ybikadzh7yenkzxsnkoh7ua74-6cma2dxeutwe7e52vtwd4d7iaq.datawarehouse.fabric.microsoft.com",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          },
+          "enableStaging": true
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Information Schema",
+        "description": "Uses a copy activity to transfer data from Azure SQL to the  Warehouse's InformationSchema ",
+        "dependsOn": [
+          {
+            "activity": "Create Schema",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Script",
+        "typeProperties": {
+          "scripts": [
+            {
+              "text": {
+                "value": "@concat('CREATE SCHEMA ' ,variables('ConfigSchemaName'))",
+                "type": "Expression"
+              },
+              "type": "Query"
+            }
+          ],
+          "scriptBlockExecutionTimeout": "02:00:00"
+        },
+        "linkedService": {
+          "name": "WH_MetaData",
+          "properties": {
+            "type": "DataWarehouse",
+            "typeProperties": {
+              "artifactId": "bfce2aba-4923-90da-4a1e-2c020d4b573a",
+              "endpoint": "2ybikadzh7yenkzxsnkoh7ua74-6cma2dxeutwe7e52vtwd4d7iaq.datawarehouse.fabric.microsoft.com",
+              "workspaceId": "00000000-0000-0000-0000-000000000000"
+            },
+            "annotations": []
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Create Schema",
+        "description": "Executes a script to create the Config_SQLServer schema ",
+        "dependsOn": []
+      },
+      {
+        "type": "Wait",
+        "typeProperties": {
+          "waitTimeInSeconds": 10
+        },
+        "name": "Wait for Process Completion",
+        "description": "Introduces a wait activity to allow time for prior activities to complete before proceeding with the next steps.",
+        "dependsOn": [
+          {
+            "activity": "Primary Key",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          },
+          {
+            "activity": "View Information Schema",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "TridentNotebook",
+        "typeProperties": {
+          "notebookId": "a4e808c0-9e73-84f6-474e-a24ef5c8a76d",
+          "workspaceId": "00000000-0000-0000-0000-000000000000",
+          "parameters": {
+            "ConfigSchemaName": {
+              "value": {
+                "value": "@variables('ConfigSchemaName')",
+                "type": "Expression"
+              },
+              "type": "string"
+            }
+          }
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Process Metadata",
+        "description": "Executes the metadata processing notebook to generate dynamic SQL queries, transform the data, and load the processed metadata into the centralized configuration table.",
+        "dependsOn": [
+          {
+            "activity": "Wait for Process Completion",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "SqlServerSource",
+            "sqlReaderQuery": "SELECT \n    fk.name AS FK_Name,\n    sch1.name AS FK_Schema,\n    t1.name AS FK_Table,\n    c1.name AS FK_Column,\n    sch2.name AS Referenced_Schema,\n    t2.name AS Referenced_Table,\n    c2.name AS Referenced_Column\nFROM sys.foreign_keys fk\nINNER JOIN sys.foreign_key_columns fkc \n    ON fk.object_id = fkc.constraint_object_id\nINNER JOIN sys.tables t1 \n    ON fkc.parent_object_id = t1.object_id\nINNER JOIN sys.schemas sch1 \n    ON t1.schema_id = sch1.schema_id\nINNER JOIN sys.columns c1 \n    ON fkc.parent_object_id = c1.object_id \n    AND fkc.parent_column_id = c1.column_id\nINNER JOIN sys.tables t2 \n    ON fkc.referenced_object_id = t2.object_id\nINNER JOIN sys.schemas sch2 \n    ON t2.schema_id = sch2.schema_id\nINNER JOIN sys.columns c2 \n    ON fkc.referenced_object_id = c2.object_id \n    AND fkc.referenced_column_id = c2.column_id\nORDER BY FK_Schema, FK_Table;",
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00",
+            "datasetSettings": {
+              "type": "AzureSqlTable",
+              "typeProperties": {
+                "database": "fabricaccelerator"
+              },
+              "schema": [],
+              "externalReferences": {
+                "connection": "d796e273-a4ec-4654-9450-15e022830810"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "DataWarehouseSink",
+            "tableOption": "autoCreate",
+            "allowCopyCommand": true,
+            "writeBehavior": "Insert",
+            "datasetSettings": {
+              "type": "DataWarehouseTable",
+              "typeProperties": {
+                "schema": {
+                  "value": "@variables('ConfigSchemaName')",
+                  "type": "Expression"
+                },
+                "table": "KeyConstraintConfig"
+              },
+              "schema": [],
+              "linkedService": {
+                "name": "WH_MetaData",
+                "properties": {
+                  "type": "DataWarehouse",
+                  "typeProperties": {
+                    "artifactId": "bfce2aba-4923-90da-4a1e-2c020d4b573a",
+                    "endpoint": "2ybikadzh7yenkzxsnkoh7ua74-6cma2dxeutwe7e52vtwd4d7iaq.datawarehouse.fabric.microsoft.com",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          },
+          "enableStaging": true
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Key Constraint Config",
+        "description": "Uses a copy activity to transfer data from Azure SQL to the  Warehouse's InformationSchema ",
+        "dependsOn": [
+          {
+            "activity": "Information Schema",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "SqlServerSource",
+            "sqlReaderQuery": "SELECT \n    KU.TABLE_SCHEMA,\n    KU.TABLE_NAME,\n    KU.COLUMN_NAME\nFROM INFORMATION_SCHEMA.TABLE_CONSTRAINTS TC\nJOIN INFORMATION_SCHEMA.KEY_COLUMN_USAGE KU\n    ON TC.CONSTRAINT_NAME = KU.CONSTRAINT_NAME\nWHERE TC.CONSTRAINT_TYPE = 'PRIMARY KEY'\nORDER BY KU.TABLE_SCHEMA, KU.TABLE_NAME, KU.ORDINAL_POSITION;",
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00",
+            "datasetSettings": {
+              "type": "AzureSqlTable",
+              "typeProperties": {
+                "database": "fabricaccelerator"
+              },
+              "schema": [],
+              "externalReferences": {
+                "connection": "d796e273-a4ec-4654-9450-15e022830810"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "DataWarehouseSink",
+            "tableOption": "autoCreate",
+            "allowCopyCommand": true,
+            "writeBehavior": "Insert",
+            "datasetSettings": {
+              "type": "DataWarehouseTable",
+              "typeProperties": {
+                "schema": {
+                  "value": "@variables('ConfigSchemaName')",
+                  "type": "Expression"
+                },
+                "table": "PrimaryKeyConfig"
+              },
+              "schema": [],
+              "linkedService": {
+                "name": "WH_MetaData",
+                "properties": {
+                  "type": "DataWarehouse",
+                  "typeProperties": {
+                    "artifactId": "bfce2aba-4923-90da-4a1e-2c020d4b573a",
+                    "endpoint": "2ybikadzh7yenkzxsnkoh7ua74-6cma2dxeutwe7e52vtwd4d7iaq.datawarehouse.fabric.microsoft.com",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          },
+          "enableStaging": true
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Primary Key",
+        "description": "Uses a copy activity to transfer data from Azure SQL to the  Warehouse's InformationSchema ",
+        "dependsOn": [
+          {
+            "activity": "Key Constraint Config",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "Copy",
+        "typeProperties": {
+          "source": {
+            "type": "SqlServerSource",
+            "sqlReaderQuery": "SELECT * FROM INFORMATION_SCHEMA.VIEWS ",
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00",
+            "datasetSettings": {
+              "type": "AzureSqlTable",
+              "typeProperties": {
+                "database": "fabricaccelerator"
+              },
+              "schema": [],
+              "externalReferences": {
+                "connection": "d796e273-a4ec-4654-9450-15e022830810"
+              },
+              "annotations": []
+            }
+          },
+          "sink": {
+            "type": "DataWarehouseSink",
+            "tableOption": "autoCreate",
+            "allowCopyCommand": true,
+            "writeBehavior": "Insert",
+            "datasetSettings": {
+              "type": "DataWarehouseTable",
+              "typeProperties": {
+                "schema": {
+                  "value": "@variables('ConfigSchemaName')",
+                  "type": "Expression"
+                },
+                "table": "SourceInformationViews"
+              },
+              "schema": [],
+              "linkedService": {
+                "name": "WH_MetaData",
+                "properties": {
+                  "type": "DataWarehouse",
+                  "typeProperties": {
+                    "artifactId": "bfce2aba-4923-90da-4a1e-2c020d4b573a",
+                    "endpoint": "2ybikadzh7yenkzxsnkoh7ua74-6cma2dxeutwe7e52vtwd4d7iaq.datawarehouse.fabric.microsoft.com",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000"
+                  },
+                  "annotations": []
+                }
+              },
+              "annotations": []
+            }
+          },
+          "translator": {
+            "type": "TabularTranslator",
+            "typeConversion": true,
+            "typeConversionSettings": {
+              "allowDataTruncation": true,
+              "treatBooleanAsNumber": false
+            }
+          },
+          "enableStaging": true
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "View Information Schema",
+        "description": "Uses a copy activity to transfer view definitions from the source to the Warehouse's SourceInformationViews table",
+        "dependsOn": [
+          {
+            "activity": "Create Schema",
+            "dependencyConditions": [
+              "Completed"
+            ]
+          }
+        ]
+      }
+    ],
+    "variables": {
+      "ConfigSchemaName": {
+        "type": "String",
+        "defaultValue": "Config_FininSecondSource"
+      }
+    }
+  }
+}

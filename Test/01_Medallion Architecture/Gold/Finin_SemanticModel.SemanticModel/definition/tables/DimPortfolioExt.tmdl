@@ -1,0 +1,17 @@
+table DimPortfolioExt
+	lineageTag: 968edc16-7597-4681-980b-ed4cc28365d8
+
+	column PortfolioKey
+		dataType: int64
+		lineageTag: bf00ef8b-2c2e-45da-bfb0-1d273ab6834b
+		sourceColumn: PortfolioKey
+
+	partition DimPortfolioExt-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimPortfolioExt"]}[Data]
+				in
+				    Nav
+

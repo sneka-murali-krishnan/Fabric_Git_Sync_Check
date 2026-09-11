@@ -1,0 +1,17 @@
+table FactRiskAnalyticsExt
+	lineageTag: 4094b3cd-9133-4fe3-bbe9-2b74855a0b29
+
+	column AnalyticsKey
+		dataType: int64
+		lineageTag: 8acbdd16-9da5-49ee-9483-2ae6dc3f090b
+		sourceColumn: AnalyticsKey
+
+	partition FactRiskAnalyticsExt-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="FactRiskAnalyticsExt"]}[Data]
+				in
+				    Nav
+

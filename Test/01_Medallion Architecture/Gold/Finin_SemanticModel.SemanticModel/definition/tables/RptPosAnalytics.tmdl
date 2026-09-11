@@ -1,0 +1,182 @@
+table RptPosAnalytics
+	lineageTag: a0bd0e99-05b2-4d5c-afca-657e7a0764c2
+
+	column PosAnalyticsKey
+		dataType: int64
+		lineageTag: c2b482ac-9194-4200-8b51-0763dc1b16cf
+		sourceColumn: PosAnalyticsKey
+
+	column SecurityKey
+		dataType: int64
+		lineageTag: daa85130-4988-4e48-9a2e-9fc0d41cfde8
+		sourceColumn: SecurityKey
+
+	column LinkAssetClassKey
+		dataType: int64
+		lineageTag: 7fe92e05-90f7-4a92-9550-6c2daa355516
+		sourceColumn: LinkAssetClassKey
+
+	column LinkSecurityTypeKey
+		dataType: int64
+		lineageTag: 9f70f277-4b30-4521-8c69-c06c66b4307d
+		sourceColumn: LinkSecurityTypeKey
+
+	column CurrencyKey
+		dataType: int64
+		lineageTag: 67f8932a-3dbd-4421-9402-6932b05bda1c
+		sourceColumn: CurrencyKey
+
+	column CountryKey
+		dataType: int64
+		lineageTag: 3716d548-2723-4182-99dc-7099c4745e02
+		sourceColumn: CountryKey
+
+	column ShortName
+		dataType: string
+		lineageTag: 5de9519a-d57d-4ed6-9084-f083e7bdfdb0
+		sourceColumn: ShortName
+
+	column LongName
+		dataType: string
+		lineageTag: 3f08bf49-52e4-45e6-a62b-3c40928c8727
+		sourceColumn: LongName
+
+	column SecurityDescription
+		dataType: string
+		lineageTag: 2aa1c750-7552-42c9-b3c6-e3a84ff19dc5
+		sourceColumn: SecurityDescription
+
+	column SourceSystemKey
+		dataType: int64
+		lineageTag: 3a93d976-b225-4c8d-a8a0-e61d7fb9e53a
+		sourceColumn: SourceSystemKey
+
+	column IndustryGICS
+		dataType: string
+		lineageTag: 5bd2a82b-2e38-45be-beba-4c66f1094228
+		sourceColumn: IndustryGICS
+
+	column SubindustryGICS
+		dataType: string
+		lineageTag: e27c2bbb-4a43-4745-b0a3-4943f9f65227
+		sourceColumn: SubindustryGICS
+
+	column SectorGICS
+		dataType: string
+		lineageTag: 17710035-dac4-4be2-b06a-309b42c1eb75
+		sourceColumn: SectorGICS
+
+	column IndustryGroupGICS
+		dataType: string
+		lineageTag: bd110bbd-90ac-4cad-b2d7-5c0baeba8c1c
+		sourceColumn: IndustryGroupGICS
+
+	column SubSectorGICS
+		dataType: string
+		lineageTag: b00c6a29-cffb-46c5-b59a-d67025039b8f
+		sourceColumn: SubSectorGICS
+
+	column EffectiveDt
+		dataType: dateTime
+		lineageTag: 309c5f30-db43-451e-a5e6-297f6768b93f
+		sourceColumn: EffectiveDt
+
+	column FormatedEffectiveDt
+		dataType: dateTime
+		lineageTag: 56f7edf4-e9fb-4803-bb49-eb9617597612
+		sourceColumn: FormatedEffectiveDt
+
+	column NextDividendPaydate
+		dataType: dateTime
+		lineageTag: 2118ca68-71d0-4a2f-b454-55d7fd471217
+		sourceColumn: NextDividendPaydate
+
+	column LastDividendPaydate
+		dataType: dateTime
+		lineageTag: 07ab8194-38a0-4abd-9647-a7d8a5a98406
+		sourceColumn: LastDividendPaydate
+
+	column FIGI
+		dataType: string
+		lineageTag: cb8df1a6-6da9-4cd6-9042-d0e01a997855
+		sourceColumn: FIGI
+
+	column SYMBOL
+		dataType: string
+		lineageTag: 5a38d00e-5b41-4ca3-8dbc-c556f3b8f7f5
+		sourceColumn: SYMBOL
+
+	column CUSIP
+		dataType: string
+		lineageTag: d2935101-156f-4250-bb58-40471b7d5aa1
+		sourceColumn: CUSIP
+
+	column ISIN
+		dataType: string
+		lineageTag: 1e8c4599-63cb-4ec1-8027-2f476645e495
+		sourceColumn: ISIN
+
+	column SEDOL
+		dataType: string
+		lineageTag: d37e8193-7129-4ccb-b7ac-f64148aac1ee
+		sourceColumn: SEDOL
+
+	column Identifier
+		dataType: string
+		lineageTag: 07d016d7-e3b6-4314-a33e-e2b32cd5f023
+		sourceColumn: Identifier
+
+	column PFBMCode
+		dataType: string
+		lineageTag: fb84c71c-24a2-40b9-8636-c990500d1db3
+		sourceColumn: PFBMCode
+
+	column AsOfDate
+		dataType: dateTime
+		lineageTag: 8251948e-67ee-4e87-8a56-096cb89c9089
+		sourceColumn: AsOfDate
+
+	column IsPortfolio
+		dataType: boolean
+		lineageTag: 59408108-46a8-4f64-b308-4b68e57e8374
+		sourceColumn: IsPortfolio
+
+	column UnPivotValue
+		dataType: decimal
+		lineageTag: 9ffa7ab9-e845-48bc-b51e-e442f5d21613
+		sourceColumn: UnPivotValue
+
+	column Metric
+		dataType: string
+		lineageTag: c09d75df-f843-4bd5-a794-3dfbef70c341
+		sourceColumn: Metric
+
+	column CreatedBy
+		dataType: string
+		lineageTag: effbbad2-bee3-46f8-91c2-ce6dac9db560
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: b6b2842c-3e13-4ec6-8c73-086595a702a6
+		sourceColumn: CreatedDate
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: 3d3a3317-1b62-4ad2-9eeb-a22091695496
+		sourceColumn: UpdatedBy
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: 60bb7c9a-4631-4156-b5f0-553af8464c9f
+		sourceColumn: UpdatedDate
+
+	partition RptPosAnalytics-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="RptPosAnalytics"]}[Data]
+				in
+				    Nav
+

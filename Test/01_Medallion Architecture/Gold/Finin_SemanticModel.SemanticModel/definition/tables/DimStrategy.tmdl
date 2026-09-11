@@ -1,0 +1,57 @@
+table DimStrategy
+	lineageTag: 3c6c9489-1293-4721-a509-f5341700d11e
+
+	column StrategyKey
+		dataType: int64
+		lineageTag: f37f1de0-5a42-4338-be7b-62bc4312f480
+		sourceColumn: StrategyKey
+
+	column ParentId
+		dataType: int64
+		lineageTag: bd0b2a87-12f6-47d8-9778-9097e7ac1279
+		sourceColumn: ParentId
+
+	column StrategyId
+		dataType: string
+		lineageTag: 96faa231-5129-419a-a3bc-b03fa6a1838b
+		sourceColumn: StrategyId
+
+	column Code
+		dataType: string
+		lineageTag: 624223fa-67a4-4c97-9e8d-ec2e0b557f6c
+		sourceColumn: Code
+
+	column Name
+		dataType: string
+		lineageTag: 7e17b75f-e959-44b4-93eb-893ab0bf64c2
+		sourceColumn: Name
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 399f237f-64fc-4a97-aba0-c7331aaf488c
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: 3796b22a-7e62-40c6-8521-ed6ba68bc64f
+		sourceColumn: CreatedDate
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: 8d03fc0a-c4c4-4e49-a740-88ad32a2a52e
+		sourceColumn: UpdatedBy
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: 9df0afa7-f718-4d36-8931-89b76f632d3b
+		sourceColumn: UpdatedDate
+
+	partition DimStrategy-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimStrategy"]}[Data]
+				in
+				    Nav
+

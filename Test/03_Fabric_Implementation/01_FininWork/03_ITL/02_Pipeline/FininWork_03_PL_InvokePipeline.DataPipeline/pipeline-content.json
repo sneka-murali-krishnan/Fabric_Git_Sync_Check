@@ -1,0 +1,110 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "SetVariable",
+        "typeProperties": {
+          "variableName": "starttime",
+          "value": {
+            "value": "@utcNow()",
+            "type": "Expression"
+          }
+        },
+        "policy": {
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Config Set",
+        "dependsOn": []
+      },
+      {
+        "type": "ExecutePipeline",
+        "typeProperties": {
+          "pipeline": {
+            "referenceName": "680e4fdb-61e6-9d58-46bc-fdfb0d74bb60",
+            "type": "PipelineReference"
+          },
+          "parameters": {
+            "DBsource": {
+              "value": "@pipeline().parameters.DBsource",
+              "type": "Expression"
+            },
+            "Batch_Id": {
+              "value": "@pipeline().parameters.Batch_Id",
+              "type": "Expression"
+            },
+            "SchemaName": {
+              "value": "@pipeline().parameters.SchemaName",
+              "type": "Expression"
+            }
+          },
+          "waitOnCompletion": true
+        },
+        "policy": {
+          "secureInput": false
+        },
+        "name": "Source To Bronze",
+        "dependsOn": [
+          {
+            "activity": "Config Set",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "ExecutePipeline",
+        "typeProperties": {
+          "pipeline": {
+            "referenceName": "29414e81-d385-8edc-4522-af39409cd7ee",
+            "type": "PipelineReference"
+          },
+          "parameters": {
+            "Batch_Id": {
+              "value": "@pipeline().parameters.Batch_Id",
+              "type": "Expression"
+            },
+            "DBsource": {
+              "value": "@pipeline().parameters.DBsource",
+              "type": "Expression"
+            },
+            "SchemaName": {
+              "value": "@pipeline().parameters.SchemaName",
+              "type": "Expression"
+            }
+          },
+          "waitOnCompletion": true
+        },
+        "policy": {
+          "secureInput": false
+        },
+        "name": "Source Delete",
+        "dependsOn": [
+          {
+            "activity": "Config Set",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ],
+    "parameters": {
+      "Batch_Id": {
+        "type": "string"
+      },
+      "DBsource": {
+        "type": "string"
+      },
+      "SchemaName": {
+        "type": "string"
+      }
+    },
+    "variables": {
+      "starttime": {
+        "type": "String"
+      }
+    }
+  }
+}

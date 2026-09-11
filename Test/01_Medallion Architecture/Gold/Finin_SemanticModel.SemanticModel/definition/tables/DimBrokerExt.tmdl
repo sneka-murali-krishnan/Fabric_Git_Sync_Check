@@ -1,0 +1,17 @@
+table DimBrokerExt
+	lineageTag: d6d51100-ad32-4642-8f0a-535b6bdba1d5
+
+	column BrokerKey
+		dataType: int64
+		lineageTag: ea254b3e-94de-4201-be76-f7c73710323a
+		sourceColumn: BrokerKey
+
+	partition DimBrokerExt-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimBrokerExt"]}[Data]
+				in
+				    Nav
+

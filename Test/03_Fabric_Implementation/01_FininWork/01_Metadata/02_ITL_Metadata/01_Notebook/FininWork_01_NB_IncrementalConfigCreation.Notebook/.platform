@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Notebook",
+    "displayName": "FininWork_01_NB_IncrementalConfigCreation"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "14b26133-8723-870f-4ead-6b8d1ad339a9"
+  }
+}

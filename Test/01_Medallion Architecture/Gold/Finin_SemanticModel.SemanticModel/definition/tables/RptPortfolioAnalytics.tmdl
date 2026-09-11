@@ -1,0 +1,112 @@
+table RptPortfolioAnalytics
+	lineageTag: 76f6ec8d-80a3-4e87-800c-dc2309fa06e9
+
+	column PFBMCode
+		dataType: string
+		lineageTag: 6fbbe2b5-2848-47be-98b3-656dfb6bcdc4
+		sourceColumn: PFBMCode
+
+	column EffectiveDt
+		dataType: dateTime
+		lineageTag: 1f24c161-187b-496c-9737-cb7309bacb71
+		sourceColumn: EffectiveDt
+
+	column Identifier
+		dataType: string
+		lineageTag: 8dfb71c4-05de-4189-b691-b15491f8b648
+		sourceColumn: Identifier
+
+	column ShortName
+		dataType: string
+		lineageTag: 54c5af9c-fe93-47c1-bd08-4d5b9a75c72d
+		sourceColumn: ShortName
+
+	column AssetClassName
+		dataType: string
+		lineageTag: b4d46d83-bb6e-4ff0-9023-84a9163d0bdc
+		sourceColumn: AssetClassName
+
+	column IndustryGICS
+		dataType: string
+		lineageTag: 3d04f561-4958-454c-9f1d-b037d7b00aa8
+		sourceColumn: IndustryGICS
+
+	column MarketPrice
+		dataType: decimal
+		lineageTag: 9dc6af0c-e9d1-4e83-8c94-e227d4e76525
+		sourceColumn: MarketPrice
+
+	column Quantity
+		dataType: decimal
+		lineageTag: 7718ba8e-14fb-492a-8d61-052b254e3211
+		sourceColumn: Quantity
+
+	column MarketValue
+		dataType: decimal
+		lineageTag: f0a36a38-e038-4bcf-ad65-2ba648d8004c
+		sourceColumn: MarketValue
+
+	column PE
+		dataType: decimal
+		lineageTag: 1e7cd8c2-22c2-43e7-adfd-58b04234e7ed
+		sourceColumn: PE
+
+	column Beta
+		dataType: decimal
+		lineageTag: 2107a8aa-f786-4c02-a2dd-4207a3dc40ba
+		sourceColumn: Beta
+
+	column OneMCPR
+		dataType: decimal
+		lineageTag: 51b9e48f-feb9-4ef7-839c-f96581b0d40e
+		sourceColumn: OneMCPR
+
+	column ThreeMCPR
+		dataType: decimal
+		lineageTag: fa3cfb1c-b68a-4f69-a056-841ac8df9522
+		sourceColumn: ThreeMCPR
+
+	column SixMCPR
+		dataType: decimal
+		lineageTag: 3c50b70c-fbd1-49db-806d-6debf7e03edd
+		sourceColumn: SixMCPR
+
+	column TwelveMCPR
+		dataType: decimal
+		lineageTag: 02e6511a-b078-4ae6-aecb-23d6340937a8
+		sourceColumn: TwelveMCPR
+
+	column KeyRateDur6M
+		dataType: decimal
+		lineageTag: 4db3462a-5e3a-408c-a9e2-66b29042e1a1
+		sourceColumn: KeyRateDur6M
+
+	column KeyRateDur1Yr
+		dataType: decimal
+		lineageTag: 189b4197-6825-4efd-b562-5419f040796c
+		sourceColumn: KeyRateDur1Yr
+
+	column KeyRateDur3y
+		dataType: decimal
+		lineageTag: fc0d0eaa-4623-407b-b25a-2dd9b7f3648e
+		sourceColumn: KeyRateDur3y
+
+	column KeyRateDur5y
+		dataType: decimal
+		lineageTag: 3e4dd2df-8663-4b66-b146-ade7de5e0d83
+		sourceColumn: KeyRateDur5y
+
+	column KeyRateDur7y
+		dataType: decimal
+		lineageTag: 7ac43907-a1a8-4df1-83f0-5ecdb9d7bc01
+		sourceColumn: KeyRateDur7y
+
+	partition RptPortfolioAnalytics-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="RptPortfolioAnalytics"]}[Data]
+				in
+				    Nav
+

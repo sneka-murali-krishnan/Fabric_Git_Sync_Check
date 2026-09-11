@@ -1,0 +1,17 @@
+table DimAggregationMetricExt
+	lineageTag: 41f287dc-eeb8-4eca-bd67-3ec767888c1f
+
+	column AggregationMetricKey
+		dataType: int64
+		lineageTag: 5e4595d7-5a50-4131-9925-c95447b8a6b3
+		sourceColumn: AggregationMetricKey
+
+	partition DimAggregationMetricExt-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimAggregationMetricExt"]}[Data]
+				in
+				    Nav
+

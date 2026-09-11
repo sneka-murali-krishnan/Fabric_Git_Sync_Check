@@ -1,0 +1,112 @@
+table DimPortfolio
+	lineageTag: a8f2909b-fb74-4b9a-af69-0da6a39cfec5
+
+	column PortfolioKey
+		dataType: int64
+		lineageTag: ca70ce84-2942-45d4-a343-21ff0556bd30
+		sourceColumn: PortfolioKey
+
+	column PortfolioId
+		dataType: string
+		lineageTag: eafcfdac-a48c-4849-8ea7-160129b7a816
+		sourceColumn: PortfolioId
+
+	column PortfolioCode
+		dataType: string
+		lineageTag: a72bf745-1a21-4ccb-983f-6af7c01fb417
+		sourceColumn: PortfolioCode
+
+	column ShortName
+		dataType: string
+		lineageTag: 55244746-f654-4212-8770-ac6ba47963ae
+		sourceColumn: ShortName
+
+	column LongName
+		dataType: string
+		lineageTag: c87ab9a2-e8dd-4333-999a-c271e1c55cba
+		sourceColumn: LongName
+
+	column PortfolioDescription
+		dataType: string
+		lineageTag: 70b57054-3553-498f-93c7-8d7f891a5604
+		sourceColumn: PortfolioDescription
+
+	column ParentId
+		dataType: int64
+		lineageTag: 6a89c2ee-355b-40d4-a68e-38fffc812eaa
+		sourceColumn: ParentId
+
+	column InceptionDate
+		dataType: dateTime
+		lineageTag: c1ca4bbc-d1dc-465c-974b-f2308c9b1e4a
+		sourceColumn: InceptionDate
+
+	column TerminationDate
+		dataType: dateTime
+		lineageTag: e64b4edf-3296-45a5-8a9d-c9dd7e0825fe
+		sourceColumn: TerminationDate
+
+	column PortfolioType
+		dataType: string
+		lineageTag: 3af06dfc-4258-4d8a-aed9-cb2929f67f99
+		sourceColumn: PortfolioType
+
+	column IsActive
+		dataType: boolean
+		lineageTag: 36b2b8eb-d826-4d5a-b066-d721bf0318f3
+		sourceColumn: IsActive
+
+	column PortfolioGroupCode
+		dataType: string
+		lineageTag: 04421832-2166-4700-a38c-ee9c6ec5c044
+		sourceColumn: PortfolioGroupCode
+
+	column PortfolioGroupName
+		dataType: string
+		lineageTag: 9d1aa6b6-907f-4945-b74f-91b998fc8b3d
+		sourceColumn: PortfolioGroupName
+
+	column StrategyKey
+		dataType: int64
+		lineageTag: 80304250-efd4-4641-b05f-acedc9972b4b
+		sourceColumn: StrategyKey
+
+	column BenchmarkKey
+		dataType: int64
+		lineageTag: a1292b37-d620-41fe-a1a9-3ddb7b781f7d
+		sourceColumn: BenchmarkKey
+
+	column CustodianKey
+		dataType: int64
+		lineageTag: 0899d4a2-40a5-4239-b366-f9daeb5341d6
+		sourceColumn: CustodianKey
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 8248698b-efa8-42f4-8243-dfe649c95289
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: 5eda1f29-2e0d-4eff-8ed0-e2239de77317
+		sourceColumn: CreatedDate
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: 255fe113-7ce2-4ce7-a89b-044eaaf6a960
+		sourceColumn: UpdatedBy
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: 4ab0a1fe-0e3e-4b10-b72d-5e414e0ff292
+		sourceColumn: UpdatedDate
+
+	partition DimPortfolio-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimPortfolio"]}[Data]
+				in
+				    Nav
+

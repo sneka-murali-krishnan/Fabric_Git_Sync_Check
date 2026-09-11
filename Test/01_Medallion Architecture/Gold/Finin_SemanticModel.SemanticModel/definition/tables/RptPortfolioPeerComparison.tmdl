@@ -1,0 +1,72 @@
+table RptPortfolioPeerComparison
+	lineageTag: f45e0712-4be2-48b3-bf44-f9ad1e846234
+
+	column PortfolioCode
+		dataType: string
+		lineageTag: 04359f37-9c62-4501-9b03-3496a1fbeb34
+		sourceColumn: PortfolioCode
+
+	column Ticker
+		dataType: string
+		lineageTag: b56fc1aa-5861-409b-a386-d72b034f73bf
+		sourceColumn: Ticker
+
+	column FundName
+		dataType: string
+		lineageTag: 4c320734-058b-4384-8d5c-aba89b3d6e66
+		sourceColumn: FundName
+
+	column AsOfDate
+		dataType: dateTime
+		lineageTag: 4ea6b582-a1a7-4efb-af3e-e06b00a837a6
+		sourceColumn: AsOfDate
+
+	column NetAssetValue
+		dataType: decimal
+		lineageTag: 59388b1d-3198-4cdd-9da2-499ea812b9e7
+		sourceColumn: NetAssetValue
+
+	column Return1D
+		dataType: decimal
+		lineageTag: 56370c50-e7c4-4ecb-8950-cbf008b438e0
+		sourceColumn: Return1D
+
+	column Return1W
+		dataType: decimal
+		lineageTag: 7832c0fd-effc-477d-a0a1-33d33dc7b5f1
+		sourceColumn: Return1W
+
+	column Return1M
+		dataType: decimal
+		lineageTag: 280cf51a-1adb-406f-aad9-e08280485550
+		sourceColumn: Return1M
+
+	column Return3M
+		dataType: decimal
+		lineageTag: b26f208e-a620-49aa-b55f-9c4e588a77d0
+		sourceColumn: Return3M
+
+	column Return1Y
+		dataType: decimal
+		lineageTag: 28339c76-7b60-493e-8499-caabc9b9c0fb
+		sourceColumn: Return1Y
+
+	column Return3Y
+		dataType: decimal
+		lineageTag: cc6876f8-f6d3-4909-948f-d6cbf7055c52
+		sourceColumn: Return3Y
+
+	column Return5Y
+		dataType: decimal
+		lineageTag: 5509dc2e-2b44-405b-a1cb-c0fc6db67ade
+		sourceColumn: Return5Y
+
+	partition RptPortfolioPeerComparison-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="RptPortfolioPeerComparison"]}[Data]
+				in
+				    Nav
+

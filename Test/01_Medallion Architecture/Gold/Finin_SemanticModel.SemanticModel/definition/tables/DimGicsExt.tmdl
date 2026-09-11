@@ -1,0 +1,17 @@
+table DimGicsExt
+	lineageTag: 1dc2ab19-4048-4e8a-9630-c78768b57459
+
+	column GicsKey
+		dataType: int64
+		lineageTag: e92779db-3cea-46c5-a3c3-dfc6aa3cdd0b
+		sourceColumn: GicsKey
+
+	partition DimGicsExt-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimGicsExt"]}[Data]
+				in
+				    Nav
+

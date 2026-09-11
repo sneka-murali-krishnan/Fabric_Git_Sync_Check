@@ -1,0 +1,52 @@
+table DimCountry
+	lineageTag: 000d20b7-01ab-4cf6-86c7-78f37437369b
+
+	column CountryKey
+		dataType: int64
+		lineageTag: a6fdc52a-6cef-4ad5-a725-91e4c67f1936
+		sourceColumn: CountryKey
+
+	column CountryId
+		dataType: string
+		lineageTag: da171e25-2f53-400c-9b61-9ae7f43c8df4
+		sourceColumn: CountryId
+
+	column Code
+		dataType: string
+		lineageTag: 86a0b81e-5fe7-46db-b57b-619acaa62dc5
+		sourceColumn: Code
+
+	column Name
+		dataType: string
+		lineageTag: e417a879-1014-4396-846d-2471d07e207a
+		sourceColumn: Name
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 569c957a-0d0b-43bc-a3af-b0e3c0683497
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: 0815e08e-4a24-4f4d-b9ad-250c07153cc5
+		sourceColumn: CreatedDate
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: 29c3987c-1681-44d4-9092-0a0de662f816
+		sourceColumn: UpdatedBy
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: 1bc7e084-2b69-4135-a965-d4858db3c0f7
+		sourceColumn: UpdatedDate
+
+	partition DimCountry-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimCountry"]}[Data]
+				in
+				    Nav
+

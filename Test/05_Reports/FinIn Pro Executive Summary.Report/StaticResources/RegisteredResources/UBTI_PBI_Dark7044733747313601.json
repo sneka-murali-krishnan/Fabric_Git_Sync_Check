@@ -1,0 +1,16 @@
+{
+  "name": "UBTI PBI Dark",
+  "dataColors": [
+    "#5bc0be",
+    "#8EAF50",
+    "#D78507",
+    "#ffd100",
+    "#000000",
+    "#EAB364",
+    "#eff6e0",
+    "#50AFA0"
+  ],
+  "background": "#FFFFFF",
+  "foreground": "#062F4F",
+  "tableAccent": "#000000"
+}

@@ -1,0 +1,17 @@
+table DimClientExt
+	lineageTag: ffc8a29b-beeb-4625-98c4-8b6a67c1ae8c
+
+	column ClientKey
+		dataType: int64
+		lineageTag: 946fdc84-1179-401f-9539-ba745d079994
+		sourceColumn: ClientKey
+
+	partition DimClientExt-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimClientExt"]}[Data]
+				in
+				    Nav
+

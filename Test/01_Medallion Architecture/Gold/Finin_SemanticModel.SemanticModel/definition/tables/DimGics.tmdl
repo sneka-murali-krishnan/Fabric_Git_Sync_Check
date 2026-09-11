@@ -1,0 +1,52 @@
+table DimGics
+	lineageTag: 7b6ef2bd-9965-4998-b592-bd19889b46cc
+
+	column GicsKey
+		dataType: int64
+		lineageTag: 3da09dd4-5eda-42e0-a99b-3a5b0ee8b6c9
+		sourceColumn: GicsKey
+
+	column GicsId
+		dataType: string
+		lineageTag: 41a58600-ceb9-4aab-9d1c-e59141859005
+		sourceColumn: GicsId
+
+	column Code
+		dataType: string
+		lineageTag: 4a692169-05ab-47aa-a256-1783731a1b91
+		sourceColumn: Code
+
+	column Name
+		dataType: string
+		lineageTag: a210cc5c-cef0-4701-b2d5-18757e2cc35e
+		sourceColumn: Name
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 32f6c926-aa0d-4e06-bc4b-a65e1991f744
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: 297feb83-8704-49d2-9985-1986576dde14
+		sourceColumn: CreatedDate
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: 5655135e-39ee-4d04-a1a1-6fbc4b490b08
+		sourceColumn: UpdatedBy
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: b9a82ff6-3ae4-4450-a790-7280e4eb2946
+		sourceColumn: UpdatedDate
+
+	partition DimGics-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimGics"]}[Data]
+				in
+				    Nav
+

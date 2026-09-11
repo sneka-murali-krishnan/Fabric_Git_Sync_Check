@@ -1,0 +1,87 @@
+table RptPortfolioBenchmark
+	lineageTag: b93481b4-8e71-453e-a0a1-8a5021d3c262
+
+	column RptPortfolioKey
+		dataType: int64
+		lineageTag: 51102962-a97a-4fe9-966d-146cf9b9d4bb
+		sourceColumn: RptPortfolioKey
+
+	column StrategyCode
+		dataType: string
+		lineageTag: 4002f714-731a-4c32-b7dc-0def3527063d
+		sourceColumn: StrategyCode
+
+	column StrategyName
+		dataType: string
+		lineageTag: 7f71be44-1798-4813-a7c3-d83184039e38
+		sourceColumn: StrategyName
+
+	column PortfolioKey
+		dataType: int64
+		lineageTag: e35a08bc-44bd-4a64-a61f-4f01c34e94ef
+		sourceColumn: PortfolioKey
+
+	column PFBMCode
+		dataType: string
+		lineageTag: 9ee17b8c-d894-48e4-a8c8-5ad8c1c0bed6
+		sourceColumn: PFBMCode
+
+	column PFBMType
+		dataType: string
+		lineageTag: c0f5c437-bafc-4ab1-bbd4-d61ee1b6b74f
+		sourceColumn: PFBMType
+
+	column PFBMName
+		dataType: string
+		lineageTag: 706b62a5-d847-4664-bfe2-49966a53e5fb
+		sourceColumn: PFBMName
+
+	column Type
+		dataType: string
+		lineageTag: 92f59768-b619-4446-a8a4-1f5fd3a031c5
+		sourceColumn: Type
+
+	column IsActive
+		dataType: boolean
+		lineageTag: ac5bd78a-fc5b-495b-b278-ad2c3cd1b39b
+		sourceColumn: IsActive
+
+	column Root
+		dataType: string
+		lineageTag: 5d83a389-c9ee-4ba4-8f94-0f4fbf6dc57f
+		sourceColumn: Root
+
+	column LinkedBenchmarkCode
+		dataType: string
+		lineageTag: 0c06c576-7efc-449a-b69a-30414973f79e
+		sourceColumn: LinkedBenchmarkCode
+
+	column CreatedBy
+		dataType: string
+		lineageTag: d273da4d-2891-4e00-a84e-5f00013edc28
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: bd40c4ca-9f84-451d-9a22-099fd583b21e
+		sourceColumn: CreatedDate
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: 17d0da67-956f-4843-9de0-f34ed049db17
+		sourceColumn: UpdatedBy
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: 56e26527-63c2-4eac-9530-aa5b58876fd0
+		sourceColumn: UpdatedDate
+
+	partition RptPortfolioBenchmark-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="RptPortfolioBenchmark"]}[Data]
+				in
+				    Nav
+

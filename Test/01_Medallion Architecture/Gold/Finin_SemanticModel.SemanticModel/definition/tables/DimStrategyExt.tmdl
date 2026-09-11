@@ -1,0 +1,17 @@
+table DimStrategyExt
+	lineageTag: 58caa8b2-5f33-4051-9825-549efad283e8
+
+	column StrategyKey
+		dataType: int64
+		lineageTag: 5d21085b-d8bf-4840-aff5-3bb5c1d3dba8
+		sourceColumn: StrategyKey
+
+	partition DimStrategyExt-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimStrategyExt"]}[Data]
+				in
+				    Nav
+

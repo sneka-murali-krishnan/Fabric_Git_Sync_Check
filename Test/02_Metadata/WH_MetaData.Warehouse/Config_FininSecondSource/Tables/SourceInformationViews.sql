@@ -1,0 +1,11 @@
+CREATE TABLE [Config_FininSecondSource].[SourceInformationViews] (
+    [TABLE_CATALOG]   VARCHAR (8000) NULL,
+    [TABLE_SCHEMA]    VARCHAR (8000) NULL,
+    [TABLE_NAME]      VARCHAR (8000) NULL,
+    [VIEW_DEFINITION] VARCHAR (8000) NULL,
+    [CHECK_OPTION]    VARCHAR (7)    NULL,
+    [IS_UPDATABLE]    VARCHAR (2)    NULL
+);
+
+
+GO

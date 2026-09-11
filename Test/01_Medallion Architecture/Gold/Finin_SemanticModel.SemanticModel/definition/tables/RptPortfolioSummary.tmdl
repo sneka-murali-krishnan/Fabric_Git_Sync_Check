@@ -1,0 +1,52 @@
+table RptPortfolioSummary
+	lineageTag: 002a2308-85f7-4d56-977e-a446d591865d
+
+	column Identifier
+		dataType: string
+		lineageTag: 19f85fec-0723-41de-8d86-3be0dd6d3b21
+		sourceColumn: Identifier
+
+	column MarketValue
+		dataType: decimal
+		lineageTag: 051981b9-5fb6-451a-a232-59b0079550b4
+		sourceColumn: MarketValue
+
+	column AssetClass
+		dataType: string
+		lineageTag: 41dc8f09-da70-4dff-a9d3-469f9e4bfef8
+		sourceColumn: AssetClass
+
+	column ESG
+		dataType: decimal
+		lineageTag: 8671f9bb-4a8f-4b03-a5e5-34f97ec351cc
+		sourceColumn: ESG
+
+	column ESGGroup
+		dataType: string
+		lineageTag: 7e1addaf-a531-450e-a732-50d27d30d51e
+		sourceColumn: ESGGroup
+
+	column ESGGroupSortOrder
+		dataType: int64
+		lineageTag: 600fcc9f-149f-41b8-b994-73f2aadf08fd
+		sourceColumn: ESGGroupSortOrder
+
+	column PFBMCode
+		dataType: string
+		lineageTag: ebb1cc14-38c1-45df-ac2a-38b735c72e56
+		sourceColumn: PFBMCode
+
+	column EffectiveDt
+		dataType: dateTime
+		lineageTag: cc64496a-61f3-42b5-82e1-fcc10f7aec60
+		sourceColumn: EffectiveDt
+
+	partition RptPortfolioSummary-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="RptPortfolioSummary"]}[Data]
+				in
+				    Nav
+

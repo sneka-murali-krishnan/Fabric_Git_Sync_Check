@@ -1,0 +1,57 @@
+table DimIssuer
+	lineageTag: 1cb85a1c-f47f-48be-b80c-e8abba3f0b64
+
+	column IssuerKey
+		dataType: int64
+		lineageTag: 115d97a4-5673-49dd-a42a-187419e7055f
+		sourceColumn: IssuerKey
+
+	column IssuerId
+		dataType: int64
+		lineageTag: 7869b360-267a-48ed-b659-25a8e515ab08
+		sourceColumn: IssuerId
+
+	column Code
+		dataType: string
+		lineageTag: 9f6d85b7-21e7-437c-a450-44bbff249a32
+		sourceColumn: Code
+
+	column Name
+		dataType: string
+		lineageTag: de95db82-f831-43f1-9783-a23b1207638e
+		sourceColumn: Name
+
+	column Description
+		dataType: string
+		lineageTag: 85fcf233-31b7-4a45-b64b-94362f864fa4
+		sourceColumn: Description
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 3eb491de-65ab-4647-88c8-728cac3694f3
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: b0edf1cc-65e4-411d-9f47-e0487ef86f31
+		sourceColumn: CreatedDate
+
+	column LastModifiedBy
+		dataType: string
+		lineageTag: d847b698-657d-4afc-8cab-f180319d0df9
+		sourceColumn: LastModifiedBy
+
+	column LastModifiedDate
+		dataType: dateTime
+		lineageTag: 2eec46e9-ac6d-4964-8331-1a72232a0a04
+		sourceColumn: LastModifiedDate
+
+	partition DimIssuer-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimIssuer"]}[Data]
+				in
+				    Nav
+

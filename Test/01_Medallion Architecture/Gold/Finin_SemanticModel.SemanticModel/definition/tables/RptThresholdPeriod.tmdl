@@ -1,0 +1,67 @@
+table RptThresholdPeriod
+	lineageTag: ca2b2ed8-5d9a-4bdf-a7d4-6053638b47f3
+
+	column MVPeriod
+		dataType: int64
+		lineageTag: 4f7228db-a4ff-4b93-b611-ddae8e3fb9b3
+		sourceColumn: MVPeriod
+
+	column PFBMCode
+		dataType: string
+		lineageTag: 3862790e-6d86-4827-b7f0-b3ea33c0e9cf
+		sourceColumn: PFBMCode
+
+	column PFBMType
+		dataType: string
+		lineageTag: 7f025ecf-b902-4025-997d-8b7946a74276
+		sourceColumn: PFBMType
+
+	column MVDuration
+		dataType: int64
+		lineageTag: f5374356-373a-4dec-abc8-844ff4de37ab
+		sourceColumn: MVDuration
+
+	column MVStartDate
+		dataType: dateTime
+		lineageTag: 047b7b1c-93b0-46c8-9a46-295e90794d4b
+		sourceColumn: MVStartDate
+
+	column MVEndDate
+		dataType: dateTime
+		lineageTag: 6c1794e0-107a-49d8-afa7-0201f5dcbb87
+		sourceColumn: MVEndDate
+
+	column MVDateRange
+		dataType: string
+		lineageTag: 8f49054e-2f34-4986-a5fc-e102793c1e36
+		sourceColumn: MVDateRange
+
+	column MVDateRangeFuture6Months
+		dataType: string
+		lineageTag: 0f663012-24f5-4cff-b0b8-1ae5c7e45985
+		sourceColumn: MVDateRangeFuture6Months
+
+	column MVPercentageChange
+		dataType: double
+		lineageTag: 5a2a8441-a3ab-46a8-84cd-abf012093ad1
+		sourceColumn: MVPercentageChange
+
+	column MVPercentageChangeFuture6Months
+		dataType: double
+		lineageTag: 39141c58-9fc7-4422-acb2-7bca285e7a96
+		sourceColumn: MVPercentageChangeFuture6Months
+
+	column BMIsRising
+		dataType: int64
+		lineageTag: 4ed97dd0-cf0c-4aa9-a903-4ed60319624e
+		sourceColumn: BMIsRising
+
+	partition RptThresholdPeriod-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="RptThresholdPeriod"]}[Data]
+				in
+				    Nav
+

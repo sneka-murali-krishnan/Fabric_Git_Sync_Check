@@ -1,0 +1,87 @@
+table RptPerformanceAttribution
+	lineageTag: a3972ec6-3090-4b76-b350-d51467f3041b
+
+	column PFBMCode
+		dataType: string
+		lineageTag: 5e16e208-3cb9-4985-970e-ef0b9fef6422
+		sourceColumn: PFBMCode
+
+	column EffectiveDt
+		dataType: dateTime
+		lineageTag: b29328d8-ff17-4bad-b277-f58d17c40329
+		sourceColumn: EffectiveDt
+
+	column ESG
+		dataType: decimal
+		lineageTag: dcf22515-518a-43da-a806-8bf4e77cfc7d
+		sourceColumn: ESG
+
+	column Ratings
+		dataType: decimal
+		lineageTag: eab2b487-cce0-444c-b08d-f91621b163e3
+		sourceColumn: Ratings
+
+	column SectorGICS
+		dataType: string
+		lineageTag: 902c93bc-333b-4cc2-a690-ed1fdabfdaa3
+		sourceColumn: SectorGICS
+
+	column HoldingsMarketValue
+		dataType: decimal
+		lineageTag: ff626149-ddb5-408b-98a5-e06a59de49b7
+		sourceColumn: HoldingsMarketValue
+
+	column EffectiveDtMonth
+		dataType: dateTime
+		lineageTag: 19993680-2289-449e-b8f7-c4eb8df50838
+		sourceColumn: EffectiveDtMonth
+
+	column EffectiveDtQuarter
+		dataType: dateTime
+		lineageTag: e93b691d-12a7-4fe0-a415-8f9f7693ecc7
+		sourceColumn: EffectiveDtQuarter
+
+	column EffectiveDtYear
+		dataType: dateTime
+		lineageTag: 610d8a85-6bdf-40bd-8f9c-54fee2dc97f4
+		sourceColumn: EffectiveDtYear
+
+	column HoldingsMarketValueMonth
+		dataType: decimal
+		lineageTag: 5b32b34f-4710-403b-bf90-191d62b4bd8c
+		sourceColumn: HoldingsMarketValueMonth
+
+	column HoldingsMarketValueQuarter
+		dataType: decimal
+		lineageTag: 3bef2132-e40c-4de4-bc61-18283afcb695
+		sourceColumn: HoldingsMarketValueQuarter
+
+	column HoldingsMarketValueYear
+		dataType: decimal
+		lineageTag: cfdc1b51-7a68-41a8-93d1-47ecf3e32f05
+		sourceColumn: HoldingsMarketValueYear
+
+	column MarketValueReturnMonth
+		dataType: decimal
+		lineageTag: a61dc3d0-0574-4263-8929-2675159995cf
+		sourceColumn: MarketValueReturnMonth
+
+	column MarketValueReturnQuarter
+		dataType: decimal
+		lineageTag: bf9898e2-0f56-40eb-b228-ac022054e2dc
+		sourceColumn: MarketValueReturnQuarter
+
+	column MarketValueReturnYear
+		dataType: decimal
+		lineageTag: 701e0e48-a454-45c9-b5c5-3883b3ab878e
+		sourceColumn: MarketValueReturnYear
+
+	partition RptPerformanceAttribution-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="RptPerformanceAttribution"]}[Data]
+				in
+				    Nav
+

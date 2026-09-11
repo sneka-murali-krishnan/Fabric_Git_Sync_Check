@@ -1,0 +1,17 @@
+table FactTransactExt
+	lineageTag: e4fa3ad8-3e71-494d-8ae2-dd7f06f95dbc
+
+	column TransactKey
+		dataType: int64
+		lineageTag: e16fef4d-fc1f-4a91-900b-fe44a536c8a2
+		sourceColumn: TransactKey
+
+	partition FactTransactExt-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="FactTransactExt"]}[Data]
+				in
+				    Nav
+

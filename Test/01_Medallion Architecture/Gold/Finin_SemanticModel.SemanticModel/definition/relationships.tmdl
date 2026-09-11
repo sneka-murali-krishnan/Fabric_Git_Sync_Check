@@ -1,0 +1,270 @@
+relationship ab17a553-bc85-4b7f-966e-08045d6faebb
+	fromColumn: RptPFBMSecurity.PFBMCode
+	toColumn: RptPortfolioBenchmark.PFBMCode
+
+relationship cc855b2d-e124-4320-a08b-8bacc75f11d8
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: RptPFBMSecurity.SecurityKey
+	toColumn: RptSecurityAnalyticsUnpivot.SecurityKey
+
+relationship 54037a77-ad68-4957-829b-fa9ccede4d96
+	fromColumn: RptPosAnalytics.LinkAssetClassKey
+	toColumn: DimLinkAssetClass.LinkAssetClassKey
+
+relationship 8a835de3-e3ba-45ee-9152-e471d069ad27
+	fromColumn: RptPosAnalytics.PFBMCode
+	toColumn: RptPortfolioBenchmark.PFBMCode
+
+relationship 3d13477c-aefc-4f58-84da-9928da93d0dd
+	toCardinality: many
+	fromColumn: RptPosAnalytics.SecurityKey
+	toColumn: RptSecurityAnalytics.SecurityKey
+
+relationship d1e9d681-3f71-4cfd-b5cf-02065fccf199
+	crossFilteringBehavior: bothDirections
+	fromColumn: RptPosAnalytics.LinkSecurityTypeKey
+	toColumn: DimLinkSecurityType.LinkSecurityTypeKey
+
+relationship 9e922516-7ea7-4ed4-82b1-69408722e8d9
+	isActive: false
+	fromColumn: RptSecurityAnalytics.LinkAssetClassKey
+	toColumn: DimLinkAssetClass.LinkAssetClassKey
+
+relationship 716cab0c-232e-4e9b-b052-170345c4ca1d
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: RptSecurityAnalytics.SecurityKey
+	toColumn: FactTransact.SecurityKey
+
+relationship 9844dc64-89d3-4b08-8960-2c14c57c0c32
+	isActive: false
+	fromColumn: RptSecurityAnalytics.LinkSecurityTypeKey
+	toColumn: DimLinkSecurityType.LinkSecurityTypeKey
+
+relationship 3c074159-6ac4-46ea-861a-16a961ae97c4
+	isActive: false
+	fromColumn: RptSecurityAnalyticsUnpivot.LinkAssetClassKey
+	toColumn: DimLinkAssetClass.LinkAssetClassKey
+
+relationship b8732653-8980-4154-9434-249cae37e6cd
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: RptSecurityAnalyticsUnpivot.SecurityKey
+	toColumn: RptSecurityAnalytics.SecurityKey
+
+relationship 431bc60a-c114-4f8a-9be4-664e3f11ce28
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: RptSecurityAnalyticsUnpivot.SecurityKey
+	toColumn: RptPosAnalytics.SecurityKey
+
+relationship e2937d75-fc75-4f6a-913c-c4977e33fd84
+	isActive: false
+	fromColumn: RptSecurityAnalyticsUnpivot.LinkSecurityTypeKey
+	toColumn: DimLinkSecurityType.LinkSecurityTypeKey
+
+relationship 1a29b769-8290-4f96-8b63-f70069342e30
+	fromColumn: RptSecurityAnalytics.EffectiveDt
+	toColumn: DimDate.Date
+
+relationship ce35fb81-538d-4828-932a-2354937e3cdf
+	isActive: false
+	fromColumn: RptPFBMSecurity.AsOfDate
+	toColumn: DimDate.Date
+
+relationship 87cdce6a-0d24-469b-940e-92043777c62e
+	fromColumn: RptPFBMSecurity.PFBMCode
+	toColumn: RptPortfolioBenchmarkVariance.PFBMCode
+
+relationship 4e65a04f-34c8-476a-aadd-e8eb74bd86b6
+	fromColumn: RptPosAnalyticsData.LinkAssetClassKey
+	toColumn: DimLinkAssetClass.LinkAssetClassKey
+
+relationship ae67ba88-d5bf-4c4e-91ec-c36d075588d1
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromColumn: RptPosAnalyticsData.LinkSecurityTypeKey
+	toColumn: DimLinkSecurityType.LinkSecurityTypeKey
+
+relationship 6b247e61-1527-4333-a6aa-8eb4642db2bb
+	isActive: false
+	fromColumn: RptPortfolioBenchmarkVariance.PFBMCode
+	toColumn: RptPortfolioBenchmark.PFBMCode
+
+relationship d0ec511a-a412-4c29-8f6a-55202b3e53d5
+	crossFilteringBehavior: bothDirections
+	fromColumn: FactTransact.PortfolioKey
+	toColumn: DimPortfolio.PortfolioKey
+
+relationship 15a44419-eefb-4364-ac85-de6ab06b5676
+	fromColumn: DimAggregationMetric.MetricCode
+	toColumn: RptSecurityAnalyticsUnpivot.Metric
+
+relationship 760653d9-dd03-4ef7-bcd4-d490c1015c04
+	fromColumn: DimAggregationMetric.AggregationMetricKey
+	toColumn: DimAggregationMetricExt.AggregationMetricKey
+
+relationship ccdd3603-af61-438d-99e8-7562beb64a72
+	fromColumn: DimBenchmark.BenchmarkKey
+	toColumn: DimBenchmarkExt.BenchmarkKey
+
+relationship ada5f3b3-ef8a-4332-bb1a-f851c65b61b2
+	fromColumn: DimBroker.BrokerKey
+	toColumn: DimBrokerExt.BrokerKey
+
+relationship c37cc7f6-2954-46eb-ba3e-02d437c7151f
+	fromColumn: DimClient.ClientKey
+	toColumn: DimClientExt.ClientKey
+
+relationship 892c79f8-04b5-40e4-8be9-17cc1a52e9c7
+	fromColumn: DimCountry.CountryKey
+	toColumn: DimCountryExt.CountryKey
+
+relationship e934f892-5fa3-403c-8454-cedfd99542e6
+	fromColumn: DimCurrency.CurrencyKey
+	toColumn: DimCurrencyExt.CurrencyKey
+
+relationship 7c753610-7263-4f4e-865a-396132f4c619
+	fromColumn: DimCustodian.CustodianKey
+	toColumn: DimCustodianExt.CustodianKey
+
+relationship 21e62057-fd3c-4b4e-8ae1-8ad1d6209632
+	fromColumn: DimGics.GicsKey
+	toColumn: DimGicsExt.GicsKey
+
+relationship 5eed461c-a84b-4777-8117-5d14ee416363
+	fromColumn: DimIndexSecurity.IndexSecurityKey
+	toColumn: DimIndexSecurityExt.IndexSecurityKey
+
+relationship 3070424e-8cef-46f3-a64c-a769a3e51f2e
+	fromColumn: DimLinkAssetClass.LinkAssetClassKey
+	toColumn: DimLinkAssetClassExt.LinkAssetClassKey
+
+relationship 8593d242-9edb-4c4d-bb3b-6ce29540f7db
+	fromColumn: DimLinkSecurityType.LinkSecurityTypeKey
+	toColumn: DimLinkSecurityTypeExt.LinkSecurityTypeKey
+
+relationship 32dae16d-4388-4a7b-9603-3088feee1726
+	fromColumn: DimPortfolio.PortfolioKey
+	toColumn: DimPortfolioExt.PortfolioKey
+
+relationship f7aff98d-1d5d-411a-81ee-8e399791f464
+	fromColumn: DimSecurity.SecurityKey
+	toColumn: DimSecurityExt.SecurityKey
+
+relationship 527fc920-ca47-429f-bfa5-3392c4176510
+	fromColumn: DimSecurityIdentifier.SecurityKey
+	toColumn: DimSecurityIdentifierExt.SecurityKey
+
+relationship 2911528c-17bb-46c1-945b-686b96d7c470
+	fromColumn: DimSourceSystem.SourceSystemKey
+	toColumn: DimSourceSystemExt.SourceSystemKey
+
+relationship 01fa10eb-1549-4063-88b7-f57a0725d487
+	fromColumn: FactDollarAnalytics.AnalyticsKey
+	toColumn: FactDollarAnalyticsExt.AnalyticsKey
+
+relationship 9e41408a-1a10-407a-ab35-2622451db73c
+	fromColumn: FactRiskAnalytics.AnalyticsKey
+	toColumn: FactRiskAnalyticsExt.AnalyticsKey
+
+relationship c7cdcb01-a40d-4147-8c86-47e284fe6de4
+	fromColumn: FactTransact.TransactKey
+	toColumn: FactTransactExt.TransactKey
+
+relationship 99395f8d-f791-488a-acd8-a6e82db01aad
+	toCardinality: many
+	fromColumn: FactTransact.PortfolioKey
+	toColumn: RptPortfolioBenchmarkVariance.PortfolioKey
+
+relationship 6f8a9b65-fbd9-465d-a2d9-08c0bead7775
+	isActive: false
+	toCardinality: many
+	fromColumn: RptPortfolioBenchmark.PortfolioKey
+	toColumn: FactTransact.PortfolioKey
+
+relationship 3814233c-2986-49a1-8270-9c3976bf9f37
+	isActive: false
+	toCardinality: many
+	fromColumn: RptPosAnalytics.Metric
+	toColumn: DimAggregationMetric.MetricCode
+
+relationship 207b5511-56f2-40ca-b91b-58dcf2f9e5ae
+	crossFilteringBehavior: bothDirections
+	fromColumn: DimSecurityIdentifier.SecurityKey
+	toColumn: DimSecurity.SecurityKey
+
+relationship 57063965-3675-4ad2-8169-a5ab65389b07
+	isActive: false
+	fromColumn: RptPosAnalytics.EffectiveDt
+	toColumn: RptSecurityAnalytics.EffectiveDt
+
+relationship 352e6be9-2548-4893-9c92-ac72c4a97516
+	crossFilteringBehavior: bothDirections
+	fromColumn: FactAccountPortfolio.PlanKey
+	toColumn: DimPlan.PlanKey
+
+relationship 2265ced1-7ac3-4d2d-a552-f2f958939359
+	fromColumn: FactAccountPortfolio.PortfolioKey
+	toColumn: DimPortfolio.PortfolioKey
+
+relationship 0c01b140-b8c7-4671-b47e-76c0f2504d9e
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	toCardinality: many
+	fromColumn: RptPortfolioBenchmarkVariance.PortfolioKey
+	toColumn: FactAccountPortfolio.PortfolioKey
+
+relationship 5a4ee0b1-1626-4aa4-ba0a-54749efaff11
+	crossFilteringBehavior: bothDirections
+	fromColumn: DimAccount.ClientKey
+	toColumn: DimClient.ClientKey
+
+relationship 3d7a1257-affc-45f0-a476-da18fa1f5635
+	fromColumn: FactAccountPortfolio.AccountKey
+	toColumn: DimAccount.AccountKey
+
+relationship 5aaea8f6-5fa6-4d0c-81b0-939754e5bbc0
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: DimSecurity.IssuerKey
+	toColumn: DimIssuer.IssuerKey
+
+relationship 068603fe-f79a-4e1b-80ff-b48021cc9d25
+	crossFilteringBehavior: bothDirections
+	fromColumn: RptDatePeriod.Date
+	toColumn: DimDate.Date
+
+relationship 8404f22e-3162-4afd-b3a2-8951c4a8c385
+	crossFilteringBehavior: bothDirections
+	fromColumn: FactDollarAnalytics.DateKey
+	toColumn: DimDate.DateKey
+
+relationship 4e1af0fa-063c-4f29-86c2-7ace0b60e927
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromColumn: FactTransact.DateKey
+	toColumn: DimDate.DateKey
+
+relationship c4cc8795-01f1-4215-9cf2-0bcedb95460c
+	crossFilteringBehavior: bothDirections
+	fromColumn: FactPosition.DateKey
+	toColumn: DimDate.DateKey
+
+relationship 14eb1275-ea7a-40e6-afc0-74e5b78159e9
+	crossFilteringBehavior: bothDirections
+	fromColumn: RptEndogenousLiquidity.Date
+	toColumn: DimDate.Date
+
+relationship 32678c16-9005-4d4d-9d2b-55601c9eb9a0
+	isActive: false
+	fromColumn: RptPosAnalytics.FormatedEffectiveDt
+	toColumn: DimDate.Date
+
+relationship 9cbd1067-fef1-46c5-962d-fc8b39ad99d0
+	fromColumn: DimStrategy.StrategyKey
+	toColumn: DimStrategyExt.StrategyKey
+

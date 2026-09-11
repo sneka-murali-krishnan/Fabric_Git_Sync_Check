@@ -1,0 +1,36 @@
+CREATE TABLE [ims].[FactRiskAnalytics] (
+    [AnalyticsKey]        BIGINT          NULL,
+    [SecurityKey]         BIGINT          NULL,
+    [LinkAssetClassKey]   BIGINT          NULL,
+    [LinkSecurityTypeKey] BIGINT          NULL,
+    [CurrencyKey]         BIGINT          NULL,
+    [CountryKey]          BIGINT          NULL,
+    [SourceSystemKey]     BIGINT          NULL,
+    [DateKey]             BIGINT          NULL,
+    [EffectiveDt]         DATE            NULL,
+    [EquityVolatility]    DECIMAL (18, 4) NULL,
+    [PERatio]             DECIMAL (18, 4) NULL,
+    [KeyRateDur6M]        DECIMAL (18, 4) NULL,
+    [KeyRateDur1Yr]       DECIMAL (18, 4) NULL,
+    [KeyRateDur2y]        DECIMAL (18, 4) NULL,
+    [KeyRateDur3y]        DECIMAL (18, 4) NULL,
+    [KeyRateDur5y]        DECIMAL (18, 4) NULL,
+    [KeyRateDur7y]        DECIMAL (18, 4) NULL,
+    [KeyRateDur10y]       DECIMAL (18, 4) NULL,
+    [Factor]              DECIMAL (18, 4) NULL,
+    [WAC]                 DECIMAL (18, 4) NULL,
+    [WAM]                 DECIMAL (18, 4) NULL,
+    [ModifiedDur]         DECIMAL (18, 4) NULL,
+    [SpreadDur]           DECIMAL (18, 4) NULL,
+    [OAS]                 DECIMAL (18, 4) NULL,
+    [Convexity]           DECIMAL (18, 4) NULL,
+    [AdjustedDur]         DECIMAL (18, 4) NULL,
+    [YTM]                 DECIMAL (18, 4) NULL,
+    [CreatedBy]           VARCHAR (8000)  NULL,
+    [CreatedDate]         DATETIME2 (6)   NULL,
+    [UpdatedBy]           VARCHAR (8000)  NULL,
+    [UpdatedDate]         DATETIME2 (6)   NULL
+);
+
+
+GO

@@ -1,0 +1,17 @@
+table FactDollarAnalyticsExt
+	lineageTag: 57a3c032-379e-4887-8cc0-0743de39bafe
+
+	column AnalyticsKey
+		dataType: int64
+		lineageTag: 85338e8a-28b4-4a04-820a-faa01defc510
+		sourceColumn: AnalyticsKey
+
+	partition FactDollarAnalyticsExt-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="FactDollarAnalyticsExt"]}[Data]
+				in
+				    Nav
+

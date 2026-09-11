@@ -1,0 +1,37 @@
+table RptEndogenousLiquidity
+	lineageTag: 4aa19af2-d88a-426e-9515-09fe182c297f
+
+	column PortfolioCode
+		dataType: string
+		lineageTag: 57d09a02-89db-4b7d-bb5e-2e226e39dc6f
+		sourceColumn: PortfolioCode
+
+	column ShortName
+		dataType: string
+		lineageTag: f9300833-6ca3-4247-a4f9-393edc0a25fb
+		sourceColumn: ShortName
+
+	column Date
+		dataType: dateTime
+		lineageTag: 7f55f12f-b6ff-4fa6-b2cd-5964945eeb93
+		sourceColumn: Date
+
+	column HoldingsMarketValue
+		dataType: decimal
+		lineageTag: 81b87cc2-63a6-4dfc-9022-d40044327426
+		sourceColumn: HoldingsMarketValue
+
+	column LiquidationAmount
+		dataType: decimal
+		lineageTag: 51ce5400-9829-42a6-98e6-14b064709abe
+		sourceColumn: LiquidationAmount
+
+	partition RptEndogenousLiquidity-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="RptEndogenousLiquidity"]}[Data]
+				in
+				    Nav
+

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "FininWork_06_PL_MailTrigger"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "3aadeb79-6071-a7a5-4393-e90f77d6140b"
+  }
+}

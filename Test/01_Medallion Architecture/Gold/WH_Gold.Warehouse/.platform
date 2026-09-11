@@ -1,0 +1,12 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Warehouse",
+    "displayName": "WH_Gold",
+    "description": "Business-ready analytics"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "b0c747bd-460c-a977-47ea-2eea2f561289"
+  }
+}

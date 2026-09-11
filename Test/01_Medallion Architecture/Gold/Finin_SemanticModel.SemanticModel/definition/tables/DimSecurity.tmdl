@@ -1,0 +1,147 @@
+table DimSecurity
+	lineageTag: 4f450313-6317-4e57-958d-7d9d9dc27a76
+
+	column SecurityKey
+		dataType: int64
+		lineageTag: 8ebc9a04-76a1-4c83-8b10-fbe5afe4c42e
+		sourceColumn: SecurityKey
+
+	column LinkAssetClassKey
+		dataType: int64
+		lineageTag: 677fcb62-fb30-400c-b33b-b9dfc7c14b06
+		sourceColumn: LinkAssetClassKey
+
+	column LinkSecurityTypeKey
+		dataType: int64
+		lineageTag: 8575a345-caef-4650-abf7-cfbb19782a39
+		sourceColumn: LinkSecurityTypeKey
+
+	column FIGI
+		dataType: string
+		lineageTag: 700dd29c-0a3b-4744-a80e-799d7c4d437b
+		sourceColumn: FIGI
+
+	column CurrencyKey
+		dataType: int64
+		lineageTag: 4de5f617-1155-40e2-9cee-f83e037d68cf
+		sourceColumn: CurrencyKey
+
+	column CountryKey
+		dataType: int64
+		lineageTag: 7c3c341f-6e81-451b-a473-87617a5295e5
+		sourceColumn: CountryKey
+
+	column ShortName
+		dataType: string
+		lineageTag: 64ff1fbd-9f32-4378-80a4-7bdfc9f6897a
+		sourceColumn: ShortName
+
+	column LongName
+		dataType: string
+		lineageTag: 4494b225-9fbc-4932-a137-a6b1823ac4a1
+		sourceColumn: LongName
+
+	column SecurityDescription
+		dataType: string
+		lineageTag: 59b98825-c0e7-4fcf-80cd-7f0f4015c888
+		sourceColumn: SecurityDescription
+
+	column SourceSystemKey
+		dataType: int64
+		lineageTag: 39e34599-a871-435a-951a-a9276128aa1a
+		sourceColumn: SourceSystemKey
+
+	column IndustryGICS
+		dataType: string
+		lineageTag: a973e918-8ee2-44d4-aa29-76dcfccb8348
+		sourceColumn: IndustryGICS
+
+	column SubindustryGICS
+		dataType: string
+		lineageTag: 98e3b40e-069c-44eb-8698-b8134bf236dc
+		sourceColumn: SubindustryGICS
+
+	column SectorGICS
+		dataType: string
+		lineageTag: d127d59d-f85b-45d9-8db8-4071341606a1
+		sourceColumn: SectorGICS
+
+	column IndustryGroupGICS
+		dataType: string
+		lineageTag: bf4a886d-5e56-4dd4-868b-08992f182866
+		sourceColumn: IndustryGroupGICS
+
+	column SubSectorGICS
+		dataType: string
+		lineageTag: f0ecada2-84b3-4de5-9fbb-e5e7c7d80a87
+		sourceColumn: SubSectorGICS
+
+	column LatestEffectiveDt
+		dataType: dateTime
+		lineageTag: 1604c16e-01f4-4471-83b5-de4f1980b613
+		sourceColumn: LatestEffectiveDt
+
+	column OrginationDt
+		dataType: dateTime
+		lineageTag: 153c7caa-2fdf-4c8d-8d60-3f99ecbf9338
+		sourceColumn: OrginationDt
+
+	column Coupon
+		dataType: decimal
+		lineageTag: 8f5013b5-b7fd-4e06-b793-81ffe4a7f562
+		sourceColumn: Coupon
+
+	column ContractSize
+		dataType: string
+		lineageTag: ef9babfb-aa70-4468-ac6b-75fe826c6931
+		sourceColumn: ContractSize
+
+	column TotalShares
+		dataType: decimal
+		lineageTag: a6003250-8701-4726-9c3a-3da1a8133a4e
+		sourceColumn: TotalShares
+
+	column MaturityDate
+		dataType: dateTime
+		lineageTag: 1fa99acd-0a6f-4b81-8acc-baca6f22e9c6
+		sourceColumn: MaturityDate
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 102ae989-ef71-4c8d-8cfd-9958f7e343f7
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: 9d5cf16c-f554-4d07-8002-963fadbd43e0
+		sourceColumn: CreatedDate
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: 242ccd67-8d3a-426d-9253-f117df958866
+		sourceColumn: UpdatedBy
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: 1ff013b7-92a4-468a-aaf0-22a68383bb30
+		sourceColumn: UpdatedDate
+
+	column ProductType
+		dataType: string
+		lineageTag: 0027eaa6-74fb-4b30-b3a6-6071f27a1418
+		sourceColumn: ProductType
+
+	column IssuerKey
+		dataType: int64
+		lineageTag: b85ba135-33b9-4a8f-865a-ea1e9f66018f
+		sourceColumn: IssuerKey
+
+	partition DimSecurity-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimSecurity"]}[Data]
+				in
+				    Nav
+

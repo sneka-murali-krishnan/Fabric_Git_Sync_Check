@@ -1,0 +1,62 @@
+table DimSourceSystem
+	lineageTag: e2bf7179-ab20-44f9-96f2-54ee81e66a19
+
+	column SourceSystemKey
+		dataType: int64
+		lineageTag: 603109ff-5e2d-4f2e-aebe-ed82a3b7434d
+		sourceColumn: SourceSystemKey
+
+	column SourceSystemId
+		dataType: string
+		lineageTag: 648243c0-8812-4142-aa75-0c39812dfe2a
+		sourceColumn: SourceSystemId
+
+	column Code
+		dataType: string
+		lineageTag: 40730b74-da84-47b3-a857-619693e2baf0
+		sourceColumn: Code
+
+	column Name
+		dataType: string
+		lineageTag: 5d73979e-1fae-4f69-9fe7-d9a309b398d0
+		sourceColumn: Name
+
+	column SourceSystemTypeCode
+		dataType: string
+		lineageTag: c92b49ae-d5e0-4297-b7f2-32649a2611c5
+		sourceColumn: SourceSystemTypeCode
+
+	column SourceSystemTypeName
+		dataType: string
+		lineageTag: ce882a64-666d-467d-a0a2-1e6a3cf33757
+		sourceColumn: SourceSystemTypeName
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 565a7f8c-9dcf-4080-93af-b9ae1037d209
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: e61a756b-a97b-4b0b-8edf-df6b2dc27118
+		sourceColumn: CreatedDate
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: 9dc0243e-ec7a-4f66-94fc-3d6bc3b55c25
+		sourceColumn: UpdatedBy
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: 5d3db794-f14f-40c8-a010-cd202d10518c
+		sourceColumn: UpdatedDate
+
+	partition DimSourceSystem-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimSourceSystem"]}[Data]
+				in
+				    Nav
+

@@ -1,0 +1,52 @@
+table DimExternalSystem
+	lineageTag: cd55d866-4404-48a6-b06f-7657038a7cdd
+
+	column ExternalSystemKey
+		dataType: int64
+		lineageTag: 6e79d642-bbfc-4f69-aaac-caf746458d4a
+		sourceColumn: ExternalSystemKey
+
+	column ExternalSystemId
+		dataType: string
+		lineageTag: cff971f1-a11c-46f2-89a3-bdc78ab40525
+		sourceColumn: ExternalSystemId
+
+	column Code
+		dataType: string
+		lineageTag: d3364b41-33d9-4484-8d22-bf74c9b5bba3
+		sourceColumn: Code
+
+	column Name
+		dataType: string
+		lineageTag: b6c70ee6-6d09-4c61-bbb9-9777a9788eaa
+		sourceColumn: Name
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 91a480da-a0b0-46a8-bd1b-936491163693
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: 3437eacd-62bb-4974-9a2d-9527ee5cb0b0
+		sourceColumn: CreatedDate
+
+	column ModifiedBy
+		dataType: string
+		lineageTag: b191e5c1-8d01-4da1-b763-f3b86e742a20
+		sourceColumn: ModifiedBy
+
+	column ModifiedDate
+		dataType: dateTime
+		lineageTag: b2edfa9c-5518-48f9-b4c8-f609fe05860c
+		sourceColumn: ModifiedDate
+
+	partition DimExternalSystem-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimExternalSystem"]}[Data]
+				in
+				    Nav
+

@@ -1,0 +1,37 @@
+CREATE TABLE [dbo].[DimDate] (
+    [DateKey]           INT            NULL,
+    [Date]              DATETIME2 (6)  NULL,
+    [DateBKey]          VARCHAR (8000) NULL,
+    [DayOfMonth]        VARCHAR (8000) NULL,
+    [DaySuffix]         VARCHAR (8000) NULL,
+    [DayName]           VARCHAR (8000) NULL,
+    [DayOfWeek]         VARCHAR (8000) NULL,
+    [DayOfWeekInMonth]  VARCHAR (8000) NULL,
+    [DayOfWeekInYear]   VARCHAR (8000) NULL,
+    [DayOfQuarter]      VARCHAR (8000) NULL,
+    [DayOfYear]         VARCHAR (8000) NULL,
+    [WeekOfMonth]       VARCHAR (8000) NULL,
+    [WeekOfQuarter]     VARCHAR (8000) NULL,
+    [WeekOfYear]        VARCHAR (8000) NULL,
+    [Month]             VARCHAR (8000) NULL,
+    [MonthName]         VARCHAR (8000) NULL,
+    [MonthOfQuarter]    VARCHAR (8000) NULL,
+    [Quarter]           VARCHAR (8000) NULL,
+    [QuarterName]       VARCHAR (8000) NULL,
+    [Year]              VARCHAR (8000) NULL,
+    [YearName]          VARCHAR (8000) NULL,
+    [MonthYear]         VARCHAR (8000) NULL,
+    [MMYYYY]            VARCHAR (8000) NULL,
+    [FirstDayOfMonth]   DATE           NULL,
+    [LastDayOfMonth]    DATE           NULL,
+    [FirstDayOfQuarter] DATE           NULL,
+    [LastDayOfQuarter]  DATE           NULL,
+    [FirstDayOfYear]    DATE           NULL,
+    [LastDayOfYear]     DATE           NULL,
+    [IsHolidayUSA]      BIT            NULL,
+    [IsWeekday]         BIT            NULL,
+    [HolidayUSA]        VARCHAR (8000) NULL
+);
+
+
+GO

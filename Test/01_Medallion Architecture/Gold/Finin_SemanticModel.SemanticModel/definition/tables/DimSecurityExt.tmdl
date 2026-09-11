@@ -1,0 +1,17 @@
+table DimSecurityExt
+	lineageTag: 8a55ea39-e265-4bdd-adda-e26b6e94fdd9
+
+	column SecurityKey
+		dataType: int64
+		lineageTag: 29a82b51-e809-4b26-bbbe-360befccec3e
+		sourceColumn: SecurityKey
+
+	partition DimSecurityExt-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimSecurityExt"]}[Data]
+				in
+				    Nav
+

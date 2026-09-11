@@ -1,0 +1,17 @@
+table DimCurrencyExt
+	lineageTag: f9361806-3a3c-4ab2-9609-e4cfae81710f
+
+	column CurrencyKey
+		dataType: int64
+		lineageTag: 30c679c2-2d17-48ff-95dd-6c0e6c731bc8
+		sourceColumn: CurrencyKey
+
+	partition DimCurrencyExt-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimCurrencyExt"]}[Data]
+				in
+				    Nav
+

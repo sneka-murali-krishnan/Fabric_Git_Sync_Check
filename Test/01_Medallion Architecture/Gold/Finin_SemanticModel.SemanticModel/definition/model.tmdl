@@ -1,0 +1,75 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["AllMeasures", "DimAccount", "DimAggregationMetric", "DimAggregationMetricExt", "DimBenchmark", "DimBenchmarkExt", "DimBroker", "DimBrokerExt", "DimClient", "DimClientExt", "DimCountry", "DimCountryExt", "DimCurrency", "DimCurrencyExt", "DimCustodian", "DimCustodianExt", "DimDate", "DimExternalSystem", "DimGics", "DimGicsExt", "DimIndexSecurity", "DimIndexSecurityExt", "DimIssuer", "DimLinkAssetClass", "DimLinkAssetClassExt", "DimLinkSecurityType", "DimLinkSecurityTypeExt", "DimPlan", "DimPortfolio", "DimPortfolioExt", "DimSecurity", "DimSecurityExt", "DimSecurityIdentifier", "DimSecurityIdentifierExt", "DimSourceSystem", "DimSourceSystemExt", "DimStrategy", "DimStrategyExt", "DimThresholdPeriod", "FactAccountPortfolio", "FactDollarAnalytics", "FactDollarAnalyticsExt", "FactPosition", "FactPositionExt", "FactRiskAnalytics", "FactRiskAnalyticsExt", "FactTransact", "FactTransactExt", "RptDatePeriod", "RptEndogenousLiquidity", "RptPerformanceAttribution", "RptPFBMSecurity", "RptPortfolioAnalytics", "RptPortfolioBenchmark", "RptPortfolioBenchmarkVariance", "RptPortfolioPeerComparison", "RptPortfolioSummary", "RptPosAnalytics", "RptPosAnalyticsData", "RptSecurityAnalytics", "RptSecurityAnalyticsUnpivot", "RptThresholdPeriod"]
+
+annotation PBI_ProTooling = ["WebModelingEdit"]
+
+ref table AllMeasures
+ref table DimAccount
+ref table DimAggregationMetric
+ref table DimAggregationMetricExt
+ref table DimBenchmark
+ref table DimBenchmarkExt
+ref table DimBroker
+ref table DimBrokerExt
+ref table DimClient
+ref table DimClientExt
+ref table DimCountry
+ref table DimCountryExt
+ref table DimCurrency
+ref table DimCurrencyExt
+ref table DimCustodian
+ref table DimCustodianExt
+ref table DimDate
+ref table DimExternalSystem
+ref table DimGics
+ref table DimGicsExt
+ref table DimIndexSecurity
+ref table DimIndexSecurityExt
+ref table DimIssuer
+ref table DimLinkAssetClass
+ref table DimLinkAssetClassExt
+ref table DimLinkSecurityType
+ref table DimLinkSecurityTypeExt
+ref table DimPlan
+ref table DimPortfolio
+ref table DimPortfolioExt
+ref table DimSecurity
+ref table DimSecurityExt
+ref table DimSecurityIdentifier
+ref table DimSecurityIdentifierExt
+ref table DimSourceSystem
+ref table DimSourceSystemExt
+ref table DimStrategy
+ref table DimStrategyExt
+ref table DimThresholdPeriod
+ref table FactAccountPortfolio
+ref table FactDollarAnalytics
+ref table FactDollarAnalyticsExt
+ref table FactPosition
+ref table FactPositionExt
+ref table FactRiskAnalytics
+ref table FactRiskAnalyticsExt
+ref table FactTransact
+ref table FactTransactExt
+ref table RptDatePeriod
+ref table RptEndogenousLiquidity
+ref table RptPerformanceAttribution
+ref table RptPFBMSecurity
+ref table RptPortfolioAnalytics
+ref table RptPortfolioBenchmark
+ref table RptPortfolioBenchmarkVariance
+ref table RptPortfolioPeerComparison
+ref table RptPortfolioSummary
+ref table RptPosAnalytics
+ref table RptPosAnalyticsData
+ref table RptSecurityAnalytics
+ref table RptSecurityAnalyticsUnpivot
+ref table RptThresholdPeriod
+

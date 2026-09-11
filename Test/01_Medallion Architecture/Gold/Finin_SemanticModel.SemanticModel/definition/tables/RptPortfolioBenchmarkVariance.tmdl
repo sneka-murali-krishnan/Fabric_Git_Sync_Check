@@ -1,0 +1,148 @@
+table RptPortfolioBenchmarkVariance
+	lineageTag: a0285eec-47a3-4219-9ced-2c937686cfdb
+
+	column RptPortfolioVarianceKey
+		dataType: int64
+		lineageTag: bded2bb1-bb15-4a37-9cbc-8ef635b9d663
+		summarizeBy: count
+		sourceColumn: RptPortfolioVarianceKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column StrategyCode
+		dataType: string
+		lineageTag: ee2be45b-ebe9-45e0-bba9-38ca81f3dcad
+		summarizeBy: none
+		sourceColumn: StrategyCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column StrategyName
+		dataType: string
+		lineageTag: 03cfeec9-b9ee-4717-ad0a-5cb34e36fa10
+		summarizeBy: none
+		sourceColumn: StrategyName
+
+		annotation SummarizationSetBy = Automatic
+
+	column PortfolioKey
+		dataType: int64
+		lineageTag: 97a45e19-adbd-42cf-8f55-f1f634b73eca
+		summarizeBy: none
+		sourceColumn: PortfolioKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column PFBMCode
+		dataType: string
+		lineageTag: 5db644dc-4fd4-45f7-86e3-871dec60d72a
+		summarizeBy: none
+		sourceColumn: PFBMCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column PFBMType
+		dataType: string
+		lineageTag: ad2e16db-a257-4072-82c3-9bd682081655
+		summarizeBy: none
+		sourceColumn: PFBMType
+
+		annotation SummarizationSetBy = Automatic
+
+	column LinkedBenchmarkCode
+		dataType: string
+		lineageTag: 285a966e-452a-43bd-a5c7-5e06a03e4bd8
+		summarizeBy: none
+		sourceColumn: LinkedBenchmarkCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column VariancePFBMCode
+		dataType: string
+		lineageTag: 8d1c958c-1939-401d-9867-5cff972c202c
+		summarizeBy: none
+		sourceColumn: VariancePFBMCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column Type
+		dataType: string
+		lineageTag: 8e32dab7-6886-4b23-ab2e-128ccd821265
+		summarizeBy: none
+		sourceColumn: Type
+
+		annotation SummarizationSetBy = Automatic
+
+	column PFBMName
+		dataType: string
+		lineageTag: f2208af7-ba87-45c2-9ab4-4d99889f0a89
+		summarizeBy: none
+		sourceColumn: PFBMName
+
+		annotation SummarizationSetBy = Automatic
+
+	column IsActive
+		dataType: boolean
+		lineageTag: a4046093-cfd4-4ccd-8116-90918e853c88
+		summarizeBy: none
+		sourceColumn: IsActive
+
+		annotation SummarizationSetBy = Automatic
+
+	column Root
+		dataType: string
+		lineageTag: 1720a20f-6171-4de0-8c6e-acfef3611254
+		summarizeBy: none
+		sourceColumn: Root
+
+		annotation SummarizationSetBy = Automatic
+
+	column PFBMDisplayCode
+		dataType: string
+		lineageTag: 16cea917-d809-48d9-9a27-726508ae3cfa
+		summarizeBy: none
+		sourceColumn: PFBMDisplayCode
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 509ccadb-6d84-4369-b738-9bf7a8b6188f
+		summarizeBy: none
+		sourceColumn: CreatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: 956b5b0a-b992-4299-9335-2c6d67fde0ca
+		summarizeBy: none
+		sourceColumn: CreatedDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: 770ea882-e97f-404c-ac16-74f1ad3c5e7a
+		summarizeBy: none
+		sourceColumn: UpdatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: a8727caf-86be-42c8-a4a4-edac6b6bbde0
+		summarizeBy: none
+		sourceColumn: UpdatedDate
+
+		annotation SummarizationSetBy = Automatic
+
+	partition RptPortfolioBenchmarkVariance-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="RptPortfolioBenchmarkVariance"]}[Data]
+				in
+				    Nav
+

@@ -1,0 +1,62 @@
+table DimIndexSecurity
+	lineageTag: 0aef1b2c-b000-42b6-b284-894e0027c491
+
+	column IndexSecurityKey
+		dataType: int64
+		lineageTag: 100099d6-5b9b-4a99-a8c5-f13c820a0a48
+		sourceColumn: IndexSecurityKey
+
+	column AsofDate
+		dataType: dateTime
+		lineageTag: 32896fdf-810a-4e88-a521-125be0d2214a
+		sourceColumn: AsofDate
+
+	column Identifier
+		dataType: string
+		lineageTag: 9256506f-1dd3-4c92-807a-bb87c00ad5a3
+		sourceColumn: Identifier
+
+	column BenchmarkKey
+		dataType: int64
+		lineageTag: fa4f7dd4-76c7-4674-a0c6-4120dc234f61
+		sourceColumn: BenchmarkKey
+
+	column SecurityKey
+		dataType: int64
+		lineageTag: 0f7e2f7e-65e9-41ff-ad2b-7e6bb48e5ef4
+		sourceColumn: SecurityKey
+
+	column CurrentFace
+		dataType: int64
+		lineageTag: 3537fb3c-fd22-4008-96f0-5db892851f97
+		sourceColumn: CurrentFace
+
+	column CreatedBy
+		dataType: string
+		lineageTag: e1327d7a-88d3-49c9-bb5a-4d6e6cafdb52
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: 6ffa0935-0e5a-4514-a41a-c9be4678f6e3
+		sourceColumn: CreatedDate
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: 6f33a70b-58cc-477f-94f1-4b73cc879fd2
+		sourceColumn: UpdatedBy
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: e010a3e6-3f45-4600-9b5a-46cefdd05f36
+		sourceColumn: UpdatedDate
+
+	partition DimIndexSecurity-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimIndexSecurity"]}[Data]
+				in
+				    Nav
+

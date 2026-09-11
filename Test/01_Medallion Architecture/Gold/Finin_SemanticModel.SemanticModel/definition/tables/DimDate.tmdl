@@ -1,0 +1,172 @@
+table DimDate
+	lineageTag: 9e6faac7-c7ee-4686-b9a6-4f2aef5192ff
+
+	column DateKey
+		dataType: int64
+		lineageTag: 78ca9cf9-36f9-4f2f-96e9-5eb78e96585b
+		sourceColumn: DateKey
+
+	column Date
+		dataType: dateTime
+		lineageTag: c0b0f165-d058-4db8-b5ed-f85b7a56e885
+		sourceColumn: Date
+
+	column DateBKey
+		dataType: string
+		lineageTag: 507a59ea-6e5d-42d2-a3c9-5ef3add258cc
+		sourceColumn: DateBKey
+
+	column DayOfMonth
+		dataType: string
+		lineageTag: 5119bcba-15bf-49df-8e8e-4b27d60ac969
+		sourceColumn: DayOfMonth
+
+	column DaySuffix
+		dataType: string
+		lineageTag: 3c433398-9d2b-4cdc-8638-036117063b6e
+		sourceColumn: DaySuffix
+
+	column DayName
+		dataType: string
+		lineageTag: 47fc062f-c153-4871-a618-2664532e7358
+		sourceColumn: DayName
+
+	column DayOfWeek
+		dataType: string
+		lineageTag: 81d5e7cd-cd32-417a-8a0c-ad95a23bfe04
+		sourceColumn: DayOfWeek
+
+	column DayOfWeekInMonth
+		dataType: string
+		lineageTag: 9ef465f8-70b0-47bf-a430-f887cf4a85d0
+		sourceColumn: DayOfWeekInMonth
+
+	column DayOfWeekInYear
+		dataType: string
+		lineageTag: 18cade66-90e7-4de9-b19b-32032c1a9d2a
+		sourceColumn: DayOfWeekInYear
+
+	column DayOfQuarter
+		dataType: string
+		lineageTag: 87a9d6f1-097e-47ca-90fe-ff22c53b8908
+		sourceColumn: DayOfQuarter
+
+	column DayOfYear
+		dataType: string
+		lineageTag: 16775bc0-4a6b-4ecb-9f0a-7b3d96d02804
+		sourceColumn: DayOfYear
+
+	column WeekOfMonth
+		dataType: string
+		lineageTag: 64c451b0-f07f-4800-bb25-cf6758f4597a
+		sourceColumn: WeekOfMonth
+
+	column WeekOfQuarter
+		dataType: string
+		lineageTag: 9b87b2f8-f743-41b8-8103-7a12a703087d
+		sourceColumn: WeekOfQuarter
+
+	column WeekOfYear
+		dataType: string
+		lineageTag: 42c1d9d2-0079-47ef-947e-b6370fe23392
+		sourceColumn: WeekOfYear
+
+	column Month
+		dataType: string
+		lineageTag: 3e2a0ff4-1072-4151-b3d1-fb310defb10e
+		sourceColumn: Month
+
+	column MonthName
+		dataType: string
+		lineageTag: 08b6454f-ce67-4abb-be49-faa1cb9fb73a
+		sourceColumn: MonthName
+
+	column MonthOfQuarter
+		dataType: string
+		lineageTag: cdb3ba04-61dc-4b69-9050-588ba05ed35c
+		sourceColumn: MonthOfQuarter
+
+	column Quarter
+		dataType: string
+		lineageTag: 234460a2-0080-4b8c-b608-e0e031b717fb
+		sourceColumn: Quarter
+
+	column QuarterName
+		dataType: string
+		lineageTag: 64337a8d-9023-4744-8767-482901cdce5b
+		sourceColumn: QuarterName
+
+	column Year
+		dataType: string
+		lineageTag: e655fc8e-38bc-48d1-b9a3-fafe1fbdab6f
+		sourceColumn: Year
+
+	column YearName
+		dataType: string
+		lineageTag: 0085c32d-560c-428b-8a1b-a99bb6adf76d
+		sourceColumn: YearName
+
+	column MonthYear
+		dataType: string
+		lineageTag: 413a01d7-c120-4d74-84a5-3ff50f574787
+		sourceColumn: MonthYear
+
+	column MMYYYY
+		dataType: string
+		lineageTag: 97ef63c3-dbe4-4977-98b1-64ad87620483
+		sourceColumn: MMYYYY
+
+	column FirstDayOfMonth
+		dataType: dateTime
+		lineageTag: 516f4d00-e253-446b-a195-e7df84d4f360
+		sourceColumn: FirstDayOfMonth
+
+	column LastDayOfMonth
+		dataType: dateTime
+		lineageTag: 32faf87c-6bf2-4dbc-872d-b8834c4cc0b1
+		sourceColumn: LastDayOfMonth
+
+	column FirstDayOfQuarter
+		dataType: dateTime
+		lineageTag: c271a265-48c6-4854-8b0d-670c6fee6c2d
+		sourceColumn: FirstDayOfQuarter
+
+	column LastDayOfQuarter
+		dataType: dateTime
+		lineageTag: aca40b0c-20b0-4dcd-9a62-4d549037f711
+		sourceColumn: LastDayOfQuarter
+
+	column FirstDayOfYear
+		dataType: dateTime
+		lineageTag: c373f71c-4d1f-486b-b645-1455c6d4776d
+		sourceColumn: FirstDayOfYear
+
+	column LastDayOfYear
+		dataType: dateTime
+		lineageTag: d681be69-758d-44b4-8f06-fdb9f5297744
+		sourceColumn: LastDayOfYear
+
+	column IsHolidayUSA
+		dataType: boolean
+		lineageTag: 52bf4f36-c30a-4576-adf5-3152f40a7f6d
+		sourceColumn: IsHolidayUSA
+
+	column IsWeekday
+		dataType: boolean
+		lineageTag: 7fd40c50-df45-42d1-90d2-6afe0a669d54
+		sourceColumn: IsWeekday
+
+	column HolidayUSA
+		dataType: string
+		lineageTag: b802bbbc-bb70-4203-9974-97296fe94fd0
+		sourceColumn: HolidayUSA
+
+	partition DimDate-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="dbo",Item="DimDate"]}[Data]
+				in
+				    Nav
+

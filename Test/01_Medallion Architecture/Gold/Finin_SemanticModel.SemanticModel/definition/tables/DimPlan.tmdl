@@ -1,0 +1,77 @@
+table DimPlan
+	lineageTag: b04cf8aa-bc5e-4a64-9578-62880d22837b
+
+	column PlanKey
+		dataType: int64
+		lineageTag: bd362a6f-5b52-43b1-b93d-6bb000e1e0c9
+		sourceColumn: PlanKey
+
+	column PlanId
+		dataType: string
+		lineageTag: 5c63596b-a29b-44f8-803e-39cf229a39fb
+		sourceColumn: PlanId
+
+	column Code
+		dataType: string
+		lineageTag: abd2a96f-e7c3-4117-ad3c-e639aed21a40
+		sourceColumn: Code
+
+	column Name
+		dataType: string
+		lineageTag: e6e478fa-9b2d-4087-ae00-059fcff89598
+		sourceColumn: Name
+
+	column IsTaxable
+		dataType: boolean
+		lineageTag: a95329b3-fbb0-4cef-a179-2e9b21f74ec0
+		sourceColumn: IsTaxable
+
+	column PlanTypeKey
+		dataType: int64
+		lineageTag: 99b97c97-2445-4113-ab11-f05bd0e1fe2d
+		sourceColumn: PlanTypeKey
+
+	column CustodianKey
+		dataType: int64
+		lineageTag: e5e9ba60-9ddf-4fe8-b041-75e253f81bda
+		sourceColumn: CustodianKey
+
+	column ExternalSystemKey
+		dataType: int64
+		lineageTag: 9df38811-8111-420f-b589-712d69035477
+		sourceColumn: ExternalSystemKey
+
+	column ExternalSystemPlanNumber
+		dataType: int64
+		lineageTag: 4b7a2938-3cc8-4744-907b-1a3160f84cfc
+		sourceColumn: ExternalSystemPlanNumber
+
+	column CreatedBy
+		dataType: string
+		lineageTag: fd91af13-1f88-4f03-bac0-4fd44616bb09
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: 5f3f001a-2267-44c2-9a2c-681d7947ace6
+		sourceColumn: CreatedDate
+
+	column ModifiedBy
+		dataType: string
+		lineageTag: 6bfd480f-9cbd-420c-8bd9-cdf59966e6ac
+		sourceColumn: ModifiedBy
+
+	column ModifiedDate
+		dataType: dateTime
+		lineageTag: 7d2caaeb-e2a3-4a49-bd60-6ccedc624d86
+		sourceColumn: ModifiedDate
+
+	partition DimPlan-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimPlan"]}[Data]
+				in
+				    Nav
+

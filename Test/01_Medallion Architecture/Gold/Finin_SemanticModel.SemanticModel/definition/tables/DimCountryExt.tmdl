@@ -1,0 +1,17 @@
+table DimCountryExt
+	lineageTag: 53e0bde8-47e4-4757-a169-1984eb01efb0
+
+	column CountryKey
+		dataType: int64
+		lineageTag: 63505698-07ba-46d1-a8b9-278091b7af8c
+		sourceColumn: CountryKey
+
+	partition DimCountryExt-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimCountryExt"]}[Data]
+				in
+				    Nav
+

@@ -1,0 +1,77 @@
+table DimLinkAssetClass
+	lineageTag: 02afb4f6-6921-4688-befd-b509309db6bf
+
+	column LinkAssetClassKey
+		dataType: int64
+		lineageTag: 564fd5fd-a48b-4ead-9d37-8dd2e18021b3
+		sourceColumn: LinkAssetClassKey
+
+	column AssetClassCode
+		dataType: string
+		lineageTag: 98be7d95-ac37-438b-ba18-b889497108bd
+		sourceColumn: AssetClassCode
+
+	column AssetClassName
+		dataType: string
+		lineageTag: 0f94d570-30a1-448f-b7f9-60b810955599
+		sourceColumn: AssetClassName
+
+	column ParentAssetClassCode
+		dataType: string
+		lineageTag: bdfd7e0c-b4b9-47d6-a26b-92927a1615c8
+		sourceColumn: ParentAssetClassCode
+
+	column ParentAssetClassName
+		dataType: string
+		lineageTag: 059b5bbe-1e80-478f-b5e2-e157c80c18be
+		sourceColumn: ParentAssetClassName
+
+	column CustomerAssetClassCode
+		dataType: string
+		lineageTag: 2541d825-482f-416f-aa88-90b22e5562ce
+		sourceColumn: CustomerAssetClassCode
+
+	column CustomerAssetClassName
+		dataType: string
+		lineageTag: 047a6235-d767-4a6f-b849-a5c852548673
+		sourceColumn: CustomerAssetClassName
+
+	column ParentCustomerAssetClassCode
+		dataType: string
+		lineageTag: d8fa5d85-ee5a-438c-ad2f-507ec4cb31e0
+		sourceColumn: ParentCustomerAssetClassCode
+
+	column ParentCustomerAssetClassName
+		dataType: string
+		lineageTag: 4d6e9499-d9fe-4c2e-b51f-9a58554e020b
+		sourceColumn: ParentCustomerAssetClassName
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 5a1f1b71-96e4-4763-983f-988ac722deaa
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: 757c2fe3-9871-4ba4-85c0-a78ae07e24df
+		sourceColumn: CreatedDate
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: 27f4fd93-0013-4500-9f0f-456dff4a0e1b
+		sourceColumn: UpdatedBy
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: 01b566b8-efc8-4868-ac90-a3c691a3c692
+		sourceColumn: UpdatedDate
+
+	partition DimLinkAssetClass-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimLinkAssetClass"]}[Data]
+				in
+				    Nav
+

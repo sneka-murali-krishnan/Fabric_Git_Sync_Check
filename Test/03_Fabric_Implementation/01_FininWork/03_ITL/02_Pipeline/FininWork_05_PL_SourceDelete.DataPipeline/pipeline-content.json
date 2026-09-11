@@ -1,0 +1,402 @@
+{
+  "properties": {
+    "activities": [
+      {
+        "type": "Lookup",
+        "typeProperties": {
+          "source": {
+            "type": "DataWarehouseSource",
+            "sqlReaderQuery": {
+              "value": "@concat(\n'\nSELECT \n[Id],\n[SourceSchemaName],\n[SourceTableName],\n[BronzeSchemaName],\n[BronzeTableName],\n[SilverSchemaName],\n[SilverTableName],\n[PrimaryKey],\n[LoadType],\n[IsFullLoad],\n[IncLoadType],\n[CreatedWaterMarkField],\n[CreatedWaterMarkValue],\n[UpdatedWaterMarkField],\n[UpdatedWaterMarkValue],\n[LastModifiedDate],\n[LastModifiedBy],\n[IsActive],\n[IsSourceDelete],\n[SourceQuery],\n[SourceDeleteQuery]\nFROM [WH_MetaData].[Config_', pipeline().parameters.SchemaName, '].[IncrementalConfigETL]\nWHERE IsActive = 1 AND IsSourceDelete = 1 \nORDER BY Id\n'\n)",
+              "type": "Expression"
+            },
+            "partitionOption": "None",
+            "queryTimeout": "02:00:00"
+          },
+          "datasetSettings": {
+            "type": "DataWarehouseTable",
+            "schema": [],
+            "linkedService": {
+              "name": "WH_MetaData",
+              "properties": {
+                "type": "DataWarehouse",
+                "typeProperties": {
+                  "artifactId": "bfce2aba-4923-90da-4a1e-2c020d4b573a",
+                  "endpoint": "2ybikadzh7yenkzxsnkoh7ua74-6cma2dxeutwe7e52vtwd4d7iaq.datawarehouse.fabric.microsoft.com",
+                  "workspaceId": "00000000-0000-0000-0000-000000000000"
+                },
+                "annotations": []
+              }
+            },
+            "annotations": []
+          },
+          "firstRowOnly": false
+        },
+        "policy": {
+          "timeout": "0.12:00:00",
+          "retry": 0,
+          "retryIntervalInSeconds": 30,
+          "secureInput": false,
+          "secureOutput": false
+        },
+        "name": "Get Tables List",
+        "dependsOn": []
+      },
+      {
+        "type": "ForEach",
+        "typeProperties": {
+          "isSequential": false,
+          "batchCount": 20,
+          "items": {
+            "value": "@activity('Get Tables List').output.value",
+            "type": "Expression"
+          },
+          "activities": [
+            {
+              "type": "Copy",
+              "typeProperties": {
+                "source": {
+                  "type": "SqlServerSource",
+                  "sqlReaderQuery": {
+                    "value": "@item().SourceDeleteQuery",
+                    "type": "Expression"
+                  },
+                  "partitionOption": "None",
+                  "queryTimeout": "02:00:00",
+                  "numberPrecision": 38,
+                  "numberScale": 18,
+                  "datasetSettings": {
+                    "type": "AzureSqlTable",
+                    "schema": [],
+                    "externalReferences": {
+                      "connection": "baea8017-935f-4cdb-86e7-96b06f31e7aa"
+                    },
+                    "annotations": []
+                  }
+                },
+                "sink": {
+                  "type": "LakehouseTableSink",
+                  "tableActionOption": "OverwriteSchema",
+                  "partitionOption": "None",
+                  "datasetSettings": {
+                    "type": "LakehouseTable",
+                    "typeProperties": {
+                      "schema": {
+                        "value": "SourceDelete",
+                        "type": "Expression"
+                      },
+                      "table": {
+                        "value": "@concat(item().BronzeSchemaName,'_',item().SourceTableName)",
+                        "type": "Expression"
+                      }
+                    },
+                    "schema": [],
+                    "linkedService": {
+                      "name": "LH_Bronze",
+                      "properties": {
+                        "type": "Lakehouse",
+                        "typeProperties": {
+                          "artifactId": "acccb07c-a9c3-b1db-4706-40a9828c5977",
+                          "workspaceId": "00000000-0000-0000-0000-000000000000",
+                          "rootFolder": "Tables"
+                        },
+                        "annotations": []
+                      }
+                    },
+                    "annotations": []
+                  }
+                },
+                "translator": {
+                  "type": "TabularTranslator",
+                  "typeConversion": true,
+                  "typeConversionSettings": {
+                    "allowDataTruncation": true,
+                    "treatBooleanAsNumber": false
+                  }
+                },
+                "enableStaging": false,
+                "enableSkipIncompatibleRow": false
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 3,
+                "retryIntervalInSeconds": 120,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Copy Source Delete Data",
+              "dependsOn": [
+                {
+                  "activity": "Activity Start Time",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "SetVariable",
+              "typeProperties": {
+                "variableName": "Activity_Start_Time",
+                "value": {
+                  "value": "@utcNow()",
+                  "type": "Expression"
+                }
+              },
+              "policy": {
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Activity Start Time",
+              "dependsOn": []
+            },
+            {
+              "type": "SetVariable",
+              "typeProperties": {
+                "variableName": "Activity_End_Time",
+                "value": {
+                  "value": "@utcNow()",
+                  "type": "Expression"
+                }
+              },
+              "policy": {
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Activity_End_Time Table",
+              "dependsOn": [
+                {
+                  "activity": "Copy Source Delete Data",
+                  "dependencyConditions": [
+                    "Completed"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "SqlServerStoredProcedure",
+              "typeProperties": {
+                "storedProcedureName": "Log.SP_ETLBatchBronzeDetails",
+                "storedProcedureParameters": {
+                  "BatchId": {
+                    "value": {
+                      "value": "@pipeline().parameters.Batch_Id",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "EndTime": {
+                    "value": {
+                      "value": "@utcNow()",
+                      "type": "Expression"
+                    },
+                    "type": "DateTime"
+                  },
+                  "ErrorMessage": {
+                    "value": "No Error",
+                    "type": "String"
+                  },
+                  "ExtractedRowCount": {
+                    "value": {
+                      "value": "@activity('Copy Source Delete Data').output.rowsRead\n\n",
+                      "type": "Expression"
+                    },
+                    "type": "Int32"
+                  },
+                  "SchemaName": {
+                    "value": {
+                      "value": "@item().bronzeSchemaName",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "SourceName": {
+                    "value": "Incremental Reporting Tables - Source Delete",
+                    "type": "String"
+                  },
+                  "StartTime": {
+                    "value": {
+                      "value": "@utcNow()",
+                      "type": "Expression"
+                    },
+                    "type": "DateTime"
+                  },
+                  "Status": {
+                    "value": "Success",
+                    "type": "String"
+                  },
+                  "TableName": {
+                    "value": {
+                      "value": "@item().BronzeTableName",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "TableId": {
+                    "value": {
+                      "value": "@item().Id",
+                      "type": "Expression"
+                    }
+                  }
+                }
+              },
+              "linkedService": {
+                "name": "WH_MetaData",
+                "properties": {
+                  "type": "DataWarehouse",
+                  "typeProperties": {
+                    "artifactId": "bfce2aba-4923-90da-4a1e-2c020d4b573a",
+                    "endpoint": "2ybikadzh7yenkzxsnkoh7ua74-6cma2dxeutwe7e52vtwd4d7iaq.datawarehouse.fabric.microsoft.com",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000"
+                  },
+                  "annotations": []
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Success Activity Log Table",
+              "dependsOn": [
+                {
+                  "activity": "Copy Source Delete Data",
+                  "dependencyConditions": [
+                    "Succeeded"
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "SqlServerStoredProcedure",
+              "typeProperties": {
+                "storedProcedureName": "Log.SP_ETLBatchBronzeDetails",
+                "storedProcedureParameters": {
+                  "BatchId": {
+                    "value": {
+                      "value": "@pipeline().parameters.Batch_Id",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "EndTime": {
+                    "value": {
+                      "value": "@utcNow()",
+                      "type": "Expression"
+                    },
+                    "type": "DateTime"
+                  },
+                  "ErrorMessage": {
+                    "value": {
+                      "value": "@if(\n and(\n not(empty(activity('Copy Source Delete Data').output.errors)),\n not(empty(activity('Copy Source Delete Data').output.errors[0].Message))\n ),\n activity('Copy Source Delete Data').output.errors[0].Message,\n 'NotExecuted'\n)\n",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "ExtractedRowCount": {
+                    "value": "0",
+                    "type": "Int32"
+                  },
+                  "SchemaName": {
+                    "value": {
+                      "value": "@item().BronzeSchemaName",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "SourceName": {
+                    "value": "Incremental Reporting Tables - Source Delete",
+                    "type": "String"
+                  },
+                  "StartTime": {
+                    "value": {
+                      "value": "@utcNow()",
+                      "type": "Expression"
+                    },
+                    "type": "DateTime"
+                  },
+                  "Status": {
+                    "value": "Failure",
+                    "type": "String"
+                  },
+                  "TableName": {
+                    "value": {
+                      "value": "@item().BronzeTableName",
+                      "type": "Expression"
+                    },
+                    "type": "String"
+                  },
+                  "TableId": {
+                    "value": {
+                      "value": "@item().Id",
+                      "type": "Expression"
+                    }
+                  }
+                }
+              },
+              "linkedService": {
+                "name": "WH_MetaData",
+                "properties": {
+                  "type": "DataWarehouse",
+                  "typeProperties": {
+                    "artifactId": "bfce2aba-4923-90da-4a1e-2c020d4b573a",
+                    "endpoint": "2ybikadzh7yenkzxsnkoh7ua74-6cma2dxeutwe7e52vtwd4d7iaq.datawarehouse.fabric.microsoft.com",
+                    "workspaceId": "00000000-0000-0000-0000-000000000000"
+                  },
+                  "annotations": []
+                }
+              },
+              "policy": {
+                "timeout": "0.12:00:00",
+                "retry": 0,
+                "retryIntervalInSeconds": 30,
+                "secureInput": false,
+                "secureOutput": false
+              },
+              "name": "Failure Activity Log Table",
+              "dependsOn": [
+                {
+                  "activity": "Copy Source Delete Data",
+                  "dependencyConditions": [
+                    "Failed"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        "name": "Looping Tables",
+        "dependsOn": [
+          {
+            "activity": "Get Tables List",
+            "dependencyConditions": [
+              "Succeeded"
+            ]
+          }
+        ]
+      }
+    ],
+    "parameters": {
+      "Batch_Id": {
+        "type": "string"
+      },
+      "DBsource": {
+        "type": "string",
+        "defaultValue": "Incremental Reporting Tables - Source Delete"
+      },
+      "SchemaName": {
+        "type": "string"
+      }
+    },
+    "variables": {
+      "Activity_Start_Time": {
+        "type": "String"
+      },
+      "Activity_End_Time": {
+        "type": "String"
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+table FactPositionExt
+	lineageTag: 84e97cf7-a6ac-4ef2-a2cc-9c747df477ea
+
+	column PositionKey
+		dataType: int64
+		lineageTag: 433b8747-959f-42ae-8ee7-88d7315ea15c
+		sourceColumn: PositionKey
+
+	partition FactPositionExt-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="FactPositionExt"]}[Data]
+				in
+				    Nav
+

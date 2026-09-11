@@ -1,0 +1,17 @@
+table DimSourceSystemExt
+	lineageTag: 8ea2e622-4b4a-437d-9c54-beb8609c7bde
+
+	column SourceSystemKey
+		dataType: int64
+		lineageTag: 0ced0e76-018b-46eb-96a4-d12ebdca7dc7
+		sourceColumn: SourceSystemKey
+
+	partition DimSourceSystemExt-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimSourceSystemExt"]}[Data]
+				in
+				    Nav
+

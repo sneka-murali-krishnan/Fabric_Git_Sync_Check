@@ -1,0 +1,378 @@
+table FactTransact
+	lineageTag: e46d0088-46ff-46eb-a4ee-4b10771b0049
+
+	measure NewCashBalance = SUM('FactTransact'[PriceUSD])
+		lineageTag: f510c320-15df-4df8-b81e-aec93d6fd792
+
+	measure NewFees = SUM('FactTransact'[FeesUSD])
+		lineageTag: 50a87bc1-6566-4c5e-9fdd-0a72cec33a1f
+
+	column TransactKey
+		dataType: int64
+		lineageTag: cb37289f-d923-4164-ab19-4412771f5fbe
+		summarizeBy: none
+		sourceColumn: TransactKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Identifier
+		dataType: string
+		lineageTag: fe9e8364-52ff-4a21-aaf5-95244f269bdd
+		summarizeBy: none
+		sourceColumn: Identifier
+
+		annotation SummarizationSetBy = Automatic
+
+	column ReportedDate
+		dataType: dateTime
+		lineageTag: a0209698-ab72-4064-902a-b24459f51bef
+		summarizeBy: none
+		sourceColumn: ReportedDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column TradeDate
+		dataType: dateTime
+		lineageTag: 8cd9aa84-6029-474f-ac5f-37de6599be55
+		summarizeBy: none
+		sourceColumn: TradeDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column SettlementDate
+		dataType: dateTime
+		lineageTag: 7c45f26a-9a8d-4093-9867-ce78eb677cd4
+		summarizeBy: none
+		sourceColumn: SettlementDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column CanceledDate
+		dataType: dateTime
+		lineageTag: 40e70eb8-0e0b-4137-9dec-1e42a2680f30
+		summarizeBy: none
+		sourceColumn: CanceledDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column TradeType
+		dataType: string
+		lineageTag: aa79d9c3-7576-4d48-9ebb-a2c630736b45
+		summarizeBy: none
+		sourceColumn: TradeType
+
+		annotation SummarizationSetBy = Automatic
+
+	column BuyProtection
+		dataType: string
+		lineageTag: 563be59c-2ba3-4a3d-86ab-d642a1bc0dbb
+		summarizeBy: none
+		sourceColumn: BuyProtection
+
+		annotation SummarizationSetBy = Automatic
+
+	column Quantity
+		dataType: decimal
+		lineageTag: 80a81122-03a2-49b2-8417-e31515809433
+		summarizeBy: sum
+		sourceColumn: Quantity
+
+		annotation SummarizationSetBy = Automatic
+
+	column PriceLocal
+		dataType: decimal
+		lineageTag: 85e93390-77b1-4927-a8bc-458703759ae2
+		summarizeBy: sum
+		sourceColumn: PriceLocal
+
+		annotation SummarizationSetBy = Automatic
+
+	column PriceBase
+		dataType: decimal
+		lineageTag: ba14facd-370c-491d-bf0d-6b45dcd175b4
+		summarizeBy: sum
+		sourceColumn: PriceBase
+
+		annotation SummarizationSetBy = Automatic
+
+	column PriceUSD
+		dataType: decimal
+		lineageTag: 242b060e-27b1-4edf-8b52-b3220dfd9332
+		summarizeBy: sum
+		sourceColumn: PriceUSD
+
+		annotation SummarizationSetBy = Automatic
+
+	column CommissionLocal
+		dataType: decimal
+		lineageTag: 55ef8fcf-c8d0-4344-a774-44040c2816ca
+		summarizeBy: sum
+		sourceColumn: CommissionLocal
+
+		annotation SummarizationSetBy = Automatic
+
+	column CommissionBase
+		dataType: decimal
+		lineageTag: 07542623-f709-4af9-abdc-de2c9491018a
+		summarizeBy: sum
+		sourceColumn: CommissionBase
+
+		annotation SummarizationSetBy = Automatic
+
+	column CommissionUSD
+		dataType: decimal
+		lineageTag: 00b256ea-aa0e-46eb-924b-33dd9755dae7
+		summarizeBy: sum
+		sourceColumn: CommissionUSD
+
+		annotation SummarizationSetBy = Automatic
+
+	column ImpliedCommissionLocal
+		dataType: decimal
+		lineageTag: ad4b8017-c916-4c0a-8ac4-42306d7f64b1
+		summarizeBy: sum
+		sourceColumn: ImpliedCommissionLocal
+
+		annotation SummarizationSetBy = Automatic
+
+	column ImpliedCommissionBase
+		dataType: decimal
+		lineageTag: d1e05545-efd0-4af5-b380-cf77f09fd33f
+		summarizeBy: sum
+		sourceColumn: ImpliedCommissionBase
+
+		annotation SummarizationSetBy = Automatic
+
+	column ImpliedCommissionUSD
+		dataType: decimal
+		lineageTag: c6042bab-aa30-41c8-8b04-5e57e868ea92
+		summarizeBy: sum
+		sourceColumn: ImpliedCommissionUSD
+
+		annotation SummarizationSetBy = Automatic
+
+	column FeesLocal
+		dataType: decimal
+		lineageTag: 1ac314e9-91ae-402f-8211-58b7389fe444
+		summarizeBy: sum
+		sourceColumn: FeesLocal
+
+		annotation SummarizationSetBy = Automatic
+
+	column FeesBase
+		dataType: decimal
+		lineageTag: c9b545f4-e6ca-4348-a7cd-2e5d748d696f
+		summarizeBy: sum
+		sourceColumn: FeesBase
+
+		annotation SummarizationSetBy = Automatic
+
+	column FeesUSD
+		dataType: decimal
+		lineageTag: db1f240f-78d1-474f-a380-32a6acb8cf1f
+		summarizeBy: sum
+		sourceColumn: FeesUSD
+
+		annotation SummarizationSetBy = Automatic
+
+	column NetAmountLocal
+		dataType: decimal
+		lineageTag: 0b13d7ba-df4c-433b-a606-0d9da10f5365
+		summarizeBy: sum
+		sourceColumn: NetAmountLocal
+
+		annotation SummarizationSetBy = Automatic
+
+	column NetAmountBase
+		dataType: decimal
+		lineageTag: 3cebc9b2-6bac-4c94-99ad-dbac5e59931c
+		summarizeBy: sum
+		sourceColumn: NetAmountBase
+
+		annotation SummarizationSetBy = Automatic
+
+	column NetAmountUSD
+		dataType: decimal
+		lineageTag: 6644dd66-b26e-4603-beec-7753d58fd95c
+		summarizeBy: sum
+		sourceColumn: NetAmountUSD
+
+		annotation SummarizationSetBy = Automatic
+
+	column GrossAmountLocal
+		dataType: decimal
+		lineageTag: 351857b6-ec48-4e41-967d-f3a86dac6058
+		summarizeBy: sum
+		sourceColumn: GrossAmountLocal
+
+		annotation SummarizationSetBy = Automatic
+
+	column GrossAmountBase
+		dataType: decimal
+		lineageTag: a7bcd601-a5a2-4414-be5d-0f975bcab01b
+		summarizeBy: sum
+		sourceColumn: GrossAmountBase
+
+		annotation SummarizationSetBy = Automatic
+
+	column GrossAmountUSD
+		dataType: decimal
+		lineageTag: bddc1a0c-189e-4d42-b8ee-e590321fa116
+		summarizeBy: sum
+		sourceColumn: GrossAmountUSD
+
+		annotation SummarizationSetBy = Automatic
+
+	column CostLocal
+		dataType: decimal
+		lineageTag: 4bce2f62-f6c7-42f1-a461-3492f074dc93
+		summarizeBy: sum
+		sourceColumn: CostLocal
+
+		annotation SummarizationSetBy = Automatic
+
+	column CostBase
+		dataType: decimal
+		lineageTag: a1e9d750-749a-45b6-aa5c-efe7c5122f4a
+		summarizeBy: sum
+		sourceColumn: CostBase
+
+		annotation SummarizationSetBy = Automatic
+
+	column CostUSD
+		dataType: decimal
+		lineageTag: a7a61ad9-4e08-4a13-939d-17e5da91fec9
+		summarizeBy: sum
+		sourceColumn: CostUSD
+
+		annotation SummarizationSetBy = Automatic
+
+	column GainLossLocal
+		dataType: decimal
+		lineageTag: 1edeb264-1788-4545-8605-e0ec64a504ab
+		summarizeBy: sum
+		sourceColumn: GainLossLocal
+
+		annotation SummarizationSetBy = Automatic
+
+	column PercentGainLossLocal
+		dataType: decimal
+		lineageTag: 20a63925-295c-4756-b581-42541b69bbba
+		summarizeBy: sum
+		sourceColumn: PercentGainLossLocal
+
+		annotation SummarizationSetBy = Automatic
+
+	column PercentGainLossBase
+		dataType: decimal
+		lineageTag: 66c736c6-9c2d-484d-9066-ea44113cfbd8
+		summarizeBy: sum
+		sourceColumn: PercentGainLossBase
+
+		annotation SummarizationSetBy = Automatic
+
+	column PercentGainLossUSD
+		dataType: decimal
+		lineageTag: 91e8d9d8-9c5a-4c55-a396-f6348a55f338
+		summarizeBy: sum
+		sourceColumn: PercentGainLossUSD
+
+		annotation SummarizationSetBy = Automatic
+
+	column AccruedInterestLocal
+		dataType: decimal
+		lineageTag: 9a7f6254-1041-4454-bbf0-4a6003ed72aa
+		summarizeBy: sum
+		sourceColumn: AccruedInterestLocal
+
+		annotation SummarizationSetBy = Automatic
+
+	column AccruedInterestBase
+		dataType: decimal
+		lineageTag: f5d8fda3-0c8a-403d-9b5b-2b9d08c6c75a
+		summarizeBy: sum
+		sourceColumn: AccruedInterestBase
+
+		annotation SummarizationSetBy = Automatic
+
+	column AccruedInterestUSD
+		dataType: decimal
+		lineageTag: 3f879f29-377e-4ec9-813d-5fa4aea9c496
+		summarizeBy: sum
+		sourceColumn: AccruedInterestUSD
+
+		annotation SummarizationSetBy = Automatic
+
+	column DateKey
+		dataType: int64
+		lineageTag: b1b02264-266d-4ecb-897f-23286601cd1d
+		summarizeBy: count
+		sourceColumn: DateKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column SecurityKey
+		dataType: int64
+		lineageTag: 0f6ab027-f2c1-4854-9f27-3bde568dd01d
+		summarizeBy: none
+		sourceColumn: SecurityKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column PortfolioKey
+		dataType: int64
+		lineageTag: 06aedefc-a29f-4c3e-b7de-25064b98d9ba
+		summarizeBy: none
+		sourceColumn: PortfolioKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column BrokerKey
+		dataType: int64
+		lineageTag: b4c3fee5-b59a-4413-9949-b8bb9ffe0551
+		summarizeBy: count
+		sourceColumn: BrokerKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedBy
+		dataType: string
+		lineageTag: ab93211d-e79c-4067-8c4a-9d81caac01d5
+		summarizeBy: none
+		sourceColumn: CreatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: e4aa5a10-52a2-4b60-b5c8-c7abf1f29c69
+		summarizeBy: none
+		sourceColumn: CreatedDate
+
+		annotation SummarizationSetBy = Automatic
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: a51f9ce5-c9d5-470c-a3e1-989ef36db99e
+		summarizeBy: none
+		sourceColumn: UpdatedBy
+
+		annotation SummarizationSetBy = Automatic
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: b4b44348-69d5-465d-ba1d-bb70fa09ee6b
+		summarizeBy: none
+		sourceColumn: UpdatedDate
+
+		annotation SummarizationSetBy = Automatic
+
+	partition FactTransact-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="FactTransact"]}[Data]
+				in
+				    Nav
+

@@ -1,0 +1,17 @@
+table DimBenchmarkExt
+	lineageTag: 56f3f363-efeb-42f6-94f9-e763f55c38ff
+
+	column BenchmarkKey
+		dataType: int64
+		lineageTag: bf7a0b37-4ef2-470e-b962-ba5dc3b61fe1
+		sourceColumn: BenchmarkKey
+
+	partition DimBenchmarkExt-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimBenchmarkExt"]}[Data]
+				in
+				    Nav
+

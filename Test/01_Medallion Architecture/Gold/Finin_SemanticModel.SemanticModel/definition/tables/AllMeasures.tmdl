@@ -1,0 +1,942 @@
+table AllMeasures
+	lineageTag: 925ab332-c63f-44f0-a80f-a4fdf0e4fbf2
+
+	measure #Analytics =
+			VAR date__ = FORMAT(MIN(DimDate[Date]), "YYYY-MM-DD")
+			RETURN
+			    CALCULATE(
+			        [Variance],
+			        FILTER(
+			            RptPosAnalytics,
+			            FORMAT(RptPosAnalytics[FormatedEffectiveDt], "YYYY-MM-DD") = date__
+			        )
+			    )
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: eca87919-28a3-4d12-b316-1dea7b2e583b
+
+	measure Variance = ```
+			var PrimaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[PFBMCode])
+			var SecondaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[VariancePFBMCode])
+			var PFBMType__ = MIN('RptPortfolioBenchmarkVariance'[Type])
+			
+			var PrimaryData__ = CALCULATE(SUMX (
+			'DimAggregationMetric' ,
+			 IF ('DimAggregationMetric'[Formula] = "SUM", SUM('RptPosAnalytics'[UnPivotValue]),
+			     IF( 'DimAggregationMetric'[Formula] = "AVERAGE" , AVERAGE('RptPosAnalytics'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "MAX" , MAX('RptPosAnalytics'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "MIN" , MIN('RptPosAnalytics'[UnPivotValue])) ) ) 
+			
+			))
+			,FILTER(RptPosAnalytics,RptPosAnalytics[PFBMCode] IN PrimaryPf__)
+			)
+			
+			var SecondaryData__ = 
+			IF (PFBMType__ = "3-Variance", 
+			CALCULATE(SUMX (
+			'DimAggregationMetric' ,
+			 IF ('DimAggregationMetric'[Formula] = "SUM", SUM('RptPosAnalytics'[UnPivotValue]),
+			     IF( 'DimAggregationMetric'[Formula] = "AVERAGE" , AVERAGE('RptPosAnalytics'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "MAX" , MAX('RptPosAnalytics'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "MIN" , MIN('RptPosAnalytics'[UnPivotValue])) ) )
+			
+			))
+			,FILTER(RptPosAnalytics,RptPosAnalytics[PFBMCode] in SecondaryPf__)
+			)
+			,0
+			)
+			
+			RETURN  IF (
+			        NOT ISBLANK ( PrimaryData__ ) && NOT ISBLANK ( SecondaryData__ ),
+			        PrimaryData__ - SecondaryData__ 
+			    )
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 38ba98a6-7867-49c5-aa80-ac2ba9a9683a
+
+	measure #FilterAggBasedOnCondition =
+			var date__ = MIN('DimDate'[Date])
+			Return
+			CALCULATE(([AggCondition]),FILTER(RptPosAnalytics,RptPosAnalytics[EffectiveDt]=date__)
+			)
+		lineageTag: 15256a3a-b989-4e55-bea5-2359de9deb54
+
+	measure AggCondition =
+			CALCULATE(SUMX (
+			'DimAggregationMetric' , SUM('RptSecurityAnalyticsUnpivot'[UnPivotValue])
+			))
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: b70ce194-c1ba-4199-9abc-ebcaf24c75d9
+
+	measure #FilterAvgOfValue =
+			var date__ = MIN('DimDate'[Date])
+			Return
+			CALCULATE(AVERAGE('RptPosAnalytics'[UnPivotValue]),FILTER(RptPFBMSecurity,RptPFBMSecurity[AsOfDate]=date__)
+			)
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 3a86ed80-2746-49e3-907a-982f033abd71
+
+	measure #FilterSumOfValue =
+			var date__ = MIN('DimDate'[Date])
+			Return
+			CALCULATE(([#SumValues]),FILTER(RptPFBMSecurity,RptPFBMSecurity[AsOfDate]=date__)
+			)
+		lineageTag: 7fae1fc1-f527-4842-ae1e-5c2913650952
+
+	measure #SumValues = SUM('RptPosAnalytics'[UnPivotValue])
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 64333642-5094-4470-bc23-37cc6f485413
+
+	measure #PosSecAnalytics =
+			var date__ = MIN('DimDate'[Date])
+			Return
+			CALCULATE(([PosSecAgg]),FILTER(RptPosAnalytics,RptPosAnalytics[EffectiveDt]=date__)
+			)
+		lineageTag: 00465cd5-9d5c-4b7d-b280-efdd44565299
+
+	measure PosSecAgg = ```
+			var Identifiers__ = VALUES('DimSecurityIdentifier'[SecurityKey])
+			var PrimaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[PFBMCode])
+			
+			
+			
+			var PrimaryData__ = CALCULATE(SUMX (
+			'DimAggregationMetric' ,
+			 IF ('DimAggregationMetric'[Formula] = "SUM", SUM('RptPosAnalytics'[UnPivotValue]),
+			     IF( 'DimAggregationMetric'[Formula] = "AVERAGE" , AVERAGE('RptPosAnalytics'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "Max" , MAX('RptPosAnalytics'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "MIN" , MIN('RptPosAnalytics'[UnPivotValue])) ) ) 
+			
+			))
+			,FILTER(RptPosAnalytics,RptPosAnalytics[PFBMCode] IN PrimaryPf__)
+			,FILTER(RptPosAnalytics,RptPosAnalytics[SecurityKey] IN Identifiers__)
+			)
+			
+			RETURN  IF (
+			        NOT ISBLANK ( PrimaryData__ ),
+			        PrimaryData__
+			    )
+			```
+		formatString: 0
+		lineageTag: d06c0f69-cf57-42bf-b989-9d9bd314478d
+
+	measure #SecAnalytics =
+			var date__ = MIN('DimDate'[Date])
+			Return
+			CALCULATE(([SecAgg]),FILTER(RptSecurityAnalyticsUnpivot,RptSecurityAnalyticsUnpivot[EffectiveDt]=date__)
+			)
+		lineageTag: 87858207-9113-4660-af7b-bfcd52ec76ef
+
+	measure SecAgg = ```
+			var PrimaryPf__ = VALUES('DimSecurityIdentifier'[SecurityKey])
+			
+			
+			
+			var PrimaryData__ = CALCULATE(SUMX (
+			'DimAggregationMetric' ,
+			 IF ('DimAggregationMetric'[Formula] = "SUM", SUM('RptSecurityAnalyticsUnpivot'[UnPivotValue]),
+			     IF( 'DimAggregationMetric'[Formula] = "AVERAGE" , AVERAGE('RptSecurityAnalyticsUnpivot'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "Max" , MAX('RptSecurityAnalyticsUnpivot'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "MIN" , MIN('RptSecurityAnalyticsUnpivot'[UnPivotValue])) ) ) 
+			
+			))
+			,FILTER(RptSecurityAnalyticsUnpivot,RptSecurityAnalyticsUnpivot[SecurityKey] IN PrimaryPf__)
+			)
+			
+			
+			RETURN  IF (
+			        NOT ISBLANK ( PrimaryData__ ),
+			        PrimaryData__ 
+			    )
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 4bd23dff-678e-45c3-b986-178196ddf27d
+
+	measure '''#Single day vaule''' =
+			var _Selectedvalue =MIN('DimDate'[Date])
+			return
+			CALCULATE([#FilterSumOfValue],TREATAS({_Selectedvalue},RptPFBMSecurity[AsOfDate]))
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: af0fbaa8-b3c0-4f22-85fc-1609f945ae9d
+
+	measure RandomColor =
+			VAR cR =
+			    RANDBETWEEN ( 0, 255 )
+			VAR cG =
+			    RANDBETWEEN ( 0, 255 )
+			VAR cB =
+			    RANDBETWEEN ( 0, 255 )
+			VAR RedP0 =
+			    MOD ( cR, 16 )
+			VAR RedP1 =
+			    MOD ( INT ( cR / 16 ), 16 )
+			VAR GreenP0 =
+			    MOD ( cG, 16 )
+			VAR GreenP1 =
+			    MOD ( INT ( cG / 16 ), 16 )
+			VAR BlueP0 =
+			    MOD ( cB, 16 )
+			VAR BlueP1 =
+			    MOD ( INT ( cB / 16 ), 16 )
+			VAR hexTable =
+			    ADDCOLUMNS (
+			        { RedP1, RedP0, GreenP1, GreenP0, BlueP1, BlueP0 },
+			        "Hex", SWITCH (
+			            [Value],
+			            10, "A",
+			            11, "B",
+			            12, "C",
+			            13, "D",
+			            14, "E",
+			            15, "F",
+			            [Value]
+			        )
+			    )
+			RETURN
+			    "#" & CONCATENATEX ( hexTable, [Hex], "" )
+		lineageTag: 276e76b4-5c4a-4b0c-98ee-298eeb808be3
+
+	measure UserName = USERPRINCIPALNAME()
+		lineageTag: a1399c88-d17f-43ca-9e93-f7ceccff4930
+
+	measure #AnalyticsWithoutFormat =
+			VAR date__ = FORMAT(MIN(DimDate[Date]), "YYYY-MM-DD")
+			RETURN
+			    CALCULATE(
+			        [Variance],
+			        FILTER(
+			            RptPosAnalytics,
+			            FORMAT(RptPosAnalytics[EffectiveDt], "YYYY-MM-DD") = date__
+			        )
+			    )
+		formatString: #,0.00
+		lineageTag: 79d69cb3-845a-4f28-b5f6-11c569e6df5f
+
+	measure SumMarketPrice =
+			VAR date__ = FORMAT(MIN(DimDate[Date]), "YYYY-MM-DD")
+			RETURN
+			    CALCULATE(
+			        SUM(RptSecurityAnalytics[MarketPrice]),
+			        FORMAT(RptSecurityAnalytics[EffectiveDt], "YYYY-MM-DD") = date__
+			    )
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: ac87e2fb-fde2-412f-a53c-8448a4011e51
+
+	measure SumFiftyTwoWeekLow =
+			VAR date__ = FORMAT(MIN(DimDate[Date]), "YYYY-MM-DD")
+			RETURN
+			    CALCULATE(
+			        SUM(RptSecurityAnalytics[FiftyTwoWeekLow]),
+			        FORMAT(RptSecurityAnalytics[EffectiveDt], "YYYY-MM-DD") = date__
+			    )
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: 7e6e8e18-fe46-44b7-9af9-e3d1d483173f
+
+	measure SumFiftyTwoWeekHigh =
+			VAR date__ = FORMAT(MIN(DimDate[Date]), "YYYY-MM-DD")
+			RETURN
+			    CALCULATE(
+			        SUM(RptSecurityAnalytics[FiftyTwoWeekHigh]),
+			        FORMAT(RptSecurityAnalytics[EffectiveDt], "YYYY-MM-DD") = date__
+			    )
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: ea62b9bb-5ea3-4f07-a942-11a5ea062fa8
+
+	measure VarianceWithouZero = ```
+			VAR PrimaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[PFBMCode])
+			VAR SecondaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[VariancePFBMCode])
+			VAR PrimaryData__ = [PrimaryDataMeasure]
+			VAR PFBMType__ = MIN('RptPortfolioBenchmarkVariance'[Type])
+			
+			VAR SecondaryData__ = 
+			IF(
+			    PFBMType__ = "3-Variance",
+			    [SecondaryDataMeasure],  // Call the secondary measure
+			    0
+			)
+			
+			RETURN PrimaryData__-SecondaryData__
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 511ca73c-8826-4538-ae03-68bfe1a967fc
+
+	measure #AnalyticsNew =
+			VAR date__ = FORMAT(MIN(DimDate[Date]), "YYYY-MM-DD")
+			RETURN
+			    CALCULATE(
+			        [Variance],
+			        FILTER(
+			            RptPosAnalytics,
+			            FORMAT(RptPosAnalytics[EffectiveDt], "YYYY-MM-DD") = date__
+			        )
+			    )
+		formatString: #,0.00
+		lineageTag: b5ce8793-df20-407d-bb76-9c1ec8f64cd9
+
+	measure PrimaryDataMeasure = ```
+			VAR PrimaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[PFBMCode])
+			VAR CalculatedValue = 
+			    CALCULATE(
+			        SUMX(
+			            'DimAggregationMetric',
+			            SWITCH(
+			                'DimAggregationMetric'[Formula],
+			                "SUM", SUM('RptPosAnalytics'[UnPivotValue]),
+			                "AVERAGE", AVERAGE('RptPosAnalytics'[UnPivotValue]),
+			                "MAX", MAX('RptPosAnalytics'[UnPivotValue]),
+			                "MIN", MIN('RptPosAnalytics'[UnPivotValue]),
+			                BLANK()  // Default case if none match
+			            )
+			        ),
+			        FILTER(RptPosAnalytics, RptPosAnalytics[PFBMCode] IN PrimaryPf__)
+			    )
+			RETURN CalculatedValue+0
+			    // IF(ISBLANK(CalculatedValue), 1, CalculatedValue)
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: bb9d0c47-6d38-4941-a789-3cdf98125cc6
+
+	measure SecondaryDataMeasure = ```
+			VAR SecondaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[VariancePFBMCode])
+			VAR CalculatedValue = 
+			CALCULATE(
+			    SUMX(
+			        'DimAggregationMetric',
+			        SWITCH(
+			            'DimAggregationMetric'[Formula],
+			            "SUM", SUM('RptPosAnalytics'[UnPivotValue]),
+			            "AVERAGE", AVERAGE('RptPosAnalytics'[UnPivotValue]),
+			            "MAX", MAX('RptPosAnalytics'[UnPivotValue]),
+			            "MIN", MIN('RptPosAnalytics'[UnPivotValue]),
+			            BLANK()  // Default case if none match
+			        )
+			    ),
+			    FILTER(RptPosAnalytics, RptPosAnalytics[PFBMCode] IN SecondaryPf__)
+			)
+			return CalculatedValue+0
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 254ca1d9-3d4a-4ad4-99b7-f740f0b5543c
+
+	measure #AnalyticsPrimaryDataNew =
+			VAR date__ = FORMAT(MIN(DimDate[Date]), "YYYY-MM-DD")
+			RETURN
+			    CALCULATE(
+			        [COGS 100],
+			        FILTER(
+			            RptPosAnalytics,
+			            FORMAT(RptPosAnalytics[EffectiveDt], "YYYY-MM-DD") = date__
+			        )
+			    )+0
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: cbf6bf1c-83df-48bf-b2ea-aa6fd99913fd
+
+	measure #AnalyticsSecondaryNew =
+			VAR date__ = FORMAT(MIN(DimDate[Date]), "YYYY-MM-DD")
+			RETURN
+			    CALCULATE(
+			        [COGS101],
+			        FILTER(
+			            RptPosAnalytics,
+			            FORMAT(RptPosAnalytics[EffectiveDt], "YYYY-MM-DD") = date__
+			        )
+			    )+0
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: f2e4d5e0-00d7-4ebf-9bb6-26ee626ea80d
+
+	measure '''COGS 100''' =
+			var PrimaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[PFBMCode])
+			
+			var PrimaryData__ = CALCULATE(
+			    SUMX(
+			        'DimAggregationMetric',
+			        IF(
+			            'DimAggregationMetric'[Formula] = "SUM", SUM('RptPosAnalytics'[UnPivotValue]),
+			            IF(
+			                'DimAggregationMetric'[Formula] = "AVERAGE", AVERAGE('RptPosAnalytics'[UnPivotValue]),
+			                IF(
+			                    'DimAggregationMetric'[Formula] = "MAX", MAX('RptPosAnalytics'[UnPivotValue]),
+			                    IF(
+			                        'DimAggregationMetric'[Formula] = "MIN", MIN('RptPosAnalytics'[UnPivotValue])
+			                    )
+			                )
+			            )
+			        )
+			    ),
+			    FILTER(RptPosAnalytics, RptPosAnalytics[PFBMCode] IN PrimaryPf__)
+			)
+			
+			RETURN PrimaryData__ + 0
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: ac7b61e3-e8ba-496d-8c24-0f4345f693cd
+
+	measure COGS101 = ```
+			var SecondaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[VariancePFBMCode])
+			var PFBMType__ = MIN('RptPortfolioBenchmarkVariance'[Type])
+			var SecondaryData__ = 
+			IF (PFBMType__ = "3-Variance",
+			CALCULATE(SUMX (
+			'DimAggregationMetric' ,
+			 IF ('DimAggregationMetric'[Formula] = "SUM", SUM('RptPosAnalytics'[UnPivotValue]),
+			     IF( 'DimAggregationMetric'[Formula] = "AVERAGE" , AVERAGE('RptPosAnalytics'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "MAX" , MAX('RptPosAnalytics'[UnPivotValue]),
+			     IF( 'DimAggregationMetric'[Formula] = "MIN" , MIN('RptPosAnalytics'[UnPivotValue]))))
+			))
+			,FILTER(RptPosAnalytics,RptPosAnalytics[PFBMCode] in SecondaryPf__)
+			)
+			,0
+			)
+			Return SecondaryData__+0
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 5ca967a7-94f0-4fa1-a933-cbd32ec8c762
+
+	measure '''Final Result''' = [COGS 100]-[COGS101]
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 62713fe4-7ef3-41c5-bd51-8792855f13c4
+
+	measure Gov_linechart = CALCULATE(AVERAGE(RptPosAnalytics[UnPivotValue]),RptPosAnalytics[Metric]="GOV")
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: d6a92bdd-bd20-4620-bfb5-de2f884f450f
+
+	measure MIN_ESG = ```
+			VAR PrimaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[PFBMCode])  -- Get the unique PFBMCode values
+			
+			VAR PrimaryData__ = 
+			    CALCULATE(
+			        MIN(RptPosAnalytics[UnPivotValue]),  -- Find the minimum value of UnPivotValue
+			        RptPosAnalytics[Metric] = "ESG",  -- Filter by Metric = "ESG"
+			        RptPosAnalytics[PFBMCode] IN PrimaryPf__  -- Filter by PFBMCode in the set of PrimaryPf__
+			    )
+			
+			RETURN PrimaryData__  -- Return the calculated minimum value
+			```
+		lineageTag: 979a56cf-f670-49f5-bc04-e2d8a37900d3
+
+	measure Avg_ESG_UnpivotValues =
+			CALCULATE(
+			    AVERAGE(RptPosAnalytics[UnPivotValue]),
+			    RptPosAnalytics[Metric] IN {"GOV", "ENV", "SOC"}
+			)
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: cd54f557-ea6c-4c66-82db-bce01ffd7a49
+
+	measure MAX_ESG = ```
+			VAR PrimaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[PFBMCode])  -- Get the unique PFBMCode values
+			
+			VAR PrimaryData__ = 
+			    CALCULATE(
+			        MAX(RptPosAnalytics[UnPivotValue]),  -- Find the minimum value of UnPivotValue
+			        RptPosAnalytics[Metric] = "ESG",  -- Filter by Metric = "ESG"
+			        RptPosAnalytics[PFBMCode] IN PrimaryPf__  -- Filter by PFBMCode in the set of PrimaryPf__
+			    )
+			
+			RETURN PrimaryData__  -- Return the calculated minimum value
+			```
+		lineageTag: 8fd53374-17c7-4a00-b790-4b89825e67c9
+
+	measure SumOfHolding = ```
+			VAR PrimaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[PFBMCode])  -- Get the unique PFBMCode values
+			
+			VAR PrimaryData__ = 
+			    CALCULATE(
+			        SUM(RptPosAnalytics[UnPivotValue]),  -- Find the minimum value of UnPivotValue
+			        RptPosAnalytics[Metric] = "HoldingsMarketValue",  -- Filter by Metric = "ESG"
+			        RptPosAnalytics[PFBMCode] IN PrimaryPf__,  -- Filter by PFBMCode in the set of PrimaryPf__
+			        FORMAT(RptPosAnalytics[FormatedEffectiveDt], "DD-MM-YYYY") = FORMAT((MIN(DimDate[Date]) - 1), "DD-MM-YYYY")  -- Apply the same date filter
+			    )
+			
+			RETURN PrimaryData__  -- Return the calculated minimum value
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 60e54207-26e9-4933-bf37-12021266292a
+
+	measure SelectedPeriodToDate =
+			VAR SelectedPeriod = SELECTEDVALUE(RptPeriodToDate[ShortName])
+			VAR StartDate = MIN(DimDate[Date])
+			VAR EndDate = MAX(DimDate[Date])
+			
+			RETURN
+			    SWITCH(
+			        SelectedPeriod,
+			        "YTD", IF(MAX(DimDate[Date]) >= DATE(YEAR(TODAY()), 1, 1) && MAX(DimDate[Date]) <= TODAY(), 1, 0),
+			        "QTD", IF(MAX(DimDate[Date]) >= STARTOFQUARTER(TODAY()) && MAX(DimDate[Date]) <= TODAY(), 1, 0),
+			        "MTD", IF(MAX(DimDate[Date]) >= STARTOFMONTH(TODAY()) && MAX(DimDate[Date]) <= TODAY(), 1, 0),
+			        "Custom", IF(MAX(DimDate[Date]) >= StartDate && MAX(DimDate[Date]) <= EndDate, 1, 0),
+			        1
+			    )
+		lineageTag: d2a6c12f-1cef-456c-896b-625641b09950
+
+	measure NetAssetValue =
+			VAR LastBusinessDay =
+			    MAXX(
+			        FILTER(
+			            DimDate,
+			            DimDate[Date] =
+			                MAXX(
+			                    FILTER(
+			                        DimDate,
+			                        DimDate[Date] <= ENDOFMONTH(DimDate[Date]) &&
+			                        WEEKDAY(DimDate[Date], 2) <= 5
+			                    ),
+			                    DimDate[Date]
+			                )
+			        ),
+			        DimDate[Date]
+			    )
+			RETURN
+			CALCULATE(
+			    SUMX(FactTransact, FactTransact[PriceLocal] * FactTransact[Quantity]),
+			    DimDate[Date] = LastBusinessDay
+			)
+		formatString: \$#,0.00;(\$#,0.00);\$#,0.00
+		lineageTag: abfef0a5-c20a-4531-bb30-cde77b2090f8
+
+	measure DatePeriodIsCustom = IF(SELECTEDVALUE(RptDatePeriod[Type]) = "Custom", 1, 0)
+		formatString: 0
+		lineageTag: 0097a6c9-ed74-4229-8078-bd8e524dad4b
+
+	measure '''Liquidation %''' = DIVIDE(SUM(RptEndogenousLiquidity[LiquidationAmount]), SUM(RptEndogenousLiquidity[HoldingsMarketValue]))
+		formatString: #,0.00%;-#,0.00%;#,0.00%
+		lineageTag: a0639e9b-089f-4ba3-8645-bd12a5a6d034
+
+	measure CombinedMeasure = ```
+			VAR date__ = FORMAT(MIN(DimDate[Date]), "YYYY-MM-DD")
+			VAR PrimaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[PFBMCode])
+			VAR SecondaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[VariancePFBMCode])
+			VAR PFBMType__ = MIN('RptPortfolioBenchmarkVariance'[Type])
+			
+			VAR PrimaryData__ = 
+			    CALCULATE(
+			        SUMX(
+			            'DimAggregationMetric',
+			            SWITCH(
+			                'DimAggregationMetric'[Formula],
+			                "SUM", SUM('RptPosAnalytics'[UnPivotValue]),
+			                "AVERAGE", AVERAGE('RptPosAnalytics'[UnPivotValue]),
+			                "MAX", MAX('RptPosAnalytics'[UnPivotValue]),
+			                "MIN", MIN('RptPosAnalytics'[UnPivotValue])
+			            )
+			        ),
+			        FILTER(RptPosAnalytics, RptPosAnalytics[PFBMCode] IN PrimaryPf__)
+			    )
+			
+			VAR SecondaryData__ = 
+			    IF(
+			        PFBMType__ = "3-Variance",
+			        CALCULATE(
+			            SUMX(
+			                'DimAggregationMetric',
+			                SWITCH(
+			                    'DimAggregationMetric'[Formula],
+			                    "SUM", SUM('RptPosAnalytics'[UnPivotValue]),
+			                    "AVERAGE", AVERAGE('RptPosAnalytics'[UnPivotValue]),
+			                    "MAX", MAX('RptPosAnalytics'[UnPivotValue]),
+			                    "MIN", MIN('RptPosAnalytics'[UnPivotValue])
+			                )
+			            ),
+			            FILTER(RptPosAnalytics, RptPosAnalytics[PFBMCode] IN SecondaryPf__)
+			        ),
+			        0
+			    )
+			
+			RETURN 
+			    CALCULATE(
+			        PrimaryData__,
+			        FILTER(
+			            RptPosAnalytics,
+			            FORMAT(RptPosAnalytics[EffectiveDt], "YYYY-MM-DD") = date__
+			        )
+			    )
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 1737e4eb-d93c-4efc-8eaf-d3cf51070fec
+
+	measure #AnalyticsFormatted =
+			VAR date__ = MIN(DimDate[Date])
+			RETURN
+			    CALCULATE(
+			        [Variance],
+			        USERELATIONSHIP(DimDate[Date], RptPosAnalytics[FormatedEffectiveDt]),
+			        REMOVEFILTERS(RptPosAnalytics[FormatedEffectiveDt]),  // Replace AnotherColumn with the column related to the relationship you want to disable
+			        FILTER(
+			            RptPosAnalytics,
+			            RptPosAnalytics[FormatedEffectiveDt] = date__
+			        )
+			    )
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 2a643dd8-249e-4dc2-997f-bbdbda579716
+
+	measure #Analytics_1 =
+			VAR date__ = FORMAT(MIN(DimDate[Date]), "YYYY-MM-DD")
+			RETURN
+			    COALESCE(CALCULATE(
+			        //[Variance],
+			        MIN(RptPosAnalytics[FormatedEffectiveDt]),
+			        FILTER(
+			            RptPosAnalytics,
+			            TRIM(FORMAT(RptPosAnalytics[FormatedEffectiveDt], "YYYY-MM-DD")) = "2025-12-08"
+			        )
+			    ), "Nothing!!")
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 454886ed-1eac-4c9e-97dc-da7fc8c7a523
+
+	measure Analytics_New = ```
+			VAR date__ = MIN(DimDate[Date])
+			var PrimaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[PFBMCode])
+			var SecondaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[VariancePFBMCode])
+			var PFBMType__ = MIN('RptPortfolioBenchmarkVariance'[Type])
+			
+			var PrimaryData__ = CALCULATE(SUMX('DimAggregationMetric',
+			 IF ('DimAggregationMetric'[Formula] = "SUM", SUM('RptPosAnalytics'[UnPivotValue]),
+			     IF( 'DimAggregationMetric'[Formula] = "AVERAGE" , AVERAGE('RptPosAnalytics'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "MAX" , MAX('RptPosAnalytics'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "MIN" , MIN('RptPosAnalytics'[UnPivotValue])) ) ) )
+			
+			),RptPosAnalytics[EffectiveDt] = date__
+			        
+			,FILTER(RptPosAnalytics,RptPosAnalytics[PFBMCode] IN PrimaryPf__)
+			)
+			
+			var SecondaryData__ = 
+			IF (PFBMType__ = "3-Variance", 
+			CALCULATE(sumx('DimAggregationMetric',
+			 IF ('DimAggregationMetric'[Formula] = "SUM", SUM('RptPosAnalytics'[UnPivotValue]),
+			     IF( 'DimAggregationMetric'[Formula] = "AVERAGE" , AVERAGE('RptPosAnalytics'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "MAX" , MAX('RptPosAnalytics'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "MIN" , MIN('RptPosAnalytics'[UnPivotValue])) ) ))
+			
+			),RptPosAnalytics[EffectiveDt] = date__
+			,FILTER(RptPosAnalytics,RptPosAnalytics[PFBMCode] in SecondaryPf__)
+			)
+			,0
+			)
+			
+			RETURN  IF (
+			        NOT ISBLANK ( PrimaryData__ ) && NOT ISBLANK ( SecondaryData__ ),
+			        PrimaryData__ - SecondaryData__ 
+			    )
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: c826ad74-5d0a-4dc4-8b91-4a49368f764f
+
+	measure Variance1 = ```
+			var PrimaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[PFBMCode])
+			var SecondaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[VariancePFBMCode])
+			var PFBMType__ = MIN('RptPortfolioBenchmarkVariance'[Type])
+			
+			var PrimaryData__ = CALCULATE(SUMX (
+			'DimAggregationMetric' ,
+			 IF ('DimAggregationMetric'[Formula] = "SUM", SUM('RptPosAnalytics'[UnPivotValue]),
+			     IF( 'DimAggregationMetric'[Formula] = "AVERAGE" , AVERAGE('RptPosAnalytics'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "MAX" , MAX('RptPosAnalytics'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "MIN" , MIN('RptPosAnalytics'[UnPivotValue])) ) ) 
+			
+			))
+			,FILTER(RptPosAnalytics,RptPosAnalytics[PFBMCode] IN PrimaryPf__)
+			)
+			
+			var SecondaryData__ = 
+			IF (PFBMType__ = "3-Variance", 
+			CALCULATE(SUMX (
+			'DimAggregationMetric' ,
+			 IF ('DimAggregationMetric'[Formula] = "SUM", SUM('RptPosAnalytics'[UnPivotValue]),
+			     IF( 'DimAggregationMetric'[Formula] = "AVERAGE" , AVERAGE('RptPosAnalytics'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "MAX" , MAX('RptPosAnalytics'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "MIN" , MIN('RptPosAnalytics'[UnPivotValue])) ) )
+			
+			))
+			,FILTER(RptPosAnalytics,RptPosAnalytics[PFBMCode] in SecondaryPf__)
+			)
+			,0
+			)
+			
+			RETURN  IF (
+			        NOT ISBLANK ( PrimaryData__ ) && NOT ISBLANK ( SecondaryData__ ),
+			        PrimaryData__ - SecondaryData__ 
+			    )
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 239fe046-015c-48d2-b98a-6f3726385050
+
+	measure CashValue =
+			VAR date__ = FORMAT(MIN(DimDate[Date]), "YYYY-MM-DD")
+			RETURN
+			CALCULATE(
+			    SUM(FactPosition[MarketValue]),
+			    FactPosition[Identifier] = "0000",
+			    FORMAT(FactPosition[AsOfDate], "YYYY-MM-DD") = date__
+			)
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: da62b556-7f80-41ce-abdc-4c3bd2bddab8
+
+	measure '''Cash Balance''' =
+			// SELECTEDVALUE(DimDate[Date])
+			
+			CALCULATE(SUM(FactPosition[MarketValue]),TREATAS(VALUES(DimPortfolio[PortfolioCode]),FactPosition[PortfolioCode]),CROSSFILTER(DimDate[DateKey],FactPosition[DateKey],none),FORMAT(FactPosition[AsofDate],"DD-MM-YYYY")=FORMAT((min(DimDate[Date])-1),"DD-MM-YYYY"),FactPosition[Identifier]="0000")
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 5abba44b-f5bd-4f03-bb3b-fb23e62fef0d
+
+	measure '''Selected date''' = SELECTEDVALUE(DimDate[Date])-1
+		formatString: General Date
+		lineageTag: 14eba645-8a8a-4279-bf87-3d461885ca62
+
+	measure Fees =
+			// SELECTEDVALUE(DimDate[Date])
+			
+			CALCULATE(SUM(FactPosition[MarketValue]),TREATAS(VALUES(DimPortfolio[PortfolioCode]),FactPosition[PortfolioCode]),CROSSFILTER(DimDate[DateKey],FactPosition[DateKey],none),FORMAT(FactPosition[AsofDate],"DD-MM-YYYY")=FORMAT((min(DimDate[Date])-1),"DD-MM-YYYY"),FactPosition[Identifier]="000F")
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 0ac42d19-d521-4e84-aaca-57aa145e9f98
+
+	measure '''Holdings value''' = ```
+			// VAR date__ = MIN(DimDate[Date])
+			// var PrimaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[PFBMCode])
+			// var SecondaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[VariancePFBMCode])
+			// var PFBMType__ = MIN('RptPortfolioBenchmarkVariance'[Type])
+			
+			// var PrimaryData__ = CALCULATE(SUMX('DimAggregationMetric',
+			//  IF (SELECTEDVALUE('DimAggregationMetric'[Formula]) = "SUM", SUM('RptPosAnalytics'[UnPivotValue]),
+			//      IF( SELECTEDVALUE('DimAggregationMetric'[Formula]) = "AVERAGE" , AVERAGE('RptPosAnalytics'[UnPivotValue]), 
+			//      IF( SELECTEDVALUE('DimAggregationMetric'[Formula]) = "MAX" , MAX('RptPosAnalytics'[UnPivotValue]), 
+			//      IF( SELECTEDVALUE('DimAggregationMetric'[Formula]) = "MIN" , MIN('RptPosAnalytics'[UnPivotValue])) ) ) )
+			
+			// ),RptPosAnalytics[FormatedEffectiveDt] = date__
+			        
+			// ,FILTER(RptPosAnalytics,RptPosAnalytics[PFBMCode] IN PrimaryPf__)
+			// )
+			
+			// var SecondaryData__ = 
+			// IF (PFBMType__ = "3-Variance", 
+			// CALCULATE(sumx('DimAggregationMetric',
+			//  IF (SELECTEDVALUE('DimAggregationMetric'[Formula]) = "SUM", SUM('RptPosAnalytics'[UnPivotValue]),
+			//      IF( SELECTEDVALUE('DimAggregationMetric'[Formula]) = "AVERAGE" , AVERAGE('RptPosAnalytics'[UnPivotValue]), 
+			//      IF( SELECTEDVALUE('DimAggregationMetric'[Formula]) = "MAX" , MAX('RptPosAnalytics'[UnPivotValue]), 
+			//      IF( SELECTEDVALUE('DimAggregationMetric'[Formula]) = "MIN" , MIN('RptPosAnalytics'[UnPivotValue])) ) ))
+			
+			// ),RptPosAnalytics[FormatedEffectiveDt] = date__
+			// ,FILTER(RptPosAnalytics,RptPosAnalytics[PFBMCode] in SecondaryPf__)
+			// )
+			// ,0
+			// )
+			
+			// RETURN  IF (
+			//         NOT ISBLANK ( PrimaryData__ ) && NOT ISBLANK ( SecondaryData__ ),
+			//         PrimaryData__ - SecondaryData__ 
+			//     )
+			
+			
+			
+			VAR date__ =FORMAT((min(DimDate[Date])-1),"DD-MM-YYYY") 
+			var PrimaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[PFBMCode])
+			var SecondaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[VariancePFBMCode])
+			var PFBMType__ = MIN('RptPortfolioBenchmarkVariance'[Type])
+			
+			var PrimaryData__ = CALCULATE(SUMX('DimAggregationMetric',
+			 IF ('DimAggregationMetric'[Formula] = "SUM", SUM('RptPosAnalytics'[UnPivotValue]),
+			     IF( 'DimAggregationMetric'[Formula] = "AVERAGE" , AVERAGE('RptPosAnalytics'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "MAX" , MAX('RptPosAnalytics'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "MIN" , MIN('RptPosAnalytics'[UnPivotValue])) ) ) )
+			
+			),FORMAT(RptPosAnalytics[FormatedEffectiveDt],"DD-MM-YYYY")= date__
+			        
+			,FILTER(RptPosAnalytics,RptPosAnalytics[PFBMCode] IN PrimaryPf__)
+			)
+			
+			var SecondaryData__ = 
+			IF (PFBMType__ = "3-Variance", 
+			CALCULATE(sumx('DimAggregationMetric',
+			 IF ('DimAggregationMetric'[Formula] = "SUM", SUM('RptPosAnalytics'[UnPivotValue]),
+			     IF( 'DimAggregationMetric'[Formula] = "AVERAGE" , AVERAGE('RptPosAnalytics'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "MAX" , MAX('RptPosAnalytics'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "MIN" , MIN('RptPosAnalytics'[UnPivotValue])) ) ))
+			
+			),FORMAT(RptPosAnalytics[FormatedEffectiveDt],"DD-MM-YYYY")= date__
+			,FILTER(RptPosAnalytics,RptPosAnalytics[PFBMCode] in SecondaryPf__)
+			)
+			,0
+			)
+			
+			RETURN  IF (
+			        NOT ISBLANK ( PrimaryData__ ) && NOT ISBLANK ( SecondaryData__ ),
+			        PrimaryData__ - SecondaryData__ 
+			    )
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: ac026a9b-abad-4e2b-8ec5-cb52925b1a99
+
+	measure AUM = [#Analytics] + [Cash Balance] - [Fees]
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 53da3fc3-8804-4b81-a0f8-cda2dd768fda
+
+	measure Anaytics_V1 = ```
+			VAR date__ = MIN(DimDate[Date])
+			var PrimaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[PFBMCode])
+			var SecondaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[VariancePFBMCode])
+			var PFBMType__ = MIN('RptPortfolioBenchmarkVariance'[Type])
+			
+			var PrimaryData__ = CALCULATE(SUMX('DimAggregationMetric',
+			 IF ('DimAggregationMetric'[Formula] = "SUM", SUM('RptPosAnalytics'[UnPivotValue]),
+			     IF( 'DimAggregationMetric'[Formula] = "AVERAGE" , AVERAGE('RptPosAnalytics'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "MAX" , MAX('RptPosAnalytics'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "MIN" , MIN('RptPosAnalytics'[UnPivotValue])) ) ) )
+			
+			),RptPosAnalytics[EffectiveDt] = date__
+			        
+			,FILTER(RptPosAnalytics,RptPosAnalytics[PFBMCode] IN PrimaryPf__)
+			)
+			
+			var SecondaryData__ = 
+			IF (PFBMType__ = "3-Variance", 
+			CALCULATE(sumx('DimAggregationMetric',
+			 IF ('DimAggregationMetric'[Formula] = "SUM", SUM('RptPosAnalytics'[UnPivotValue]),
+			     IF( 'DimAggregationMetric'[Formula] = "AVERAGE" , AVERAGE('RptPosAnalytics'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "MAX" , MAX('RptPosAnalytics'[UnPivotValue]), 
+			     IF( 'DimAggregationMetric'[Formula] = "MIN" , MIN('RptPosAnalytics'[UnPivotValue])) ) ))
+			
+			), RptPosAnalytics[EffectiveDt] = date__
+			,FILTER(RptPosAnalytics,RptPosAnalytics[PFBMCode] in SecondaryPf__)
+			)
+			,0
+			)
+			
+			RETURN  IF (
+			        NOT ISBLANK ( PrimaryData__ ) && NOT ISBLANK ( SecondaryData__ ),
+			        PrimaryData__ - SecondaryData__ 
+			    )
+			```
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 59e4acbc-a7ca-4e64-8b19-8cc75afa0a88
+
+	measure #Analytics_test =
+			VAR date__ = FORMAT(MIN(DimDate[Date]), "YYYY-MM-DD")
+			// RETURN
+			//     CALCULATE(
+			//         [Variance],
+			//         FILTER(
+			//             RptPosAnalytics,
+			//             FORMAT(RptPosAnalytics[EffectiveDt], "YYYY-MM-DD") = date__
+			//         )
+			//     )
+			RETURN FORMAT(MIN(RptPosAnalytics[EffectiveDt]), "YYYY-MM-DD")
+		lineageTag: 2def5782-5234-4411-bcb6-35d3d7fc0287
+
+	measure '''Total Market Value GOS100''' =
+			CALCULATE(
+			    SUM(RptPosAnalytics[UnPivotValue]),
+			    RptPosAnalytics[Metric] = "HoldingsMarketValue",
+			    RptPosAnalytics[PFBMCode] = "GOS100",
+			    RptPosAnalytics[EffectiveDt] = MAX(RptPosAnalytics[EffectiveDt])
+			)
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 8ac33312-7738-408c-8712-5f27ddc6c867
+
+	measure VarianceTest =
+			VAR PrimaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[PFBMCode])
+			VAR SecondaryPf__ = VALUES('RptPortfolioBenchmarkVariance'[VariancePFBMCode])
+			VAR PFBMType__ = MIN('RptPortfolioBenchmarkVariance'[Type])
+			
+			VAR PrimaryData__ =
+			    CALCULATE(
+			        SUMX(
+			            'DimAggregationMetric',
+			            SWITCH(
+			                TRUE(),
+			                'DimAggregationMetric'[Formula] = "SUM", SUM('RptPosAnalytics'[UnPivotValue]),
+			                'DimAggregationMetric'[Formula] = "AVERAGE", AVERAGE('RptPosAnalytics'[UnPivotValue]),
+			                'DimAggregationMetric'[Formula] = "MAX", MAX('RptPosAnalytics'[UnPivotValue]),
+			                'DimAggregationMetric'[Formula] = "MIN", MIN('RptPosAnalytics'[UnPivotValue]),
+			                0
+			            )
+			        ),
+			        FILTER(RptPosAnalytics, RptPosAnalytics[PFBMCode] IN PrimaryPf__)
+			    )
+			
+			VAR SecondaryData__ =
+			    IF(
+			        PFBMType__ = "3-Variance",
+			        CALCULATE(
+			            SUMX(
+			                'DimAggregationMetric',
+			                SWITCH(
+			                    TRUE(),
+			                    'DimAggregationMetric'[Formula] = "SUM", SUM('RptPosAnalytics'[UnPivotValue]),
+			                    'DimAggregationMetric'[Formula] = "AVERAGE", AVERAGE('RptPosAnalytics'[UnPivotValue]),
+			                    'DimAggregationMetric'[Formula] = "MAX", MAX('RptPosAnalytics'[UnPivotValue]),
+			                    'DimAggregationMetric'[Formula] = "MIN", MIN('RptPosAnalytics'[UnPivotValue]),
+			                    0
+			                )
+			            ),
+			            FILTER(RptPosAnalytics, RptPosAnalytics[PFBMCode] IN SecondaryPf__)
+			        ),
+			        0
+			    )
+			
+			RETURN
+			    IF(
+			        NOT ISBLANK(PrimaryData__) && NOT ISBLANK(SecondaryData__),
+			        PrimaryData__ - SecondaryData__
+			    )
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 084dd190-366e-4499-aec8-93461a304bf9
+
+	measure #AnalyticsTest =
+			VAR date__ = FORMAT(MIN(DimDate[Date]), "YYYY-MM-DD")
+			RETURN
+			    CALCULATE(
+			        [VarianceTest],
+			        FILTER(
+			            RptPosAnalytics,
+			            FORMAT(RptPosAnalytics[EffectiveDt], "YYYY-MM-DD") = date__
+			        )
+			    )
+		formatString: \$#,0.###############;(\$#,0.###############);\$#,0.###############
+		lineageTag: 2d3373e0-e31d-4541-a963-c283a0c136bf
+
+	measure TestPrimaryPf = CONCATENATEX(VALUES('RptPortfolioBenchmarkVariance'[PFBMCode]), 'RptPortfolioBenchmarkVariance'[PFBMCode], ", ")
+		lineageTag: 62049a85-d782-4479-bf9d-3d1d1e4be509
+
+	measure #AnalyticsCombined =
+			VAR date__ = MIN(DimDate[Date])
+			RETURN
+			    CALCULATE(
+			        [Variance],
+			        FILTER(
+			            RptPosAnalytics,
+			            RptPosAnalytics[FormatedEffectiveDt] = date__
+			        )
+			    )
+		formatString: "£"#,0.###############;-"£"#,0.###############;"£"#,0.###############
+		lineageTag: a74f156b-473f-4ec9-9d90-0ba1ddbd3f03
+
+	measure TestDate = FORMAT(MIN(DimDate[Date]), "YYYY-MM-DD")
+		lineageTag: 8914253f-4351-44ad-a2fb-92029570fff1
+
+	measure TestEffDt = FORMAT(MAX(RptPosAnalytics[FormatedEffectiveDt]), "YYYY-MM-DD")
+		lineageTag: 76b02ce9-8ea6-4037-9678-fc79fbe18c86
+
+	measure #VarianceTest =
+			VAR date__ = FORMAT(MIN(DimDate[Date]), "YYYY-MM-DD")
+			RETURN
+			    CALCULATE(
+			        [Variance],
+			        FILTER(
+			            RptPosAnalytics,
+			            FORMAT(RptPosAnalytics[FormatedEffectiveDt], "YYYY-MM-DD") = date__
+			        )
+			    )
+		formatString: "£"#,0.###############;-"£"#,0.###############;"£"#,0.###############
+		lineageTag: 4e3ba278-38b8-41dc-af0e-8b3dfdcdc43f
+
+	column Description
+		dataType: string
+		lineageTag: 5c1343ed-0291-4968-8b78-b7a8bea36550
+		sourceColumn: Description
+
+	partition AllMeasures-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="AllMeasures"]}[Data]
+				in
+				    Nav
+

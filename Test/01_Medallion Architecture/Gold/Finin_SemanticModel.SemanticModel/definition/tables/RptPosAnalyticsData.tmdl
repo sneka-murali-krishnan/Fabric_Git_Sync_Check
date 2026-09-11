@@ -1,0 +1,377 @@
+table RptPosAnalyticsData
+	lineageTag: ca9559e9-f4be-4a76-8b87-12762cc151f1
+
+	column PosAnalyticsDataKey
+		dataType: int64
+		lineageTag: 9c433b59-f7a8-4111-bc9e-ba69b860f99f
+		sourceColumn: PosAnalyticsDataKey
+
+	column SecurityKey
+		dataType: int64
+		lineageTag: dd8b6627-0b74-44c1-b7db-a78b41e97247
+		sourceColumn: SecurityKey
+
+	column Coupon
+		dataType: decimal
+		lineageTag: 5005d2b2-e7a0-451f-a4d9-fcef6a84bb90
+		sourceColumn: Coupon
+
+	column LinkAssetClassKey
+		dataType: int64
+		lineageTag: f48d85cd-9557-49cc-b8b9-c75cc4e6f4f2
+		sourceColumn: LinkAssetClassKey
+
+	column AssetClassName
+		dataType: string
+		lineageTag: e8fb3fee-9bf6-4297-940a-481670a37f78
+		sourceColumn: AssetClassName
+
+	column LinkSecurityTypeKey
+		dataType: int64
+		lineageTag: 89611885-fa24-4b8f-8636-9053591bb1ae
+		sourceColumn: LinkSecurityTypeKey
+
+	column CurrencyKey
+		dataType: int64
+		lineageTag: a1eb77ed-c0e3-471f-8962-f2bd5f19fd68
+		sourceColumn: CurrencyKey
+
+	column CountryKey
+		dataType: int64
+		lineageTag: 95a3d80e-d056-47d7-bc4a-7b34635355b5
+		sourceColumn: CountryKey
+
+	column ShortName
+		dataType: string
+		lineageTag: aaf5ccf5-0fca-42ab-8a74-9f2fe4e23036
+		sourceColumn: ShortName
+
+	column LongName
+		dataType: string
+		lineageTag: 9882df1b-96e8-4c4f-95a8-6f48ec87ead4
+		sourceColumn: LongName
+
+	column SecurityDescription
+		dataType: string
+		lineageTag: 7e322d76-1f8d-4f21-9f1a-b758d59ce7f6
+		sourceColumn: SecurityDescription
+
+	column SourceSystemKey
+		dataType: int64
+		lineageTag: 687138c3-8694-4507-8445-c09b680ef522
+		sourceColumn: SourceSystemKey
+
+	column IndustryGICS
+		dataType: string
+		lineageTag: e50cb426-e94c-48b5-b45a-8057724cd72a
+		sourceColumn: IndustryGICS
+
+	column SubindustryGICS
+		dataType: string
+		lineageTag: 20bdb97d-cfd0-4cae-abf1-606197f90e47
+		sourceColumn: SubindustryGICS
+
+	column SectorGICS
+		dataType: string
+		lineageTag: eb8b88b0-d8d2-4425-b2e1-fe30a8073264
+		sourceColumn: SectorGICS
+
+	column IndustryGroupGICS
+		dataType: string
+		lineageTag: f19c5454-f76c-4d32-a200-83809e5bb90a
+		sourceColumn: IndustryGroupGICS
+
+	column SubSectorGICS
+		dataType: string
+		lineageTag: c473e7c3-3bc2-4902-8d35-99b6ac7688e3
+		sourceColumn: SubSectorGICS
+
+	column EffectiveDt
+		dataType: dateTime
+		lineageTag: a4ea67fd-a0a2-4abb-8e82-29a0043e8f6a
+		sourceColumn: EffectiveDt
+
+	column PriceStartDay
+		dataType: decimal
+		lineageTag: 74cd9e12-a205-48a2-8d04-87e94cf19f9a
+		sourceColumn: PriceStartDay
+
+	column PriceLastEOD
+		dataType: decimal
+		lineageTag: aaaa2c3b-6df5-4f81-b041-007268148faf
+		sourceColumn: PriceLastEOD
+
+	column DividendYield
+		dataType: decimal
+		lineageTag: 5e6abbed-1a95-4719-88fc-47f9eac47d41
+		sourceColumn: DividendYield
+
+	column DividendAmount
+		dataType: decimal
+		lineageTag: cfb8a9fc-ed87-42c9-83ff-878bf64b81aa
+		sourceColumn: DividendAmount
+
+	column NextDividendPaydate
+		dataType: dateTime
+		lineageTag: 852f2637-8f02-4ab6-81b1-60a8dd4a44a5
+		sourceColumn: NextDividendPaydate
+
+	column LastDividendPaydate
+		dataType: dateTime
+		lineageTag: f85b8752-dbc9-4450-89d9-405c7d74374b
+		sourceColumn: LastDividendPaydate
+
+	column FiftyTwoWeekHigh
+		dataType: decimal
+		lineageTag: 097811ba-e999-4313-8fc6-ee0c0d950858
+		sourceColumn: FiftyTwoWeekHigh
+
+	column FiftyTwoWeekLow
+		dataType: decimal
+		lineageTag: 5adc6ef6-cabf-487e-97b6-80cc8a81e0e7
+		sourceColumn: FiftyTwoWeekLow
+
+	column CurrentYearHigh
+		dataType: decimal
+		lineageTag: 53dc388f-2362-4409-8c42-7da908aa2174
+		sourceColumn: CurrentYearHigh
+
+	column CurrentYearLow
+		dataType: decimal
+		lineageTag: c7248315-163c-4945-9189-161d5fd10088
+		sourceColumn: CurrentYearLow
+
+	column MarketPrice
+		dataType: decimal
+		lineageTag: 01cfecd4-4ce1-4694-9dbf-67eb4017278e
+		sourceColumn: MarketPrice
+
+	column Factor
+		dataType: decimal
+		lineageTag: b965e858-0fd2-4cd1-83e5-4d97d8873a96
+		sourceColumn: Factor
+
+	column OneMCPR
+		dataType: decimal
+		lineageTag: 8c104de4-4031-48c9-9af9-2e022b18f10a
+		sourceColumn: OneMCPR
+
+	column ThreeMCPR
+		dataType: decimal
+		lineageTag: f88c61da-d069-4dfc-88c3-f4c4e79f0d68
+		sourceColumn: ThreeMCPR
+
+	column SixMCPR
+		dataType: decimal
+		lineageTag: 083fc9e6-2a7c-43c1-8f13-b6fd83aa80b8
+		sourceColumn: SixMCPR
+
+	column TwelveMCPR
+		dataType: decimal
+		lineageTag: 94887933-37e5-40e2-a675-0aa005f69737
+		sourceColumn: TwelveMCPR
+
+	column DTC
+		dataType: decimal
+		lineageTag: 96633e4c-d5af-4b72-9381-b72705a64180
+		sourceColumn: DTC
+
+	column KeyRateDur6M
+		dataType: decimal
+		lineageTag: 178bd5ca-93e9-447f-a532-8baa0387f7e5
+		sourceColumn: KeyRateDur6M
+
+	column KeyRateDur1Yr
+		dataType: decimal
+		lineageTag: 60ddde51-88f3-4da7-8e7c-4de7d63727b9
+		sourceColumn: KeyRateDur1Yr
+
+	column KeyRateDur2y
+		dataType: decimal
+		lineageTag: f6bdbecc-1cf9-4e18-9014-034bbfd136df
+		sourceColumn: KeyRateDur2y
+
+	column KeyRateDur3y
+		dataType: decimal
+		lineageTag: 2c31f18c-51af-4f95-847f-5a563fb6c60f
+		sourceColumn: KeyRateDur3y
+
+	column KeyRateDur5y
+		dataType: decimal
+		lineageTag: b3df14c1-8b21-4719-ba0f-be6a3386842f
+		sourceColumn: KeyRateDur5y
+
+	column KeyRateDur7y
+		dataType: decimal
+		lineageTag: 0d69cee6-93b2-4c2a-82d0-bc852c3e63c6
+		sourceColumn: KeyRateDur7y
+
+	column KeyRateDur10y
+		dataType: decimal
+		lineageTag: 3e118e17-77d4-4f27-adfb-056520dc7495
+		sourceColumn: KeyRateDur10y
+
+	column WAC
+		dataType: decimal
+		lineageTag: da206937-f820-43e9-88f3-f29d6f467bf8
+		sourceColumn: WAC
+
+	column WAM
+		dataType: decimal
+		lineageTag: 730ffc23-cc11-4de6-b7e1-6e7fada6af44
+		sourceColumn: WAM
+
+	column ModifiedDur
+		dataType: decimal
+		lineageTag: f8631d50-d262-4be3-9bf8-c4c7c1167e82
+		sourceColumn: ModifiedDur
+
+	column SpreadDur
+		dataType: decimal
+		lineageTag: 01eab299-f4dc-48c1-955e-906096b5ab3e
+		sourceColumn: SpreadDur
+
+	column OAS
+		dataType: decimal
+		lineageTag: 53dafd68-8889-4e4a-bcca-ee99adedcf09
+		sourceColumn: OAS
+
+	column Convexity
+		dataType: decimal
+		lineageTag: 25687065-6b52-4b4d-ac91-5e0748b6be32
+		sourceColumn: Convexity
+
+	column AdjustedDur
+		dataType: decimal
+		lineageTag: a2083a32-6682-4a3b-9f37-6faf2d06cd5c
+		sourceColumn: AdjustedDur
+
+	column YTM
+		dataType: decimal
+		lineageTag: dd9fc7cd-9d21-4926-8cae-b3dbdc6113ed
+		sourceColumn: YTM
+
+	column FIGI
+		dataType: string
+		lineageTag: f4b483a4-c824-4102-a712-ee2f1662ef39
+		sourceColumn: FIGI
+
+	column SYMBOL
+		dataType: string
+		lineageTag: 797eb1f1-8109-4094-af37-1e978a7c1886
+		sourceColumn: SYMBOL
+
+	column CUSIP
+		dataType: string
+		lineageTag: 65ae7f3e-a49b-43e8-9d44-4d7de16f9060
+		sourceColumn: CUSIP
+
+	column ISIN
+		dataType: string
+		lineageTag: fd87e02b-abba-4313-8138-6c178a222825
+		sourceColumn: ISIN
+
+	column SEDOL
+		dataType: string
+		lineageTag: 4d1480f3-0187-4857-871a-a6d0c6793b20
+		sourceColumn: SEDOL
+
+	column PE
+		dataType: decimal
+		lineageTag: cd14a2b5-e537-461d-b523-fc53b740e462
+		sourceColumn: PE
+
+	column Beta
+		dataType: decimal
+		lineageTag: 636007fc-acf0-4c72-83e8-159e862472e1
+		sourceColumn: Beta
+
+	column Identifier
+		dataType: string
+		lineageTag: 59362002-7c59-4b5e-a892-58fd88580c74
+		sourceColumn: Identifier
+
+	column ENV
+		dataType: decimal
+		lineageTag: fae6dbe2-6d37-4469-85ae-d8e68ec3f0da
+		sourceColumn: ENV
+
+	column SOC
+		dataType: decimal
+		lineageTag: b027cd6b-2577-41c3-ad67-9fde9c56dfba
+		sourceColumn: SOC
+
+	column GOV
+		dataType: decimal
+		lineageTag: a3aae15f-d9f6-45a4-8072-22535bcaefae
+		sourceColumn: GOV
+
+	column ESG
+		dataType: decimal
+		lineageTag: 4a04dfa7-e9d9-4a22-9617-6dbfb7f2395e
+		sourceColumn: ESG
+
+	column Ratings
+		dataType: decimal
+		lineageTag: 5b4ee9ec-a1d8-488a-a018-e9fd97d0c4ce
+		sourceColumn: Ratings
+
+	column PFBMCode
+		dataType: string
+		lineageTag: b505fbb3-91a0-470c-8265-09f78f7209af
+		sourceColumn: PFBMCode
+
+	column PFBMSecurityKey
+		dataType: int64
+		lineageTag: 42673da1-4e85-4db5-babb-131996f92c7f
+		sourceColumn: PFBMSecurityKey
+
+	column AsOfDate
+		dataType: dateTime
+		lineageTag: a3490877-7330-4d04-9135-45cb139318dd
+		sourceColumn: AsOfDate
+
+	column Quantity
+		dataType: decimal
+		lineageTag: 9a8d842f-f8ce-4127-b086-884e3656b0dd
+		sourceColumn: Quantity
+
+	column IsPortfolio
+		dataType: int64
+		lineageTag: d3e0d8f8-b49d-45eb-8159-55e00cc0df3d
+		sourceColumn: IsPortfolio
+
+	column HoldingsMarketValue
+		dataType: decimal
+		lineageTag: a4d36f86-eb47-453a-b5c6-18dfb239f530
+		sourceColumn: HoldingsMarketValue
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 16727874-7f0b-44f0-92a2-a8da55e6bc2b
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: 02449b5d-325f-4308-ab62-b14a4136d803
+		sourceColumn: CreatedDate
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: 9802cfbd-f834-47f8-b87e-7a1990998373
+		sourceColumn: UpdatedBy
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: bcbb62dc-60d9-432d-985a-ed2d4854ec1b
+		sourceColumn: UpdatedDate
+
+	partition RptPosAnalyticsData-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="RptPosAnalyticsData"]}[Data]
+				in
+				    Nav
+

@@ -1,0 +1,52 @@
+table DimCurrency
+	lineageTag: d9eea757-f9e8-4bc4-9953-6522a9ee8166
+
+	column CurrencyKey
+		dataType: int64
+		lineageTag: 2e4c6575-beae-4501-af53-6af8a0cadd65
+		sourceColumn: CurrencyKey
+
+	column CurrencyId
+		dataType: string
+		lineageTag: a7392eb0-f899-4dbf-8559-d6624b2a1ab2
+		sourceColumn: CurrencyId
+
+	column Code
+		dataType: string
+		lineageTag: 23605474-696f-4373-85fd-2ec36daf2f5f
+		sourceColumn: Code
+
+	column Description
+		dataType: string
+		lineageTag: c9314c9b-a5b4-45c6-a62f-b350418bf29a
+		sourceColumn: Description
+
+	column CreatedBy
+		dataType: string
+		lineageTag: ac738a92-ae42-42b7-915d-f75dc5632409
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: 9685ed76-ebdb-4010-ad2f-2003f7635e88
+		sourceColumn: CreatedDate
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: b0d8ebab-a38b-46f4-8e27-3ee6a3f5f442
+		sourceColumn: UpdatedBy
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: 790a11dc-9fd8-4688-89f8-08e610823317
+		sourceColumn: UpdatedDate
+
+	partition DimCurrency-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimCurrency"]}[Data]
+				in
+				    Nav
+

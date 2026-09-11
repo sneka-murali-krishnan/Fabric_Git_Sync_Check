@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "DataPipeline",
+    "displayName": "FininSecondSource_01_PL_SQL_ConfigCreation"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "c0f18849-8a7a-aa37-4591-1a98958a4f6f"
+  }
+}

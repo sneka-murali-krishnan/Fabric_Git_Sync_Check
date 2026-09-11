@@ -1,0 +1,162 @@
+table FactDollarAnalytics
+	lineageTag: 203e4eac-770f-434e-8471-cdfaeb3b528e
+
+	column AnalyticsKey
+		dataType: int64
+		lineageTag: b3c17b01-2d8c-4701-9acf-c77ebb25340a
+		sourceColumn: AnalyticsKey
+
+	column SecurityKey
+		dataType: int64
+		lineageTag: 0b906091-a35e-41eb-9d1a-25af2f041a45
+		sourceColumn: SecurityKey
+
+	column CustomAssetClassKey
+		dataType: int64
+		lineageTag: 68580764-74fa-4363-8ba8-f2af2f1fe2b8
+		sourceColumn: CustomAssetClassKey
+
+	column CustomSecurityTypeKey
+		dataType: int64
+		lineageTag: b1a8e757-d73e-4b23-a98c-e95e78ecef09
+		sourceColumn: CustomSecurityTypeKey
+
+	column CurrencyKey
+		dataType: int64
+		lineageTag: 140b5e34-e141-4aaa-8cb1-bcafd4bed809
+		sourceColumn: CurrencyKey
+
+	column CountryKey
+		dataType: int64
+		lineageTag: b9e1600d-280f-4725-91db-4342679814ea
+		sourceColumn: CountryKey
+
+	column SourceSystemKey
+		dataType: int64
+		lineageTag: 1c536e1f-d522-40f7-aa12-a93153d573e2
+		sourceColumn: SourceSystemKey
+
+	column DateKey
+		dataType: int64
+		lineageTag: e9c3531e-a59a-43cd-991b-56792ec1d2c6
+		sourceColumn: DateKey
+
+	column EffectiveDt
+		dataType: dateTime
+		lineageTag: 738d372f-d0ad-45ec-8a76-41de81f65597
+		sourceColumn: EffectiveDt
+
+	column NextDividendPaydate
+		dataType: dateTime
+		lineageTag: 0d506fc0-f897-41d1-b3a4-8481c90e82d3
+		sourceColumn: NextDividendPaydate
+
+	column LastDividendPaydate
+		dataType: dateTime
+		lineageTag: 05422212-2c99-459a-8661-10a268cd4b52
+		sourceColumn: LastDividendPaydate
+
+	column PriceStartDay
+		dataType: decimal
+		lineageTag: 2c6d5480-ebd2-40bf-8819-15a17c07acab
+		sourceColumn: PriceStartDay
+
+	column PriceLastEOD
+		dataType: decimal
+		lineageTag: 23b2cb15-64fc-4a21-8b2e-c6aba2cb3c30
+		sourceColumn: PriceLastEOD
+
+	column DividendYield
+		dataType: decimal
+		lineageTag: 192464f1-c615-4db4-bf92-ce0c70edb566
+		sourceColumn: DividendYield
+
+	column DividendAmount
+		dataType: decimal
+		lineageTag: 91b76bf2-1f7e-402d-bd7c-5e1de0b53087
+		sourceColumn: DividendAmount
+
+	column FiftyTwoWeekHigh
+		dataType: decimal
+		lineageTag: 7c98693a-7da9-46d4-ae3a-4d6a9ab3e08b
+		sourceColumn: FiftyTwoWeekHigh
+
+	column FiftyTwoWeekLow
+		dataType: decimal
+		lineageTag: 2543777d-8a62-42ee-b800-3940d8655f51
+		sourceColumn: FiftyTwoWeekLow
+
+	column CurrentYearHigh
+		dataType: decimal
+		lineageTag: 5f79e303-ace8-484f-8b25-7c9a4d78af94
+		sourceColumn: CurrentYearHigh
+
+	column CurrentYearLow
+		dataType: decimal
+		lineageTag: 14cf4dfc-728d-4fdc-8e71-7188b14b3b3d
+		sourceColumn: CurrentYearLow
+
+	column MarketPrice
+		dataType: decimal
+		lineageTag: c010d599-e7c2-481c-bd85-6a4f288ba89e
+		sourceColumn: MarketPrice
+
+	column Factor
+		dataType: decimal
+		lineageTag: 6ea09303-997b-4d1a-a4ab-cada7f5e40ea
+		sourceColumn: Factor
+
+	column OneMCPR
+		dataType: decimal
+		lineageTag: 4277c326-8560-4079-b07f-bdf33073052c
+		sourceColumn: OneMCPR
+
+	column ThreeMCPR
+		dataType: decimal
+		lineageTag: 811251ee-de33-4d59-bb64-b59c39076e31
+		sourceColumn: ThreeMCPR
+
+	column SixMCPR
+		dataType: decimal
+		lineageTag: c2bbf822-f477-41bd-a0a9-0102476e82d4
+		sourceColumn: SixMCPR
+
+	column TwelveMCPR
+		dataType: decimal
+		lineageTag: 51fa3593-623c-4297-8aa6-4f1b685e3c1c
+		sourceColumn: TwelveMCPR
+
+	column DTC
+		dataType: decimal
+		lineageTag: 63f08e8c-dd36-4d9c-9c2c-cd2dfa48f97a
+		sourceColumn: DTC
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 1c9b8c75-fe5a-40dc-bfd6-3e1e56333e7a
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: 81395257-663e-411d-a3c2-c94e51ac59e3
+		sourceColumn: CreatedDate
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: 711ea0c3-1f76-459f-899f-0f46681d58d7
+		sourceColumn: UpdatedBy
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: 56abdb1d-57ab-498f-b2ac-6d673d11fa13
+		sourceColumn: UpdatedDate
+
+	partition FactDollarAnalytics-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="FactDollarAnalytics"]}[Data]
+				in
+				    Nav
+

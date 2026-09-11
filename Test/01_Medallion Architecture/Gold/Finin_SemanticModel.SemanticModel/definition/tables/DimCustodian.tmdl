@@ -1,0 +1,57 @@
+table DimCustodian
+	lineageTag: 59ef9a3f-5b54-4cf0-9b92-a1a57c0c6c48
+
+	column CustodianKey
+		dataType: int64
+		lineageTag: 95b4cb2d-a1a7-454c-99b0-92af3c2cf580
+		sourceColumn: CustodianKey
+
+	column CustodianId
+		dataType: string
+		lineageTag: 22aedd77-de1d-49d8-89cd-d07975966eeb
+		sourceColumn: CustodianId
+
+	column Code
+		dataType: string
+		lineageTag: 7a57b065-9650-401a-89b4-6f2d0dd622e5
+		sourceColumn: Code
+
+	column Name
+		dataType: string
+		lineageTag: f885be26-9437-4cd0-ba3f-c0182b96f47b
+		sourceColumn: Name
+
+	column DTCCode
+		dataType: string
+		lineageTag: cbf9251d-b75b-4a7f-bf41-eb5f0298dada
+		sourceColumn: DTCCode
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 45d84075-45e9-4e9d-b65f-f05e81db950f
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: 1f83878c-b6bb-45c3-8d96-04a41faa102e
+		sourceColumn: CreatedDate
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: bd6d81f8-932d-4da0-a172-6d8ebcba1274
+		sourceColumn: UpdatedBy
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: 77e79b8a-9270-493d-8454-3b639719892c
+		sourceColumn: UpdatedDate
+
+	partition DimCustodian-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimCustodian"]}[Data]
+				in
+				    Nav
+

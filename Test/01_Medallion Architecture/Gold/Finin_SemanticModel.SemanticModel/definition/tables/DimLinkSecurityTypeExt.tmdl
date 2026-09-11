@@ -1,0 +1,17 @@
+table DimLinkSecurityTypeExt
+	lineageTag: d1a9e1f2-ae68-4165-9be9-f8dfa591985c
+
+	column LinkSecurityTypeKey
+		dataType: int64
+		lineageTag: e1fffcd9-9c12-4d5d-b6fe-15a5f7844006
+		sourceColumn: LinkSecurityTypeKey
+
+	partition DimLinkSecurityTypeExt-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimLinkSecurityTypeExt"]}[Data]
+				in
+				    Nav
+

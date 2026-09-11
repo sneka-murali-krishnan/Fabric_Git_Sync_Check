@@ -1,0 +1,92 @@
+table DimAggregationMetric
+	lineageTag: 2cb25986-87dc-4dff-bfcc-5fc9bd3e49f1
+
+	column AggregationMetricKey
+		dataType: int64
+		lineageTag: f86481fc-69f2-40ad-a8b2-40b8224bf7fb
+		sourceColumn: AggregationMetricKey
+
+	column MetricCode
+		dataType: string
+		lineageTag: e1d63e2d-00db-4ce0-98cd-7d4ea9543e7a
+		sourceColumn: MetricCode
+
+	column MetricName
+		dataType: string
+		lineageTag: 076f33d3-1469-4bd7-8fe0-cb2dde3ec400
+		sourceColumn: MetricName
+
+	column MetricGroup
+		dataType: string
+		lineageTag: 4fce4049-112b-4789-bf1c-4502df43b0e5
+		sourceColumn: MetricGroup
+
+	column MetricDisplayName
+		dataType: string
+		lineageTag: ab96b054-4344-4216-8e6c-eef37fce2284
+		sourceColumn: MetricDisplayName
+
+	column MetricLabel
+		dataType: string
+		lineageTag: e2661b09-230e-4a3e-95e9-3ca10ceb3b90
+		sourceColumn: MetricLabel
+
+	column AggregationCode
+		dataType: string
+		lineageTag: a966b709-8672-43b4-bdf3-47b441598b4f
+		sourceColumn: AggregationCode
+
+	column AggregationName
+		dataType: string
+		lineageTag: 63e69132-9f2a-4fef-90fd-a68cbb04217e
+		sourceColumn: AggregationName
+
+	column AggregationType
+		dataType: string
+		lineageTag: 3e2875f0-7605-47a9-9f58-d93cbc8e5d41
+		sourceColumn: AggregationType
+
+	column SortOrder
+		dataType: int64
+		lineageTag: 0f548ad3-6a5c-4f32-9361-67e6bee59c79
+		sourceColumn: SortOrder
+
+	column Formula
+		dataType: string
+		lineageTag: ded553e8-591d-4ce2-ba61-e8dd49750479
+		sourceColumn: Formula
+
+	column Source
+		dataType: string
+		lineageTag: 9642c63d-795d-4e71-a34e-049bd7737f25
+		sourceColumn: Source
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 350dec97-594e-4097-a481-645d17826d08
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: d2f512b1-3cda-49dc-bb81-c85fb5364e27
+		sourceColumn: CreatedDate
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: 127b8552-b762-4f69-8cfd-6d6946719ceb
+		sourceColumn: UpdatedBy
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: de5069f1-1099-46c8-abf4-bb93d597e00f
+		sourceColumn: UpdatedDate
+
+	partition DimAggregationMetric-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimAggregationMetric"]}[Data]
+				in
+				    Nav
+

@@ -1,0 +1,62 @@
+table RptPFBMSecurity
+	lineageTag: 0d339a58-8008-4320-a0a4-292b6215ca6b
+
+	column RptPFBMKey
+		dataType: int64
+		lineageTag: ddd9b2f1-61d3-4356-acb0-275573f7686f
+		sourceColumn: RptPFBMKey
+
+	column PFBMCode
+		dataType: string
+		lineageTag: 07b6e3c8-a785-4787-956c-144de63972bd
+		sourceColumn: PFBMCode
+
+	column AsOfDate
+		dataType: dateTime
+		lineageTag: 87614deb-d425-4c9b-87f6-e57d8b58f4d9
+		sourceColumn: AsOfDate
+
+	column SecurityKey
+		dataType: int64
+		lineageTag: c13ed012-acda-4acd-b10e-9870ae0b5682
+		sourceColumn: SecurityKey
+
+	column Quantity
+		dataType: decimal
+		lineageTag: d6c6d332-2e2e-416a-b69f-340062831055
+		sourceColumn: Quantity
+
+	column IsPortfolio
+		dataType: boolean
+		lineageTag: d565fbb7-ef73-4c4d-aa0e-0b1527e1f681
+		sourceColumn: IsPortfolio
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 2354ea17-1e63-4534-8867-34d6b5c72122
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: 2722ccc1-d611-445e-92be-7c8987b17b75
+		sourceColumn: CreatedDate
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: ebaa023e-b8ee-493c-93e7-481f4ed13708
+		sourceColumn: UpdatedBy
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: c7799610-5713-4e9b-a86e-138f1eb5aa98
+		sourceColumn: UpdatedDate
+
+	partition RptPFBMSecurity-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="RptPFBMSecurity"]}[Data]
+				in
+				    Nav
+

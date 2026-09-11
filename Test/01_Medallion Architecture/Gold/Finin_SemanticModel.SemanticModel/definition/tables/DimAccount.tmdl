@@ -1,0 +1,97 @@
+table DimAccount
+	lineageTag: a1632df1-8644-4ea1-bd65-75d687c77e4e
+
+	column AccountKey
+		dataType: int64
+		lineageTag: 5b6b9e32-7fc5-4e76-a9af-2cab4d8e292e
+		sourceColumn: AccountKey
+
+	column AccountId
+		dataType: string
+		lineageTag: 9e3e7d0e-42fd-4db3-8133-5bddc4466af5
+		sourceColumn: AccountId
+
+	column Code
+		dataType: string
+		lineageTag: c7d54a4a-ef3c-4be8-b142-336d540fc035
+		sourceColumn: Code
+
+	column Name
+		dataType: string
+		lineageTag: df3a7607-4e8e-46a6-b4a9-1dff2d487bd2
+		sourceColumn: Name
+
+	column ExternalSystemKey
+		dataType: int64
+		lineageTag: 04943f96-d4c1-45bf-95e5-b2bb9f046673
+		sourceColumn: ExternalSystemKey
+
+	column ExternalSystemAccountNumber
+		dataType: string
+		lineageTag: 0394d3b5-3dc6-45fc-a9eb-3aecdd456eac
+		sourceColumn: ExternalSystemAccountNumber
+
+	column PlanKey
+		dataType: int64
+		lineageTag: 0cb47820-58c3-4dbf-84c7-c5f8a9012047
+		sourceColumn: PlanKey
+
+	column InceptionDate
+		dataType: dateTime
+		lineageTag: 640eb6ed-bdf2-43f8-a318-ab3f791addfe
+		sourceColumn: InceptionDate
+
+	column IsActive
+		dataType: boolean
+		lineageTag: a83b8ac9-d20c-4396-b809-039fd5fd0c34
+		sourceColumn: IsActive
+
+	column TerminationDate
+		dataType: dateTime
+		lineageTag: 2a0d5e34-0ffe-4be2-bd53-7685a359a676
+		sourceColumn: TerminationDate
+
+	column CountryKey
+		dataType: int64
+		lineageTag: 0b626363-5ce5-4546-b05b-5c8fada0e1df
+		sourceColumn: CountryKey
+
+	column CurrencyKey
+		dataType: int64
+		lineageTag: 832fedd4-05bc-42a0-a6e5-6c3dedabb915
+		sourceColumn: CurrencyKey
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 6657e3f5-87a7-49d1-bd26-943c916b88d6
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: b454c8b3-013f-4c33-ba90-d819a6402523
+		sourceColumn: CreatedDate
+
+	column ModifiedBy
+		dataType: string
+		lineageTag: a4282ec7-046d-47d2-9ed8-a2d9b4b30e45
+		sourceColumn: ModifiedBy
+
+	column ModifiedDate
+		dataType: dateTime
+		lineageTag: f5310232-5ff1-470e-89d3-725f2a7b7f7d
+		sourceColumn: ModifiedDate
+
+	column ClientKey
+		dataType: int64
+		lineageTag: d1fd7ce2-97ff-4860-bf06-7d9948d4a90d
+		sourceColumn: ClientKey
+
+	partition DimAccount-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimAccount"]}[Data]
+				in
+				    Nav
+

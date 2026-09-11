@@ -1,0 +1,17 @@
+table DimCustodianExt
+	lineageTag: ad52e11a-5657-45b1-8729-1913efc58998
+
+	column CustodianKey
+		dataType: int64
+		lineageTag: b58fabb5-7b7e-4167-be34-adb84cf71cca
+		sourceColumn: CustodianKey
+
+	partition DimCustodianExt-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimCustodianExt"]}[Data]
+				in
+				    Nav
+

@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "Report",
+    "displayName": "FinIn Pro Research"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "bb360dd5-59bb-9415-4986-0d9f6edefb3d"
+  }
+}

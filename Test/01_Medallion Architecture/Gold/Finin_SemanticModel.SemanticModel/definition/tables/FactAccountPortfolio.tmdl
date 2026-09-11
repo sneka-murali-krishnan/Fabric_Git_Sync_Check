@@ -1,0 +1,67 @@
+table FactAccountPortfolio
+	lineageTag: 9ebb3e4a-cc00-4ec7-b0c9-78ef6b68b141
+
+	column PortfolioAccountKey
+		dataType: int64
+		lineageTag: 09d512df-6ee4-4cee-9081-8e5cdf8a086f
+		sourceColumn: PortfolioAccountKey
+
+	column PortfolioAccountId
+		dataType: string
+		lineageTag: 2e577d74-e9e6-49e9-b35c-ec8bdb399cac
+		sourceColumn: PortfolioAccountId
+
+	column Code
+		dataType: string
+		lineageTag: 919173a2-ff09-43e6-9554-16215355f5e5
+		sourceColumn: Code
+
+	column AccountKey
+		dataType: int64
+		lineageTag: 0168d41c-05c7-4304-8bc4-f4801590fed8
+		sourceColumn: AccountKey
+
+	column PortfolioKey
+		dataType: int64
+		lineageTag: 573d0ef0-5987-43d1-8f60-37673e73eb83
+		sourceColumn: PortfolioKey
+
+	column PlanKey
+		dataType: int64
+		lineageTag: 6dfc2752-29c1-4fbb-98f8-3f7d67a7fa43
+		sourceColumn: PlanKey
+
+	column IsActive
+		dataType: boolean
+		lineageTag: 48c8d711-5c62-4928-a341-17281edcb108
+		sourceColumn: IsActive
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 348d475b-51e7-4c08-9dc3-6ef6e92250c5
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: 9030ef1a-93de-4caf-b570-fedfb75cea46
+		sourceColumn: CreatedDate
+
+	column ModifiedBy
+		dataType: string
+		lineageTag: 518a3c25-c8c1-4f78-89b8-371060758b2e
+		sourceColumn: ModifiedBy
+
+	column ModifiedDate
+		dataType: dateTime
+		lineageTag: 29c0b5d8-4038-416d-9f5f-a2cba02ef028
+		sourceColumn: ModifiedDate
+
+	partition FactAccountPortfolio-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="FactAccountPortfolio"]}[Data]
+				in
+				    Nav
+

@@ -1,0 +1,117 @@
+table FactPosition
+	lineageTag: 130e6f3c-860a-46b1-92ab-5ba0a1af7a09
+
+	column PositionKey
+		dataType: int64
+		lineageTag: f2aa3bae-aaae-454d-b4fa-8f15caebe113
+		sourceColumn: PositionKey
+
+	column AsofDate
+		dataType: dateTime
+		lineageTag: d0955eed-f339-446d-846f-eb55e8f46ea0
+		sourceColumn: AsofDate
+
+	column PortfolioCode
+		dataType: string
+		lineageTag: 453fddf3-430e-4553-aeb9-aa193408e5c3
+		sourceColumn: PortfolioCode
+
+	column Identifier
+		dataType: string
+		lineageTag: fbb76085-3aa8-4d4d-a65f-8faaf25dcb50
+		sourceColumn: Identifier
+
+	column MarketPrice
+		dataType: decimal
+		lineageTag: 8e5a4a41-d43e-4acb-80c3-00e89e007695
+		sourceColumn: MarketPrice
+
+	column MarketValue
+		dataType: decimal
+		lineageTag: e0c6373c-39a5-408f-b48f-e68172ba9cee
+		sourceColumn: MarketValue
+
+	column OriginalFace
+		dataType: decimal
+		lineageTag: ea138fa9-c4a4-4d29-8beb-883731ae999d
+		sourceColumn: OriginalFace
+
+	column CurrentFace
+		dataType: decimal
+		lineageTag: c5e558aa-dff7-4347-8a65-169d6ff9d79f
+		sourceColumn: CurrentFace
+
+	column Quantity
+		dataType: decimal
+		lineageTag: 399703d3-f841-4593-b837-4eff93b90b17
+		sourceColumn: Quantity
+
+	column Factor
+		dataType: int64
+		lineageTag: 6749d2b9-a483-44f3-af52-fa121b78fd1e
+		sourceColumn: Factor
+
+	column AccruedInterestAmount
+		dataType: decimal
+		lineageTag: f5576c0b-c294-4412-9ca8-7c014cd88f6b
+		sourceColumn: AccruedInterestAmount
+
+	column NotionalValue
+		dataType: decimal
+		lineageTag: 717f9196-c47b-452a-876f-2ecd8bd45a67
+		sourceColumn: NotionalValue
+
+	column Coupon
+		dataType: decimal
+		lineageTag: 11bf2c7e-9d4b-4133-a470-459924419f0d
+		sourceColumn: Coupon
+
+	column TicketId
+		dataType: string
+		lineageTag: 6745ca53-5fb4-479a-989b-0b9bc6e03ad9
+		sourceColumn: TicketId
+
+	column DateKey
+		dataType: int64
+		lineageTag: ae2acdef-8d3d-4da5-b1bf-22f1c5c0dbee
+		sourceColumn: DateKey
+
+	column SecurityKey
+		dataType: int64
+		lineageTag: 627fcd79-8810-40e5-bcac-11d2720371aa
+		sourceColumn: SecurityKey
+
+	column PortfolioKey
+		dataType: int64
+		lineageTag: d176f728-d82e-4066-b12d-f12ef7372bc2
+		sourceColumn: PortfolioKey
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 5ed41c2e-339b-4a3d-87a4-62f7605802d5
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: 7f3e81ea-edfe-40b5-8218-c3bff7722ae1
+		sourceColumn: CreatedDate
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: 2a096035-4a61-4cfa-866f-0fac66cf66fb
+		sourceColumn: UpdatedBy
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: e38e5a45-46f4-427c-99b8-8c2bb8c227ba
+		sourceColumn: UpdatedDate
+
+	partition FactPosition-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="FactPosition"]}[Data]
+				in
+				    Nav
+

@@ -1,0 +1,22 @@
+table RptDatePeriod
+	lineageTag: 9187c500-2d1d-4d7c-856f-5e48131dae89
+
+	column Date
+		dataType: dateTime
+		lineageTag: b61a398b-aa70-4731-8407-4c17617736aa
+		sourceColumn: Date
+
+	column Type
+		dataType: string
+		lineageTag: 6e89e4ca-867e-4e2f-b61c-93ec6a6fbdcd
+		sourceColumn: Type
+
+	partition RptDatePeriod-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="RptDatePeriod"]}[Data]
+				in
+				    Nav
+

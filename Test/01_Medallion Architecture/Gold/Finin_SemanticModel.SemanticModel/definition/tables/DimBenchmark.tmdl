@@ -1,0 +1,82 @@
+table DimBenchmark
+	lineageTag: b4a56460-6485-4ebb-967d-ded8de2cc2a5
+
+	column BenchmarkKey
+		dataType: int64
+		lineageTag: 1351bf45-30bb-4702-9a3a-8253cfac1265
+		sourceColumn: BenchmarkKey
+
+	column BenchmarkCode
+		dataType: string
+		lineageTag: 3fe22588-5b38-4f5a-915e-1bbcbe1af680
+		sourceColumn: BenchmarkCode
+
+	column BenchmarkName
+		dataType: string
+		lineageTag: 2f0b23ac-f4bb-4c63-bab9-a620f011247d
+		sourceColumn: BenchmarkName
+
+	column IndexCode
+		dataType: string
+		lineageTag: de4e53e4-8bba-4257-ac76-8aa18c24cd6e
+		sourceColumn: IndexCode
+
+	column IndexName
+		dataType: string
+		lineageTag: 6205908d-4085-4751-9b78-b6dc0d2826c3
+		sourceColumn: IndexName
+
+	column MarketDate
+		dataType: dateTime
+		lineageTag: 5898d155-e9c0-4311-9ab6-5a7996ed6def
+		sourceColumn: MarketDate
+
+	column AvgMaturity
+		dataType: decimal
+		lineageTag: 487e54eb-e35d-4ca0-a70b-3081eebd035a
+		sourceColumn: AvgMaturity
+
+	column IsActive
+		dataType: boolean
+		lineageTag: 78607ea8-eee6-4d0c-8424-23be71b7812f
+		sourceColumn: IsActive
+
+	column IndexType
+		dataType: string
+		lineageTag: e344af0e-510b-4050-99f6-abc7cef2da0a
+		sourceColumn: IndexType
+
+	column CreatedBy
+		dataType: string
+		lineageTag: 078147ca-be8e-4b3c-ac53-46fdea217147
+		sourceColumn: CreatedBy
+
+	column CreatedDate
+		dataType: dateTime
+		lineageTag: d8d5a71c-20cd-43a4-9d64-d9347ba04eb3
+		sourceColumn: CreatedDate
+
+	column UpdatedBy
+		dataType: string
+		lineageTag: 6d33d33c-940d-4bc8-920b-506b472a7941
+		sourceColumn: UpdatedBy
+
+	column UpdatedDate
+		dataType: dateTime
+		lineageTag: 0b7c112f-76a3-4b00-9119-70c0c446d264
+		sourceColumn: UpdatedDate
+
+	column BenchmarkId
+		dataType: string
+		lineageTag: bcfe390a-ce43-4a8b-8d6f-9bb6ee9b2ed5
+		sourceColumn: BenchmarkId
+
+	partition DimBenchmark-partition = m
+		mode: directQuery
+		source =
+				let
+				    Source = DatabaseQuery,
+				    Nav = Source{[Schema="ims",Item="DimBenchmark"]}[Data]
+				in
+				    Nav
+
